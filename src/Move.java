@@ -91,7 +91,6 @@ public class Move {
 	 */
 	public String toString() {
 		String output = (this.player != null ? this.player.toString() : " ");
-		output += this.originX + this.originY + "-" + this.targetX + this.targetY;
-		return output;
+		return output + this.originX + this.originY + "-" + this.targetX + this.targetY;
 	}
 }
