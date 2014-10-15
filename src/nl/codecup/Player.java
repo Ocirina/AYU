@@ -11,10 +11,10 @@ public class Player {
     }
 
     public void start() {
-
+    	System.err.print("R player" + this.playerNumber);
     }
 
-    public void stopPlayer() {
+    public void stop() {
 
     }
 
