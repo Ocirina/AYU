@@ -11,14 +11,20 @@ public class Manager {
 	private Player player1;
 	private Player player2;
 	private Referee referee;
+	private IO IO;
+	
+	public Referee getReferee() {
+		return this.referee;
+	}
 	
 	public static void main(String args[]) {
-//		IO io = new IO();
-//		System.out.println( io.readMove("d10-h6") );
-//		System.out.println( io.readMove("d1-h60") );
-//		System.out.println( io.readMove("d1-h6") );
-		Manager manager = new Manager();
-        manager.startPlayer(new Player(manager, 3));
+		new Manager();
+	}
+	
+	public Manager() {
+		System.out.println("F");
+		this.startPlayer(new Player(this, 1));
+		this.IO = new IO();
 	}
 
 	public void startGame(String configFile) {
@@ -32,11 +38,11 @@ public class Manager {
 	public void startPlayer(Player player) {
 		player.start();
 		
-		try {
-			this.handleInput();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			this.handleInput();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public void startReferee() {
@@ -44,9 +50,13 @@ public class Manager {
 	}
 
 	public void handleInput() throws IOException {
-		BufferedReader reader = new BufferedReader (new InputStreamReader (System.in)); 
+		BufferedReader reader = new BufferedReader(new InputStreamReader (System.in)); 
 		String s = reader.readLine(); 
-		System.err.print(s);
+		
+		if (s.compareTo("Start!") == 0) {
+			Move move = this.IO.readMove(s); 
+			player1.setMove(move); 
+		} 
 	}
 
 	public void stopPlayer(Player player) {

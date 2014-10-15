@@ -17,6 +17,13 @@ public class Player {
     public void stop() {
 
     }
+    
+    public void setMove(Move move) {
+    	if(manager.getReferee().validMove(move)) {
+    		//DO-MOVE
+    		System.err.print(move);
+    	}
+    }
 
     public String generateMove() {
         return null;

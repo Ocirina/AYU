@@ -22,7 +22,7 @@ public class Referee {
 
     }
 
-    public Boolean checkMove(Move move) {
+    public Boolean validMove(Move move) {
         return null;
     }
 
