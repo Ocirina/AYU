@@ -1,3 +1,4 @@
+package nl.codecup;
 
 
 public class Referee {
