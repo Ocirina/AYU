@@ -11,7 +11,7 @@ public class Player {
     }
 
     public void start() {
-    	System.err.print("R player" + this.playerNumber);
+    	System.err.println("R player" + this.playerNumber);
     }
 
     public void stop() {
