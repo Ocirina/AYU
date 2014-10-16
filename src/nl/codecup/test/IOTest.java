@@ -34,5 +34,10 @@ public class IOTest {
 		Move m = new Move(originX, originY, destinationX, destinationY);
 		assertEquals(m.toString(), io.readMove(move).toString());
 	}
+	
+	@Test
+	public void testIsMove() {
+		
+	}
 
 }
