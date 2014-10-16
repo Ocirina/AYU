@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 
 public class Manager {
 //	private boolean debugMode = true;
-	private Player player1;
+//	private Player player1;
 //	private Player player2;
 	private Referee referee;
 	private IO IO;
@@ -85,8 +85,16 @@ public class Manager {
 		if (IO.isMoveFormat(input)) {
 			Move move = this.IO.readMove(input); 
 			System.out.println(move);
-			this.player1.setMove(move); 
+//			this.player1.setMove(move); 
 		} 
+	}
+	
+	/**
+	 * Get the IO
+	 * @return
+	 */
+	public IO getIO() {
+		return this.IO;
 	}
 
 }
