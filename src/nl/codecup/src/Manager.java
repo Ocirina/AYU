@@ -10,7 +10,7 @@ public class Manager {
 //	private Player player1;
 //	private Player player2;
 	private Referee referee;
-	private IO IO;
+	private MoveConverter converter;
 	
 	public Referee getReferee() {
 		return this.referee;
@@ -21,7 +21,7 @@ public class Manager {
 	}
 	
 	public Manager() {
-		this.IO = new IO();
+		this.converter = new MoveConverter();
 		this.startPlayer(new Player(this, 9));
 		this.startReferee();
 	}
@@ -82,8 +82,8 @@ public class Manager {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
 		String input = reader.readLine(); 
 		
-		if (IO.isMoveFormat(input)) {
-			Move move = this.IO.readMove(input); 
+		if (converter.isMoveFormat(input)) {
+			Move move = this.converter.readMove(input); 
 			System.out.println(move);
 //			this.player1.setMove(move); 
 		} 
@@ -93,8 +93,8 @@ public class Manager {
 	 * Get the IO
 	 * @return
 	 */
-	public IO getIO() {
-		return this.IO;
+	public MoveConverter getIO() {
+		return this.converter;
 	}
 
 }
