@@ -22,7 +22,7 @@ public class Manager {
 	
 	public Manager() {
 		this.IO = new IO();
-		this.startPlayer(new Player(this, 1));
+		this.startPlayer(new Player(this, 9));
 		this.startReferee();
 	}
 	
