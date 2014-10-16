@@ -1,11 +1,4 @@
 *.class
-<<<<<<< HEAD
-*.classpath
-*.project
-=======
-.classpath
-.project
->>>>>>> 20782b3c00b93276bf2944e678e239c9d4b77223
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -17,9 +10,4 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-<<<<<<< HEAD
-=======
-.idea
-AYU.iml
->>>>>>> 20782b3c00b93276bf2944e678e239c9d4b77223
-/bin/
+/bin
