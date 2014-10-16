@@ -60,8 +60,20 @@ public class IOTest {
 		assertFalse(io.isMoveFormat(invalidMoveFive));
 	}
 	
+	@Test
+	public void testOptionalPlayerInIsMoveFormat() {
+		String withPlayer = "2 D5-F10";
+		assertTrue(io.isMoveFormat(withPlayer));
+		
+		String withoutPlayer = "D5-F10";
+		assertTrue(io.isMoveFormat(withPlayer));
+		
+		String withInvalidPlayer = "A D5-F10";
+		assertFalse(io.isMoveFormat(withInvalidPlayer));
+	}
+	
 	@After
-	void cleanUp() {
+	public void cleanUp() {
 		io = null;
 	}
 }
