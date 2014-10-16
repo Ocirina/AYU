@@ -41,6 +41,9 @@ public class IOTest {
 		String validMoveFour ="D5-F5";
 		assertTrue(io.isMoveFormat(validMoveFour));
 		
+		String validMoveFive ="2 D5-F5";
+		assertTrue(io.isMoveFormat(validMoveFive));
+		
 		String invalidMoveOne = "D-F5";
 		assertFalse(io.isMoveFormat(invalidMoveOne));
 		
@@ -52,6 +55,9 @@ public class IOTest {
 		
 		String invalidMoveFour = "";
 		assertFalse(io.isMoveFormat(invalidMoveFour));
+		
+		String invalidMoveFive ="2 D-F5";
+		assertFalse(io.isMoveFormat(invalidMoveFive));
 	}
 	
 	@After
