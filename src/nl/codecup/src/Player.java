@@ -1,4 +1,4 @@
-package nl.codecup;
+package nl.codecup.src;
 
 public class Player {
 

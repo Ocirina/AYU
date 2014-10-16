@@ -1,4 +1,4 @@
-package nl.codecup;
+package nl.codecup.src;
 
 import java.io.BufferedReader;
 import java.io.IOException;
