@@ -91,7 +91,7 @@ public class Move {
 	 * To string for debugging and sending data to caiaio
 	 */
 	public String toString() {
-		String output = (this.player != null ? this.player.toString() : " ");
+		String output = (this.player != null ? this.player.toString() : "");
 		return output + this.originX + this.originY + "-" + this.targetX + this.targetY;
 	}
 }

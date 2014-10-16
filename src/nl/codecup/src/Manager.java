@@ -84,6 +84,7 @@ public class Manager {
 		
 		if (IO.isMove(input)) {
 			Move move = this.IO.readMove(input); 
+			System.out.println(move);
 			this.player1.setMove(move); 
 		} 
 	}
