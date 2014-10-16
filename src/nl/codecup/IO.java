@@ -1,5 +1,8 @@
 package nl.codecup;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class IO {
 	
 	/**
@@ -19,7 +22,22 @@ public class IO {
 				splitted[1].substring(1, splitted[1].length()));
 		return move;
 	}
-
+	
+	/**
+	 * Checks if the string is in the move format.
+	 * An example: 2 d10-h6
+	 * The player (number 2 in example) is optional.
+	 * 
+	 * @param moveString
+	 * @return boolean
+	 */
+	public boolean isMove(String moveString) {
+		String pattern = "([1-9]\\s)?[a-k][1-9][0-1]?-[a-k][1-9][0-1]?";
+		Pattern regex = Pattern.compile(pattern);
+		Matcher matcher = regex.matcher(moveString.toLowerCase());
+	    return matcher.matches();
+	}
+	
 	/**
 	 * This method will display an given move
 	 * 
