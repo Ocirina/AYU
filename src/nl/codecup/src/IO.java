@@ -1,4 +1,4 @@
-package nl.codecup;
+package nl.codecup.src;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,6 +45,12 @@ public class IO {
 	 */
 	public void displayMove(Move move) {
 		System.out.println(move);
+	}
+	public boolean isMove(String  move)
+	{
+		
+		return false;
+		
 	}
 
 }

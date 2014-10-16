@@ -1,4 +1,4 @@
-package nl.codecup;
+package nl.codecup.src;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -80,10 +80,10 @@ public class Manager {
 	 */
 	public void handleInput() throws IOException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
-		String s = reader.readLine(); 
+		String input = reader.readLine(); 
 		
-		if (s.compareTo("Start!") == 0) {
-			Move move = this.IO.readMove(s); 
+		if (IO.isMove(input)) {
+			Move move = this.IO.readMove(input); 
 			this.player1.setMove(move); 
 		} 
 	}
