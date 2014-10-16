@@ -83,7 +83,7 @@ public class Manager {
 		String input = reader.readLine(); 
 		
 		if (IO.isMove(input)) {
-			Move move = this.IO.readMove(s); 
+			Move move = this.IO.readMove(input); 
 			this.player1.setMove(move); 
 		} 
 	}
