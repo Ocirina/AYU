@@ -1,6 +1,5 @@
 package nl.codecup.src;
 
-
 public class Referee {
 
     private Manager manager;
@@ -9,23 +8,17 @@ public class Referee {
         this.manager = manager;
     }
 
-    public void handleInput() {
-
-    }
+    public void handleInput() { }
 
     /**
      * This method will send the report
      */
-    public void sendReport() {
-
-    }
+    public void sendReport() { }
 
     /**
      * This method will stop the object itself
      */
-//    private void stopReferee() {
-//
-//    }
+//  private void stopReferee() { }
 
     /**
      * This will return if an move is valid
@@ -35,7 +28,6 @@ public class Referee {
      */
     public Boolean validMove(Move move) {
         this.manager.getIO().displayMove(move);
-        
         return false;
     }
 
