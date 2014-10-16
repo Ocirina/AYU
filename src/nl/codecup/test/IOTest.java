@@ -1,6 +1,3 @@
-/**
- * 
- */
 package nl.codecup.test;
 
 import static org.junit.Assert.*;
@@ -10,10 +7,6 @@ import org.junit.Test;
 
 import nl.codecup.src.*;
 
-/**
- * @author Patrick
- *
- */
 public class IOTest {
 	
 	private IO io;
@@ -33,6 +26,11 @@ public class IOTest {
 		String move = "D10-F5";
 		Move m = new Move(originX, originY, destinationX, destinationY);
 		assertEquals(m.toString(), io.readMove(move).toString());
+	}
+	
+	@Test
+	public void testIsMove() {
+		
 	}
 
 }
