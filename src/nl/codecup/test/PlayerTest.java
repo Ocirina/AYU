@@ -7,9 +7,9 @@ import nl.codecup.src.*;
 
 public class PlayerTest {
 
-private Player player;
-private Manager manager;
-private int y;
+	private Player player;
+	private Manager manager;
+	private int y;
 	
 	@Before
 	public void create() {
