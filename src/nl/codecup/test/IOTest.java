@@ -31,28 +31,28 @@ public class IOTest {
 	@Test
 	public void testIsMove() {
 		String validMoveOne = "D5-F10";
-		assertTrue(io.isMove(validMoveOne));
+		assertTrue(io.isMoveFormat(validMoveOne));
 		
 		String validMoveTwo = "D10-F10";
-		assertTrue(io.isMove(validMoveTwo));
+		assertTrue(io.isMoveFormat(validMoveTwo));
 
 		String validMoveThree ="D10-F5";
-		assertTrue(io.isMove(validMoveThree));
+		assertTrue(io.isMoveFormat(validMoveThree));
 
 		String validMoveFour ="D5-F5";
-		assertTrue(io.isMove(validMoveFour));
+		assertTrue(io.isMoveFormat(validMoveFour));
 		
 		String invalidMoveOne = "D-F5";
-		assertFalse(io.isMove(invalidMoveOne));
+		assertFalse(io.isMoveFormat(invalidMoveOne));
 		
 		String invalidMoveTwo = "D-F";
-		assertFalse(io.isMove(invalidMoveTwo));
+		assertFalse(io.isMoveFormat(invalidMoveTwo));
 		
 		String invalidMoveThree = "D5-F";
-		assertFalse(io.isMove(invalidMoveThree));
+		assertFalse(io.isMoveFormat(invalidMoveThree));
 		
 		String invalidMoveFour = "";
-		assertFalse(io.isMove(invalidMoveFour));
+		assertFalse(io.isMoveFormat(invalidMoveFour));
 	}
 
 }

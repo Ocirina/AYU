@@ -31,7 +31,7 @@ public class IO {
 	 * @param moveString
 	 * @return boolean
 	 */
-	public boolean isMove(String moveString) {
+	public boolean isMoveFormat(String moveString) {
 		String pattern = "([1-9]\\s)?[a-k][1-9][0-1]?-[a-k][1-9][0-1]?";
 		Pattern regex = Pattern.compile(pattern);
 		Matcher matcher = regex.matcher(moveString.toLowerCase());

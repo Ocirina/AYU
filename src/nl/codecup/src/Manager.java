@@ -82,7 +82,7 @@ public class Manager {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
 		String input = reader.readLine(); 
 		
-		if (IO.isMove(input)) {
+		if (IO.isMoveFormat(input)) {
 			Move move = this.IO.readMove(input); 
 			System.out.println(move);
 			this.player1.setMove(move); 
