@@ -2,9 +2,7 @@ package nl.codecup.test;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import nl.codecup.src.*;
 
@@ -60,5 +58,4 @@ public class IOTest {
 	void cleanUp() {
 		io = null;
 	}
-
 }
