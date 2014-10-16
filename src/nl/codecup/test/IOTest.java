@@ -16,14 +16,23 @@ import nl.codecup.src.*;
  */
 public class IOTest {
 	
+	private IO io;
+	
 	@Before
-	void create(){
-		
+	public void create(){
+		io = new IO();
 	}
 	
 	@Test
-	public void test() {
-		
+	public void testReadMove() {
+		String originX = "D";
+		String originY = "10";
+		String destinationX = "F";
+		String destinationY = "5";
+
+		String move = "D10-F5";
+		Move m = new Move(originX, originY, destinationX, destinationY);
+		assertEquals(m.toString(), io.readMove(move).toString());
 	}
 
 }
