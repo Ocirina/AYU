@@ -15,6 +15,9 @@ public class Referee {
 
     }
 
+    /**
+     * This method will send the report
+     */
     public void sendReport() {
 
     }
