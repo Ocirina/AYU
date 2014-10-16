@@ -1,3 +1,4 @@
+package nl.codecup;
 
 public class Move {
 
@@ -27,10 +28,10 @@ public class Move {
 	 * Target location Y
 	 */
 	private String targetY;
-	
+
 	/**
 	 * Constructor without user
-	 * 
+	 *
 	 * @param originX
 	 * @param originY
 	 * @param targetX
@@ -39,10 +40,10 @@ public class Move {
 	public Move(String originX, String originY, String targetX, String targetY) {
 		this.setUpMove(originX, originY, targetX, targetY);
 	}
-	
+
 	/**
 	 * Create move with player
-	 * 
+	 *
 	 * @param player
 	 * @param originX
 	 * @param originY
@@ -56,7 +57,7 @@ public class Move {
 
 	/**
 	 * Set up move positions
-	 * 
+	 *
 	 * @param originX
 	 * @param originY
 	 * @param targetX
@@ -64,20 +65,20 @@ public class Move {
 	 */
 	public void setUpMove(String originX, String originY, String targetX, String targetY) {
 		this.originX = originX;
-		this.originY = originY;		
+		this.originY = originY;
 		this.targetX = targetX;
 		this.targetY = targetY;
 	}
-	
+
 	/**
 	 * Get From Location
-	 * 
+	 *
 	 * @return
 	 */
 	public String getFrom() {
 		return this.originX + this.originY;
 	}
-	
+
 	/**
 	 * Get to Location
 	 * @return
@@ -85,13 +86,12 @@ public class Move {
 	public String getTo() {
 		return this.targetX + this.targetY;
 	}
-	
+
 	/**
 	 * To string for debugging and sending data to caiaio
 	 */
 	public String toString() {
 		String output = (this.player != null ? this.player.toString() : " ");
-		output += this.originX + this.originY + "-" + this.targetX + this.targetY;
-		return output;
+		return output + this.originX + this.originY + "-" + this.targetX + this.targetY;
 	}
 }

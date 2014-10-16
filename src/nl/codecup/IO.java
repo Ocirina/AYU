@@ -1,7 +1,14 @@
+package nl.codecup;
 
 public class IO {
-	// "xyy-xy"
-	// "d10-h6"
+	/**
+	 * Reads the move and converts it to an Move object.
+	 * The format expected is: xy-xy
+	 * An example: d10-h6
+	 * 
+	 * @param moveString
+	 * @return Move move
+	 */
 	public Move readMove(String moveString) {
 		String[] splitted = moveString.split("-");
 		Move move = new Move(
@@ -13,6 +20,11 @@ public class IO {
 		return move;
 	}
 
+	/**
+	 * This method will display an given move
+	 * 
+	 * @param move
+	 */
 	public void displayMove(Move move) {
 		System.out.println(move);
 	}
