@@ -28,5 +28,11 @@ public class IO {
 	public void displayMove(Move move) {
 		System.out.println(move);
 	}
+	public boolean isMove(String  move)
+	{
+		
+		return false;
+		
+	}
 
 }
