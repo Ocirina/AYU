@@ -1,3 +1,4 @@
+package nl.codecup;
 
 
 public class Manager {
@@ -8,10 +9,11 @@ public class Manager {
 	private Referee referee;
 	
 	public static void main(String args[]) {
-		IO io = new IO();
-		System.out.println( io.readMove("d10-h6") );
-		System.out.println( io.readMove("d1-h60") );
-		System.out.println( io.readMove("d1-h6") );
+//		IO io = new IO();
+//		System.out.println( io.readMove("d10-h6") );
+//		System.out.println( io.readMove("d1-h60") );
+//		System.out.println( io.readMove("d1-h6") );
+        System.err.println("1");
 	}
 
 	public void startGame(String configFile) {
