@@ -20,6 +20,11 @@ public class IO {
 		return move;
 	}
 
+	/**
+	 * This method will display an given move
+	 * 
+	 * @param move
+	 */
 	public void displayMove(Move move) {
 		System.out.println(move);
 	}

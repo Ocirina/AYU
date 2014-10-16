@@ -11,11 +11,18 @@ public class Player {
     }
 
     public void start() {
-
+    	System.err.println("R player" + this.playerNumber);
     }
 
-    public void stopPlayer() {
+    public void stop() {
 
+    }
+    
+    public void setMove(Move move) {
+    	if(manager.getReferee().validMove(move)) {
+    		//DO-MOVE
+    		System.err.print("MOVE" + move);
+    	}
     }
 
     public String generateMove() {
