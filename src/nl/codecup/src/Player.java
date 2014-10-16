@@ -19,7 +19,7 @@ public class Player {
     }
     
     public void setMove(Move move) {
-    	if(manager.getReferee().validMove(move)) {
+    	if (manager.getReferee().validMove(move)) {
     		//DO-MOVE
     		System.err.print("MOVE" + move);
     	}
@@ -30,6 +30,6 @@ public class Player {
     }
 
     public String toString() {
-        return this.playerNumber + "";
+        return "" + this.playerNumber;
     }
 }
