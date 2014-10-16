@@ -1,6 +1,3 @@
-/**
- * 
- */
 package nl.codecup.test;
 
 import static org.junit.Assert.*;
@@ -10,10 +7,6 @@ import org.junit.Test;
 
 import nl.codecup.src.*;
 
-/**
- * @author Patrick
- *
- */
 public class IOTest {
 	
 	private IO io;
