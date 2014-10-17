@@ -8,17 +8,48 @@ public class Manager {
 //	private Player player2;
 	private Referee referee;
 	private MoveConverter converter;
+	private Board board;
+	/**
+	 * Get the IO
+	 * @return
+	 */
+	public MoveConverter getConverter() {
+		return this.converter;
+	}
 	
+	/**
+	 * Get the board
+	 * 
+	 * @return
+	 */
+	public Board getBoard() {
+		return this.board;
+	}
+
+	/**
+	 * Get the referee
+	 * 
+	 * @return
+	 */
 	public Referee getReferee() {
 		return this.referee;
 	}
-	
+
+	/**
+	 * Main
+	 * 
+	 * @param args
+	 */
 	public static void main(String args[]) {		
 		new Manager();
 	}
 	
+	/**
+	 * Constructor
+	 */
 	public Manager() {
 		this.converter = new MoveConverter();
+		this.board = new Board();
 		String input = IO.input();
 		if (input.equals("Start")) {
 			this.startPlayer(new Player(this, 1));
@@ -79,20 +110,10 @@ public class Manager {
 		while (!input.equals("Quit!")) {
 			if (converter.isMoveFormat(input)) {
 				IO.debug("INPUTZ:" + input);
-				Move move = this.converter.readMove(input);
+//				Move move = this.converter.readMove(input);
 				this.player.setMove(this.getConverter().readMove("C5-E5"));
-//				IO.output(move.toString());
-	//			this.player1.setMove(move); 
 			} 
 		}
-	}
-	
-	/**
-	 * Get the IO
-	 * @return
-	 */
-	public MoveConverter getConverter() {
-		return this.converter;
 	}
 
 }
