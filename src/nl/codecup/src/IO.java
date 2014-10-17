@@ -13,12 +13,11 @@ public class IO {
 	 * @return input from System.in
 	 */
 	public static String input() {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));  
+		InputStreamReader streamReader = new InputStreamReader(System.in);
+		BufferedReader reader = new BufferedReader(streamReader);
 	    try {
 			return reader.readLine();
-		} catch (IOException e) {
-			//e.printStackTrace();
-		}
+		} catch (IOException e) { }
 	    return null;
 	}
 	
