@@ -9,7 +9,7 @@ public class IO {
 	 * 
 	 * @return input from System.in
 	 */
-	public String input() {
+	public static String input() {
 		Scanner scanIn = new Scanner(System.in);
 	    String input = scanIn.nextLine();
 	    scanIn.close();            
@@ -21,7 +21,7 @@ public class IO {
 	 * 
 	 * @param output
 	 */
-	public void output(String output) {
+	public static void output(String output) {
 		System.err.print(output);
 	}
 }
