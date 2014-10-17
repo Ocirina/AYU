@@ -42,6 +42,8 @@ public class Board {
 			targetY = Integer.parseInt(move.getTargetY());
 		
 		switchPosition(originX, originY, targetX, targetY);
+		
+		IO.debug(this.toString());
 	}
 
 	private void switchPosition(int originX, int originY, int targetX, int targetY) {
