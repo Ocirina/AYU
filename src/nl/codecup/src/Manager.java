@@ -1,10 +1,5 @@
 package nl.codecup.src;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-
 public class Manager {
 //	private boolean debugMode = true;
 //	private Player player1;
@@ -22,18 +17,10 @@ public class Manager {
 	
 	public Manager() {
 		this.converter = new MoveConverter();
-		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
-		String input;
-		try {
-			input = reader.readLine();
-			
-			if(input.equals("Start")) {
-				this.startPlayer(new Player(this, 1));
-				this.startReferee();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		String input = IO.input();
+		if (input.equals("Start")) {
+			this.startPlayer(new Player(this, 1));
+			this.startReferee();
 		}
 	}
 	
@@ -50,7 +37,7 @@ public class Manager {
 	 * Load the system configuration file
 	 */
 	private void loadConfig() {
-		System.out.println("This should load the config via file");
+		IO.output("This should load the config via file");
 	}
 
 	/**
@@ -67,12 +54,7 @@ public class Manager {
 	 */
 	public void startPlayer(Player player) {
 		player.start();
-		
-		try {
-			this.handleInput();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.handleInput();
 	}
 
 	/**
@@ -89,15 +71,14 @@ public class Manager {
 	 * 
 	 * @throws IOException
 	 */
-	public void handleInput() throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
-		String input = reader.readLine(); 
+	public void handleInput() {
+		String input = IO.input(); 
 		
 		while (!input.equals("Quit!")) {
-			System.err.println("INPUTZ:" + input);
+			IO.output("INPUTZ:" + input);
 			if (converter.isMoveFormat(input)) {
 				Move move = this.converter.readMove(input); 
-				System.out.println(move);
+				IO.output(move.toString());
 	//			this.player1.setMove(move); 
 			} 
 		}
