@@ -1,6 +1,8 @@
 package nl.codecup.src;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 // TODO: Move handling logic into adapters for command line (and file?).
 public class IO {
@@ -11,10 +13,13 @@ public class IO {
 	 * @return input from System.in
 	 */
 	public static String input() {
-		Scanner scanIn = new Scanner(System.in);
-	    String input = scanIn.nextLine();
-	    scanIn.close();            
-	    return input;
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));  
+	    try {
+			return reader.readLine();
+		} catch (IOException e) {
+			//e.printStackTrace();
+			return "";
+		}
 	}
 	
 	/**
