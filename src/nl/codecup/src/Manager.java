@@ -124,5 +124,13 @@ public class Manager {
 			} 
 		}
 	}
+	
+	public void movePiece(Move move) {
+		this.getBoard().movePiece(move);
+	}
+
+	public Move readMove(String move) {
+		return this.getConverter().readMove(move);
+	}
 
 }

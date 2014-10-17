@@ -12,7 +12,7 @@ public class Player {
 
     public void start() {
     	IO.debug("R player" + this.playerNumber);
-    	this.setMove(this.manager.getConverter().readMove("B5-C5"));
+    	this.setMove(this.readMove("B5-C5"));
     }
 
     public void stop() { }
@@ -20,10 +20,22 @@ public class Player {
     public void setMove(Move move) {
 //    	if (this.manager.getReferee().validMove(move)) {
     		IO.output(move.toString());
-    		this.manager.getBoard().movePiece(move);
+    		this.movePiece(move);
 //    	}
     }
-
+    
+    private Manager getManager() {
+    	return this.manager;
+    }
+    
+    private Move readMove(String move) {
+    	return this.getManager().readMove(move);
+    }
+    
+    private void movePiece(Move move) {
+    	this.getManager().movePiece(move);
+    }
+    
     public String generateMove() {
         return null;
     }
