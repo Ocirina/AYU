@@ -47,7 +47,7 @@ public class Manager {
 	}
 
 	/**
-	 * Load the system config file
+	 * Load the system configuration file
 	 */
 	private void loadConfig() {
 		System.out.println("This should load the config via file");

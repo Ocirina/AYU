@@ -2,8 +2,6 @@ package nl.codecup.src;
 
 public class Move {
 
-//	private Boolean validMove;
-
 	/**
 	 * Instance of the player
 	 */
