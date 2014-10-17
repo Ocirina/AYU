@@ -27,7 +27,7 @@ public class IO {
 	 * @param output
 	 */
 	public static void output(String output) {
-		IO.outputDebug("WAS SENT TO CAIAIO: " + output);
+		IO.debug("WAS SENT TO CAIAIO: " + output);
 		System.out.println(output);
 	}
 	
@@ -36,7 +36,7 @@ public class IO {
 	 * 
 	 * @param output
 	 */
-	public static void outputDebug(String output) {
+	public static void debug(String output) {
 		System.err.println(output);
 	}
 }

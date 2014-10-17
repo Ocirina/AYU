@@ -77,7 +77,7 @@ public class Manager {
 		String input = IO.input(); 		
 		while (!input.equals("Quit!")) {
 			if (converter.isMoveFormat(input)) {
-				IO.outputDebug("INPUTZ:" + input);
+				IO.debug("INPUTZ:" + input);
 				Move move = this.converter.readMove(input);
 				IO.output("C5-E5");
 //				IO.output(move.toString());

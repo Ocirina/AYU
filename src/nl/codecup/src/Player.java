@@ -11,7 +11,7 @@ public class Player {
     }
 
     public void start() {
-    	IO.outputDebug("R player" + this.playerNumber);
+    	IO.debug("R player" + this.playerNumber);
     	IO.output("B5-C5");
     }
 
