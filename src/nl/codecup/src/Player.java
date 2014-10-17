@@ -12,7 +12,7 @@ public class Player {
 
     public void start() {
     	System.err.println("R player" + this.playerNumber);
-    	System.out.println(this.playerNumber + " Start");
+    	System.out.println("D5-E5");
     }
 
     public void stop() { }
