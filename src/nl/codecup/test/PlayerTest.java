@@ -9,12 +9,13 @@ public class PlayerTest {
 
 private Player player;
 private Manager manager;
-private int y;
+private int playerNumber;
 	
 	@Before
 	public void create() {
+		
 		manager = new Manager();
-		player = new Player(manager, y );
+		player = new Player(manager,playerNumber );
 	}
 	
 	@Test
