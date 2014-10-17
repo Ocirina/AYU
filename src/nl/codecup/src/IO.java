@@ -18,8 +18,8 @@ public class IO {
 			return reader.readLine();
 		} catch (IOException e) {
 			//e.printStackTrace();
-			return "";
 		}
+	    return null;
 	}
 	
 	/**
