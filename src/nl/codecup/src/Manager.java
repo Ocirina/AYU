@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Manager {
 //	private boolean debugMode = true;
-//	private Player player1;
+	private Player player;
 //	private Player player2;
 	private Referee referee;
 	private MoveConverter converter;
@@ -55,6 +55,7 @@ public class Manager {
 	 * @param player
 	 */
 	public void startPlayer(Player player) {
+		this.player = player;
 		player.start();
 		this.handleInput();
 	}
@@ -79,7 +80,7 @@ public class Manager {
 			if (converter.isMoveFormat(input)) {
 				IO.debug("INPUTZ:" + input);
 				Move move = this.converter.readMove(input);
-				IO.output("C5-E5");
+				this.player.setMove(this.getConverter().readMove("C5-E5"));
 //				IO.output(move.toString());
 	//			this.player1.setMove(move); 
 			} 

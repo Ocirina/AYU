@@ -12,15 +12,15 @@ public class Player {
 
     public void start() {
     	IO.debug("R player" + this.playerNumber);
-    	IO.output("B5-C5");
+    	this.setMove(this.manager.getConverter().readMove("B5-C5"));
     }
 
     public void stop() { }
     
     public void setMove(Move move) {
-    	if (manager.getReferee().validMove(move)) {
-    		System.err.print("MOVE" + move);
-    	}
+//    	if (this.manager.getReferee().validMove(move)) {
+    		IO.output(move.toString());
+//    	}
     }
 
     public String generateMove() {

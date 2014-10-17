@@ -30,8 +30,9 @@ public class Referee {
      * @return
      */
     public Boolean validMove(Move move) {
-        this.manager.getConverter().displayMove(move);
-        return false;
+    	return true;
+//        this.manager.getConverter().displayMove(move);
+//        return false;
     }
 
     /**
