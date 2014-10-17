@@ -93,7 +93,7 @@ public class Manager {
 	 * Get the IO
 	 * @return
 	 */
-	public MoveConverter getIO() {
+	public MoveConverter getConverter() {
 		return this.converter;
 	}
 

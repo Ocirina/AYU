@@ -27,7 +27,7 @@ public class Referee {
      * @return
      */
     public Boolean validMove(Move move) {
-        this.manager.getIO().displayMove(move);
+        this.manager.getConverter().displayMove(move);
         return false;
     }
 
