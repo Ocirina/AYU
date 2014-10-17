@@ -22,8 +22,19 @@ public class Manager {
 	
 	public Manager() {
 		this.converter = new MoveConverter();
-		this.startPlayer(new Player(this, 9));
-		this.startReferee();
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
+		String input;
+		try {
+			input = reader.readLine();
+			
+			if(input.equals("Start")) {
+				this.startPlayer(new Player(this, 1));
+				this.startReferee();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -81,7 +92,7 @@ public class Manager {
 	public void handleInput() throws IOException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
 		String input = reader.readLine(); 
-		
+		System.err.println(input);
 		if (converter.isMoveFormat(input)) {
 			Move move = this.converter.readMove(input); 
 			System.out.println(move);

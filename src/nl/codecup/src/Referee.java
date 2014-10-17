@@ -1,5 +1,9 @@
 package nl.codecup.src;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Referee {
 
     private Manager manager;
@@ -8,7 +12,17 @@ public class Referee {
         this.manager = manager;
     }
 
-    public void handleInput() { }
+    public void handleInput() {
+    	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
+		String input;
+		try {
+			input = reader.readLine();
+			
+			System.err.println(input);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
 
     /**
      * This method will send the report
