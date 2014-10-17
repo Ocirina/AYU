@@ -1,33 +1,64 @@
 package nl.codecup.src;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-
 
 public class Manager {
 //	private boolean debugMode = true;
-	private Player player1;
+	private Player player;
 //	private Player player2;
 	private Referee referee;
-	private IO IO;
+	private MoveConverter converter;
+	private Board board;
+	/**
+	 * Get the IO
+	 * @return
+	 */
+	public MoveConverter getConverter() {
+		return this.converter;
+	}
 	
+	/**
+	 * Get the board
+	 * 
+	 * @return
+	 */
+	public Board getBoard() {
+		return this.board;
+	}
+
+	/**
+	 * Get the referee
+	 * 
+	 * @return
+	 */
 	public Referee getReferee() {
 		return this.referee;
 	}
-	
+
+	/**
+	 * Main
+	 * 
+	 * @param args
+	 */
 	public static void main(String args[]) {		
 		new Manager();
 	}
 	
+	/**
+	 * Constructor
+	 */
 	public Manager() {
-		this.IO = new IO();
-		this.startPlayer(new Player(this, 9));
-		this.startReferee();
+		this.converter = new MoveConverter();
+		this.board = new Board();
+		String input = IO.input();
+		if (input.equals("Start")) {
+			this.startPlayer(new Player(this, 1));
+			this.startReferee();
+		}
 	}
 	
 	/**
-	 * This wil load the terminal config and the file config
+	 * This will load the terminal configuration and the file configuration
 	 * 
 	 * @param configFile
 	 */
@@ -36,10 +67,10 @@ public class Manager {
 	}
 
 	/**
-	 * Load the system config file
+	 * Load the system configuration file
 	 */
 	private void loadConfig() {
-		System.out.println("This should load the config via file");
+		IO.output("This should load the config via file");
 	}
 
 	/**
@@ -55,13 +86,9 @@ public class Manager {
 	 * @param player
 	 */
 	public void startPlayer(Player player) {
+		this.player = player;
 		player.start();
-		
-		try {
-			this.handleInput();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.handleInput();
 	}
 
 	/**
@@ -78,15 +105,15 @@ public class Manager {
 	 * 
 	 * @throws IOException
 	 */
-	public void handleInput() throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
-		String input = reader.readLine(); 
-		
-		if (IO.isMove(input)) {
-			Move move = this.IO.readMove(input); 
-			System.out.println(move);
-			this.player1.setMove(move); 
-		} 
+	public void handleInput() {
+		String input = IO.input(); 		
+		while (!input.equals("Quit!")) {
+			if (converter.isMoveFormat(input)) {
+				IO.debug("INPUTZ:" + input);
+//				Move move = this.converter.readMove(input);
+				this.player.setMove(this.getConverter().readMove("C5-E5"));
+			} 
+		}
 	}
 
 }

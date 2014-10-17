@@ -1,49 +1,42 @@
 package nl.codecup.src;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
+// TODO: Move handling logic into adapters for command line (and file?).
 public class IO {
 	
 	/**
-	 * Reads the move and converts it to an Move object.
-	 * The format expected is: xy-xy
-	 * An example: d10-h6
+	 * Reads input from the System.in stream.
 	 * 
-	 * @param moveString
-	 * @return Move move
+	 * @return input from System.in
 	 */
-	public Move readMove(String moveString) {
-		String[] splitted = moveString.split("-");
-		Move move = new Move(
-				splitted[0].substring(0, 1),
-				splitted[0].substring(1, splitted[0].length()),
-				splitted[1].substring(0, 1),
-				splitted[1].substring(1, splitted[1].length()));
-		return move;
+	public static String input() {
+		InputStreamReader streamReader = new InputStreamReader(System.in);
+		BufferedReader reader = new BufferedReader(streamReader);
+	    try {
+			return reader.readLine();
+		} catch (IOException e) { }
+	    return null;
 	}
 	
 	/**
-	 * Checks if the string is in the move format.
-	 * An example: 2 d10-h6
-	 * The player (number 2 in example) is optional.
+	 * Outputs the String to System.err.
 	 * 
-	 * @param moveString
-	 * @return boolean
+	 * @param output
 	 */
-	public boolean isMove(String moveString) {
-		String pattern = "([1-9]\\s)?[a-k][1-9][0-1]?-[a-k][1-9][0-1]?";
-		Pattern regex = Pattern.compile(pattern);
-		Matcher matcher = regex.matcher(moveString.toLowerCase());
-	    return matcher.matches();
+	public static void output(String output) {
+		IO.debug("WAS SENT TO CAIAIO: " + output);
+		System.out.println(output);
 	}
 	
 	/**
-	 * This method will display an given move
+	 * Log
 	 * 
-	 * @param move
+	 * @param output
 	 */
-	public void displayMove(Move move) {
-		System.out.println(move);
+	public static void debug(String output) {
+		System.err.println(output);
 	}
 }
