@@ -30,11 +30,15 @@ public class Board {
 		
 	}
 	
+	private MoveConverter getConverter() {
+		return this.moveConverter;
+	}
+	
 	public void movePiece(Move move) {
-		int originX = this.moveConverter.convertStringToPoint(move.getOriginX()),
+		int originX = this.getConverter().convertStringToPoint(move.getOriginX()),
 			originY = Integer.parseInt(move.getOriginY());
 		
-		int targetX = this.moveConverter.convertStringToPoint(move.getTargetX()),
+		int targetX = this.getConverter().convertStringToPoint(move.getTargetX()),
 			targetY = Integer.parseInt(move.getTargetY());
 		
 		int tempPiece = this.boardGrid[originX][originY];
