@@ -27,7 +27,7 @@ public class Manager {
 	}
 	
 	/**
-	 * This wil load the terminal config and the file config
+	 * This will load the terminal configuration and the file configuration
 	 * 
 	 * @param configFile
 	 */
