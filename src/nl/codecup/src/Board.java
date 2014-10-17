@@ -41,23 +41,23 @@ public class Board {
 		int targetX = this.getConverter().convertStringToPoint(move.getTargetX()),
 			targetY = Integer.parseInt(move.getTargetY());
 		
+		switchPosition(originX, originY, targetX, targetY);
+	}
+
+	private void switchPosition(int originX, int originY, int targetX, int targetY) {
 		int tempPiece = this.boardGrid[originX][originY];
-		
 		this.boardGrid[originX][originY] = this.boardGrid[targetX][targetY];		
 		this.boardGrid[targetX][targetY] = tempPiece;
 	}
 	
 	public String toString() {
 		String returnString = "";
-		
-		for(int row = 0; row < SIZE; row++) {
-			for(int column = 0; column < SIZE; column++) {
+		for (int row = 0; row < SIZE; row++) {
+			for (int column = 0; column < SIZE; column++) {
 				returnString += "|" + this.convertPiece(this.boardGrid[row][column]);
 			}
-			
 			returnString += "|\n";
 		}
-		
 		return returnString;
 	}
 	
@@ -65,7 +65,6 @@ public class Board {
 		if (player != 0) {
 			return player == 1 ? "W" : "B";
 		}
-		
 		return " ";
 	}
 }
