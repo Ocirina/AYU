@@ -119,8 +119,10 @@ public class Manager {
 		while (!input.equals("Quit!")) {
 			if (converter.isMoveFormat(input)) {
 				IO.debug("INPUTZ:" + input);
-//				Move move = this.converter.readMove(input);
-				this.setPlayerMove(this.getConverter().readMove("C5-E5"));
+				Move move = this.converter.readMove(input);
+				this.getBoard().movePiece(move);
+				
+//				this.setPlayerMove(this.getConverter().readMove("C5-E5"));
 			} 
 		}
 	}
