@@ -50,11 +50,12 @@ public class Manager {
 	public Manager() {
 		this.converter = new MoveConverter();
 		this.board = new Board();
-		String input = IO.input();
-		if (input.equals("Start")) {
-			this.startPlayer(new Player(this, 1));
-			this.startReferee();
-		}
+		System.out.println(this.board);
+//		String input = IO.input();
+//		if (input.equals("Start")) {
+//			this.startPlayer(new Player(this, 1));
+//			this.startReferee();
+//		}
 	}
 	
 	/**

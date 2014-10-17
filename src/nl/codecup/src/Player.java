@@ -20,6 +20,7 @@ public class Player {
     public void setMove(Move move) {
 //    	if (this.manager.getReferee().validMove(move)) {
     		IO.output(move.toString());
+    		this.manager.getBoard().movePiece(move);
 //    	}
     }
 
