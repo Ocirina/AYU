@@ -30,7 +30,7 @@ public class Board {
 		
 	}
 	
-	public movePiece(Move move) {
+	public void movePiece(Move move) {
 		int originX = this.moveConverter.convertStringToPoint(move.getOriginX()),
 			originY = Integer.parseInt(move.getOriginY());
 		
