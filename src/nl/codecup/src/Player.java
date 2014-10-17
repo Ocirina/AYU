@@ -5,9 +5,9 @@ public class Player {
     private Manager manager;
     private int playerNumber;
 
-    public Player(Manager manager, int type) {
+    public Player(Manager manager, int playerNumber) {
         this.manager = manager;
-        this.playerNumber = type;
+        this.playerNumber = playerNumber;
     }
 
     public void start() {
@@ -15,13 +15,10 @@ public class Player {
     	System.out.println(this.playerNumber + " Start");
     }
 
-    public void stop() {
-
-    }
+    public void stop() { }
     
     public void setMove(Move move) {
     	if (manager.getReferee().validMove(move)) {
-    		//DO-MOVE
     		System.err.print("MOVE" + move);
     	}
     }
