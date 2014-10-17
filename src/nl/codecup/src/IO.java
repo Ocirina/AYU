@@ -2,6 +2,7 @@ package nl.codecup.src;
 
 import java.util.Scanner;
 
+// TODO: Move handling logic into adapters for command line (and file?).
 public class IO {
 	
 	/**
