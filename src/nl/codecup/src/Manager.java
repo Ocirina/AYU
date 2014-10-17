@@ -101,6 +101,15 @@ public class Manager {
 		player.stop();
 	}
 	
+	
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+	public void setPlayerMove(Move move) {
+		this.getPlayer().setMove(move);
+	}
+	
 	/**
 	 * This method will handle the input for the manager
 	 * 
@@ -112,7 +121,7 @@ public class Manager {
 			if (converter.isMoveFormat(input)) {
 				IO.debug("INPUTZ:" + input);
 //				Move move = this.converter.readMove(input);
-				this.player.setMove(this.getConverter().readMove("C5-E5"));
+				this.setPlayerMove(this.getConverter().readMove("C5-E5"));
 			} 
 		}
 	}
