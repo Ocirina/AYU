@@ -92,12 +92,15 @@ public class Manager {
 	public void handleInput() throws IOException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
 		String input = reader.readLine(); 
-		System.err.println("INPUTZ:" + input);
-		if (converter.isMoveFormat(input)) {
-			Move move = this.converter.readMove(input); 
-			System.out.println(move);
-//			this.player1.setMove(move); 
-		} 
+		
+		while (!input.equals("Quit!")) {
+			System.err.println("INPUTZ:" + input);
+			if (converter.isMoveFormat(input)) {
+				Move move = this.converter.readMove(input); 
+				System.out.println(move);
+	//			this.player1.setMove(move); 
+			} 
+		}
 	}
 	
 	/**
