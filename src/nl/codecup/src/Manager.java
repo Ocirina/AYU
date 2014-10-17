@@ -1,5 +1,7 @@
 package nl.codecup.src;
 
+import java.io.IOException;
+
 public class Manager {
 //	private boolean debugMode = true;
 //	private Player player1;
@@ -72,13 +74,13 @@ public class Manager {
 	 * @throws IOException
 	 */
 	public void handleInput() {
-		String input = IO.input(); 
-		
+		String input = IO.input(); 		
 		while (!input.equals("Quit!")) {
-			IO.output("INPUTZ:" + input);
 			if (converter.isMoveFormat(input)) {
-				Move move = this.converter.readMove(input); 
-				IO.output(move.toString());
+				IO.outputDebug("INPUTZ:" + input);
+				Move move = this.converter.readMove(input);
+				IO.output("C5-E5");
+//				IO.output(move.toString());
 	//			this.player1.setMove(move); 
 			} 
 		}

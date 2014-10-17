@@ -27,6 +27,16 @@ public class IO {
 	 * @param output
 	 */
 	public static void output(String output) {
-		System.err.print(output);
+		IO.outputDebug("WAS SENT TO CAIAIO: " + output);
+		System.out.println(output);
+	}
+	
+	/**
+	 * Log
+	 * 
+	 * @param output
+	 */
+	public static void outputDebug(String output) {
+		System.err.println(output);
 	}
 }

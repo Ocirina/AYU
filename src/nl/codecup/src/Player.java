@@ -11,8 +11,8 @@ public class Player {
     }
 
     public void start() {
-    	System.err.println("R player" + this.playerNumber);
-    	System.out.println("D5-E5");
+    	IO.outputDebug("R player" + this.playerNumber);
+    	IO.output("B5-C5");
     }
 
     public void stop() { }
