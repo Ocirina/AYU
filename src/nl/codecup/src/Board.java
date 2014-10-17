@@ -45,6 +45,26 @@ public class Board {
 		
 		IO.debug(this.toString());
 	}
+	
+	public String findOpenMove() {
+		String newMove = "";
+		for (int row = 0; row < SIZE; row++) {
+			for (int column = 0; column < SIZE; column++) {
+				if(this.boardGrid[row][column] == WHITE) {
+					if((column + 1) < 11 && this.boardGrid[row][column + 1] == NONE) {
+						IO.debug(this.getConverter().convertPointToString(row) + "");
+						IO.debug(column + "");
+						IO.debug(this.getConverter().convertPointToString(row) + "");
+						IO.debug((column + 1) + "");
+						newMove = this.getConverter().convertPointToString(row) + (column + 1) + this.getConverter().convertPointToString(row) + (column + 2) + "";
+						return newMove;
+					}
+				}
+			}
+		}
+		
+		return newMove;
+	}
 
 	private void switchPosition(int originX, int originY, int targetX, int targetY) {
 		int tempPiece = this.boardGrid[originX][originY];

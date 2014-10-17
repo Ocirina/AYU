@@ -25,10 +25,14 @@ public class Player {
     }
 
     public String generateMove() {
-        return null;
+    	return this.getManager().getBoard().findOpenMove();
     }
 
     public String toString() {
         return "" + this.playerNumber;
+    }
+    
+    public Manager getManager() {
+    	return this.manager;
     }
 }
