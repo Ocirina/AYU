@@ -14,12 +14,12 @@ public class PlayerTest {
 	@Before
 	public void create() {
 		manager = new Manager();
-		player = new Player(manager, y );
+		player = new Player(manager, y);
 	}
 	
 	@Test
-	public void test() {
-
+	public void testSetMove() {
+		
 	}
 
 }
