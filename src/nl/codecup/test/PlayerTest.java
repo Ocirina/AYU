@@ -7,15 +7,14 @@ import nl.codecup.src.*;
 
 public class PlayerTest {
 
-private Player player;
-private Manager manager;
-private int playerNumber;
+	private Player player;
+	private Manager manager;
+	private int y;
 	
 	@Before
 	public void create() {
-		
 		manager = new Manager();
-		player = new Player(manager,playerNumber );
+		player = new Player(manager, y );
 	}
 	
 	@Test

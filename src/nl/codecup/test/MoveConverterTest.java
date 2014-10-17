@@ -6,13 +6,13 @@ import org.junit.*;
 
 import nl.codecup.src.*;
 
-public class IOTest {
+public class MoveConverterTest {
 	
-	private IO io;
+	private MoveConverter converter;
 	
 	@Before
 	public void create(){
-		io = new IO();
+		converter = new MoveConverter();
 	}
 	
 	@Test
@@ -24,56 +24,56 @@ public class IOTest {
 
 		String move = "D10-F5";
 		Move m = new Move(originX, originY, destinationX, destinationY);
-		assertEquals(m.toString(), io.readMove(move).toString());
+		assertEquals(m.toString(), converter.readMove(move).toString());
 	}
 	
 	@Test
 	public void testIsMove() {
 		String validMoveOne = "D5-F10";
-		assertTrue(io.isMoveFormat(validMoveOne));
+		assertTrue(converter.isMoveFormat(validMoveOne));
 		
 		String validMoveTwo = "D10-F10";
-		assertTrue(io.isMoveFormat(validMoveTwo));
+		assertTrue(converter.isMoveFormat(validMoveTwo));
 
 		String validMoveThree ="D10-F5";
-		assertTrue(io.isMoveFormat(validMoveThree));
+		assertTrue(converter.isMoveFormat(validMoveThree));
 
 		String validMoveFour ="D5-F5";
-		assertTrue(io.isMoveFormat(validMoveFour));
+		assertTrue(converter.isMoveFormat(validMoveFour));
 		
 		String validMoveFive ="2 D5-F5";
-		assertTrue(io.isMoveFormat(validMoveFive));
+		assertTrue(converter.isMoveFormat(validMoveFive));
 		
 		String invalidMoveOne = "D-F5";
-		assertFalse(io.isMoveFormat(invalidMoveOne));
+		assertFalse(converter.isMoveFormat(invalidMoveOne));
 		
 		String invalidMoveTwo = "D-F";
-		assertFalse(io.isMoveFormat(invalidMoveTwo));
+		assertFalse(converter.isMoveFormat(invalidMoveTwo));
 		
 		String invalidMoveThree = "D5-F";
-		assertFalse(io.isMoveFormat(invalidMoveThree));
+		assertFalse(converter.isMoveFormat(invalidMoveThree));
 		
 		String invalidMoveFour = "";
-		assertFalse(io.isMoveFormat(invalidMoveFour));
+		assertFalse(converter.isMoveFormat(invalidMoveFour));
 		
 		String invalidMoveFive ="2 D-F5";
-		assertFalse(io.isMoveFormat(invalidMoveFive));
+		assertFalse(converter.isMoveFormat(invalidMoveFive));
 	}
 	
 	@Test
 	public void testOptionalPlayerInIsMoveFormat() {
 		String withPlayer = "2 D5-F10";
-		assertTrue(io.isMoveFormat(withPlayer));
+		assertTrue(converter.isMoveFormat(withPlayer));
 		
 		String withoutPlayer = "D5-F10";
-		assertTrue(io.isMoveFormat(withPlayer));
+		assertTrue(converter.isMoveFormat(withoutPlayer));
 		
 		String withInvalidPlayer = "A D5-F10";
-		assertFalse(io.isMoveFormat(withInvalidPlayer));
+		assertFalse(converter.isMoveFormat(withInvalidPlayer));
 	}
 	
 	@After
 	public void cleanUp() {
-		io = null;
+		converter = null;
 	}
 }

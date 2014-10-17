@@ -3,7 +3,7 @@ package nl.codecup.src;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class IO {
+public class MoveConverter {
 	
 	/**
 	 * Reads the move and converts it to an Move object.
