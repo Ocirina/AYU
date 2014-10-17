@@ -92,7 +92,7 @@ public class Manager {
 	public void handleInput() throws IOException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
 		String input = reader.readLine(); 
-		System.err.println(input);
+		System.err.println("INPUTZ:" + input);
 		if (converter.isMoveFormat(input)) {
 			Move move = this.converter.readMove(input); 
 			System.out.println(move);
