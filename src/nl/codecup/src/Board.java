@@ -52,11 +52,15 @@ public class Board {
 			for (int column = 0; column < SIZE; column++) {
 				if(this.boardGrid[row][column] == WHITE) {
 					if((column + 1) < 11 && this.boardGrid[row][column + 1] == NONE) {
-						IO.debug(this.getConverter().convertPointToString(row) + "");
-						IO.debug((column + 1) + "");
-						IO.debug(this.getConverter().convertPointToString(row) + "");
-						IO.debug((column + 2) + "");
-						newMove = this.getConverter().convertPointToString(row) + (column + 1) + "-" + this.getConverter().convertPointToString(row) + (column + 2);
+						
+						newMove += this.getConverter().convertPointToString(row) + "";
+						newMove += (column + 1) + "-";
+						
+						newMove += this.getConverter().convertPointToString(row) + "";
+						newMove += (column + 2) + "";
+						
+//						newMove = this.getConverter().convertPointToString(row) + (column + 1) + "-" + this.getConverter().convertPointToString(row) + (column + 2);
+						
 						IO.debug("DEB: " + newMove);
 						return newMove;
 					}
