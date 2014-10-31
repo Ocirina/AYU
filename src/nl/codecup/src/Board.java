@@ -8,18 +8,18 @@ public class Board {
 	private static final int WHITE = 1;
 	private static final int BLACK = 2;
 	
-	private int[][] boardGrid = new int[][] {
-		{ NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE},
-		{ BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK},
-		{ NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE},
-		{ BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK},
-		{ NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE},
-		{ BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK},
-		{ NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE},
-		{ BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK},
-		{ NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE},
-		{ BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK},
-		{ NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE}
+	private int[][] boardGrid = new int[][] {		
+		{ NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE},
+		{ WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE},
+		{ NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE},
+		{ WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE},
+		{ NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE},
+		{ WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE},
+		{ NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE},
+		{ WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE},
+		{ NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE},
+		{ WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE},
+		{ NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE}
 	};
 	
 	public Board(int[][] grid) {
@@ -36,10 +36,10 @@ public class Board {
 	
 	public void movePiece(Move move) {
 		int originX = this.getConverter().convertStringToPoint(move.getOriginX()),
-			originY = Integer.parseInt(move.getOriginY());
+			originY = Integer.parseInt(move.getOriginY()) - 1;
 		
 		int targetX = this.getConverter().convertStringToPoint(move.getTargetX()),
-			targetY = Integer.parseInt(move.getTargetY());
+			targetY = Integer.parseInt(move.getTargetY()) - 1;
 		
 		switchPosition(originX, originY, targetX, targetY);
 		
@@ -53,10 +53,11 @@ public class Board {
 				if(this.boardGrid[row][column] == WHITE) {
 					if((column + 1) < 11 && this.boardGrid[row][column + 1] == NONE) {
 						IO.debug(this.getConverter().convertPointToString(row) + "");
-						IO.debug(column + "");
-						IO.debug(this.getConverter().convertPointToString(row) + "");
 						IO.debug((column + 1) + "");
-						newMove = this.getConverter().convertPointToString(row) + (column + 1) + this.getConverter().convertPointToString(row) + (column + 2) + "";
+						IO.debug(this.getConverter().convertPointToString(row) + "");
+						IO.debug((column + 2) + "");
+						newMove = this.getConverter().convertPointToString(row) + (column + 1) + "-" + this.getConverter().convertPointToString(row) + (column + 2);
+						IO.debug("DEB: " + newMove);
 						return newMove;
 					}
 				}
