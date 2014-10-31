@@ -60,8 +60,7 @@ public class Board {
 						newMove += (column + 2) + "";
 						
 //						newMove = this.getConverter().convertPointToString(row) + (column + 1) + "-" + this.getConverter().convertPointToString(row) + (column + 2);
-						
-						IO.debug("DEB: " + newMove);
+//						IO.debug("DEB: " + newMove);
 						return newMove;
 					}
 				}
