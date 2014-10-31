@@ -127,6 +127,8 @@ public class Manager {
 				
 				this.setPlayerMove(this.getConverter().readMove(this.player.generateMove()));
 			} 
+			
+			input = IO.input();
 		}
 	}
 
