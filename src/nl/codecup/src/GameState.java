@@ -29,11 +29,11 @@ public class GameState {
 	 * @return A new GameState with the move added
 	 */
 	public GameState makeMove(Move move) {
-		//TODO fix clone
-		GameState newState = this;
+		GameState newState = this.clone();
+		Board newBoard = this.board.clone();
 		newState.setPlayerPiece(opponentPiece);
 		newState.setComputerPiece(playingPiece);
-		newState.setBoard(board.clone().placePiece(move));
+		newState.setBoard(newBoard.placePiece(move));
 		return newState;
 	}
 	
