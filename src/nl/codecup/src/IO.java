@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-// TODO: Move handling logic into adapters for command line (and file?).
-public class IO {
+/**
+ * Abstract Class IO.
+ * Handles the input given by the Caiaio and outputs to the Caiaio
+ */
+public abstract class IO {
 	
 	/**
 	 * Reads input from the System.in stream.
