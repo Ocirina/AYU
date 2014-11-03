@@ -108,16 +108,16 @@ public class Manager {
 	 * @throws IOException
 	 */
 	public void handleInput() {
-		String input = IO.input(); 		
+		String input = IO.input();
 		while (!input.equals("Quit!")) {
 			if (converter.isMoveFormat(input)) {
-				IO.debug("INPUT FROM PLAYER:" + input);
 				Move move = this.converter.readMove(input);
-				gameState = gameState.makeMove(move);
-				gameState = this.player.takeTurn(gameState);
-				IO.output(gameState.toString());
-			} 
-			
+				this.gameState = this.gameState.makeMove(move);
+				IO.debug(gameState.toString());
+
+				this.gameState = this.player.takeTurn(this.gameState);
+				IO.debug(gameState.toString());
+			} 			
 			input = IO.input();
 		}
 	}
