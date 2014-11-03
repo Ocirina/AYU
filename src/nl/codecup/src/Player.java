@@ -3,17 +3,16 @@ package nl.codecup.src;
 public class Player {
 
     private Manager manager;
-    private int playerNumber;
 	private GameState state;
 	private int piece;
 
-    public Player(Manager manager, int playerNumber) {
+    public Player(Manager manager, int piece) {
         this.manager = manager;
-        this.playerNumber = playerNumber;
+        this.piece = piece;
     }
 
     public void start() {
-    	IO.debug("R player" + this.playerNumber);
+    	IO.debug(this.toString());
     	this.takeTurn();
     }
     
@@ -56,7 +55,7 @@ public class Player {
     }
 
     public String toString() {
-        return "" + this.playerNumber;
+        return "R player: " + this.piece;
     }
     
     private Manager getManager() {
