@@ -33,7 +33,7 @@ public class Referee {
 	public boolean validMove(Move move) {
 		Board board = this.manager.getGameState().getBoard();
 		if(this.mayBeMoved(move, board)) {
-			
+			return true;
 		} 
 		// this.manager.getConverter().displayMove(move);
 		return false;
@@ -44,16 +44,13 @@ public class Referee {
 		int originY = (Integer.parseInt(move.getOriginY()) - 1);
 		int targetX = this.manager.getConverter().convertStringToPoint(move.getTargetX());
 		int targetY = (Integer.parseInt(move.getTargetY()) - 1);
-
 		if(board.isBlankSpace(targetX, targetY)) {
 			if(!inGroup && board.hasNeighbour(targetX, targetY)) {
 				return true;
 			} else if(inGroup && board.isMoveNeighbourOfSameGroup(originX, originY, targetX, targetY)) {
-				
+				return true;
 			}
-			
 		}
-
 		return false;
 	}
 	
