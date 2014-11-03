@@ -29,7 +29,7 @@ public class Referee {
      * @param move
      * @return
      */
-    public Boolean validMove(Move move) {
+    public boolean validMove(Move move) {
     	return true;
 //        this.manager.getConverter().displayMove(move);
 //        return false;

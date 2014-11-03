@@ -148,13 +148,13 @@ public class Board {
 	}
 	
 	/**
-	 * Covert the number to an certain player
-	 * @param player
+	 * Covert the number to an certain piece
+	 * @param piece
 	 * @return
 	 */
-	private String convertPiece(int player) {
-		if (player != 0) {
-			return player == 1 ? "W" : "B";
+	private String convertPiece(int piece) {
+		if (piece != NONE) {
+			return piece == WHITE ? "W" : "B";
 		}
 		return " ";
 	}
