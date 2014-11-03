@@ -168,40 +168,6 @@ public class Board {
 	}
 
 	/**
-	 * Find an open move
-	 * 
-	 * @return
-	 */
-	public String findOpenMove() {
-		String newMove = "";
-		for (int row = 0; row < SIZE; row++) {
-			for (int column = 0; column < SIZE; column++) {
-				if (this.boardGrid[row][column] == WHITE) {
-					if ((column + 1) < 11
-							&& this.boardGrid[row][column + 1] == NONE) {
-
-						newMove += this.convertPointToString(row) + "";
-						newMove += (column + 1) + "-";
-
-						newMove += this.convertPointToString(row) + "";
-						newMove += (column + 2) + "";
-
-						// newMove =
-						// this.getConverter().convertPointToString(row) +
-						// (column + 1) + "-" +
-						// this.getConverter().convertPointToString(row) +
-						// (column + 2);
-						// IO.debug("DEB: " + newMove);
-						return newMove;
-					}
-				}
-			}
-		}
-
-		return newMove;
-	}
-
-	/**
 	 * Switch the positions
 	 * 
 	 * @param originX
@@ -223,7 +189,6 @@ public class Board {
 	 * @return
 	 */
 	public int amountOfGroups(Player player) {
-		int playerColor = WHITE;
 		return 0;
 	}
 
