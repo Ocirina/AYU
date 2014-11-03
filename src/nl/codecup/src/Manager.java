@@ -31,7 +31,7 @@ public class Manager {
 		
 		if (IO.input().equals("Start")) {
 			this.referee = new Referee(this);
-			this.player = new Player(this.gameState, PLAYER, referee);
+			this.player = new Player(this.gameState, PLAYER, this.referee);
 			this.gameState = this.player.takeTurn(this.gameState);	
 
 			this.handleInput();
