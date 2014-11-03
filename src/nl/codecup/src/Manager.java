@@ -118,7 +118,7 @@ public class Manager {
 				Move move = this.converter.readMove(input);
 				gameState = gameState.makeMove(move);
 				gameState = this.player.takeTurn(gameState);
-				IO.output(gameState.toString());
+				IO.debug(gameState.toString());
 			} 
 			
 			input = IO.input();
