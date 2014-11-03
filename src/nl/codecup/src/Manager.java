@@ -108,10 +108,6 @@ public class Manager {
 		return this.player;
 	}
 	
-	public void setPlayerMove(Move move) {
-		this.getPlayer().setMove(move);
-	}
-	
 	/**
 	 * This method will handle the input for the manager
 	 * 
@@ -125,7 +121,7 @@ public class Manager {
 				Move move = this.converter.readMove(input);
 				this.getBoard().movePiece(move);
 				
-				this.setPlayerMove(this.getConverter().readMove(this.player.takeTurn()));
+				IO.output(this.getConverter().readMove(this.player.takeTurn()).toString() );
 			} 
 			
 			input = IO.input();
