@@ -137,7 +137,7 @@ public class Board {
 		return this.moveConverter;
 	}
 
-	private char convertPointToString(int row) {
+	private String convertPointToString(int row) {
 		return this.getConverter().convertPointToString(row);
 	}
 

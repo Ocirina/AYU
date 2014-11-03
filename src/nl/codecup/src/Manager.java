@@ -34,7 +34,7 @@ public class Manager {
 			this.referee = new Referee(this);
 			this.player.start();
 
-			this.handleInput(gameState);
+			this.handleInput();
 		} else {
 			//OUR DEBUG
 			System.out.println(gameState);
@@ -110,15 +110,15 @@ public class Manager {
 	 * 
 	 * @throws IOException
 	 */
-	public void handleInput(GameState state) {
+	public void handleInput() {
 		String input = IO.input(); 		
 		while (!input.equals("Quit!")) {
 			if (converter.isMoveFormat(input)) {
 				IO.debug("INPUTZ:" + input);
 				Move move = this.converter.readMove(input);
-				state = state.makeMove(move);
-				
-				IO.output(this.player.takeTurn(state).toString());
+				gameState = gameState.makeMove(move);
+				gameState = this.player.takeTurn(gameState);
+				IO.output(gameState.toString());
 			} 
 			
 			input = IO.input();

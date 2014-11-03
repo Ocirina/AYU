@@ -21,11 +21,38 @@ public class Player {
 		this.state = state.clone();
 		this.piece = state.getPlayingPiece();
 		Move move = chooseMove();
+		IO.output(move.toString());
 		return state.makeMove(move);
     }
     
     private Move chooseMove() {
-    	return new Move("B", "5", "C", "5");
+    	int[][] content = this.state.getBoardContents();
+    	MoveConverter converter = new MoveConverter();
+    	int contentLength = content.length - 1;
+    	for (int row = 0; row < contentLength; row++) {
+    		for (int column = 0; column < contentLength; column++) {
+    			/**
+    			 * Check if there are 3 items near each other. E.g.:
+    			 * Start:  |   | W |   | W |   |
+    			 * Result: |   |   | W | W |   |
+    			 * 
+    			 * But also when 2 are already connected
+    			 * Start:  |   | W | W |   | W |
+    			 * Result: |   | W | W | W |   |
+    			 */
+    			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
+    				if (column > 0 && content[row][column-1] == 1) {
+    					// Move backward
+    					return converter.readMove(row, column+1, row, column);
+    				}
+    				else {
+    					// Move forward
+    					return converter.readMove(row, column+1, row, column+2);
+    				}
+    			}
+    		}
+    	}
+    	return null;
 	}
 
 	public void stop() { }

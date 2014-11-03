@@ -119,4 +119,8 @@ public class GameState {
 		// TODO Auto-generated method stub
 		return this.playingPiece;
 	}
+	
+	public int[][] getBoardContents() {
+		return this.board.getBoardContents();
+	}
 }
