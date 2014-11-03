@@ -33,11 +33,15 @@ public class Player {
     }
     
     public int amountOfGroups() {
-    	return this.getManager().getBoard().amountOfGroups(this);
+    	return this.getBoard().amountOfGroups(this);
     }
 
     public String generateMove() {
-    	return this.getManager().getBoard().findOpenMove();
+    	return this.getBoard().findOpenMove();
+    }
+    
+    public Board getBoard() {
+    	return this.getManager().getBoard();
     }
 
     public String toString() {
