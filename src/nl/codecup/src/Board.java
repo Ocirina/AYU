@@ -3,13 +3,10 @@ package nl.codecup.src;
 public class Board {
 	private MoveConverter moveConverter = new MoveConverter();
 	private static final int SIZE = 11;
-	
-	/**
-	 * The actual players
-	 */
 	private static final int NONE = 0;
 	private static final int WHITE = 1;
 	private static final int BLACK = 2;
+	
 	
 	/**
 	 * The actual board
@@ -41,7 +38,10 @@ public class Board {
 	 * Constructor
 	 */
 	public Board() {
-		
+	}
+	
+	public boolean isBlankSpace(int row, int column) {
+		return (this.boardGrid[row][column] == NONE);
 	}
 	
 	/**
