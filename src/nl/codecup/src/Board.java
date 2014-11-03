@@ -286,4 +286,8 @@ public class Board {
 		// Switch the pieces. Should receive Move object?
 		return this;
 	}
+	
+	public int[][] getBoardContents() {
+		return this.boardGrid;
+	}
 }
