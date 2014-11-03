@@ -31,7 +31,7 @@ public class Board {
 	 * @param grid
 	 */
 	public Board(int[][] grid) {
-		this.boardGrid = grid;
+		this.boardGrid = cloneBoard(grid);
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class Board {
 	}
 	
 	/**
-	 * Count the ammount of groups
+	 * Count the amount of groups
 	 * 
 	 * @param player
 	 * @return
@@ -157,5 +157,33 @@ public class Board {
 			return player == 1 ? "W" : "B";
 		}
 		return " ";
+	}
+	
+	/**
+	 * Clones this board instance.
+	 */
+	public Board clone() { 
+		return new Board(this.boardGrid);
+	}
+	
+	/**
+	 * Completely clones the board so no references are made and the board is a perfect
+	 * clone of the given one.
+	 * @param board The board to clone
+	 * @return A clone board
+	 */
+	private int[][] cloneBoard(int[][] board) {
+		int[][] tempBoard = new int[SIZE][SIZE];
+		for (int row = 0; row < SIZE; row++) {
+			for (int column = 0; column < SIZE; column++) {
+				tempBoard[row][column] = board[row][column];
+			}
+		}
+		return tempBoard;
+	}
+	
+	public Board placePiece(int piece, int row, int column) {
+		// Switch the pieces. Should receive Move object?
+		return this;
 	}
 }
