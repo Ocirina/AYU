@@ -29,11 +29,15 @@ public class Manager {
 		Board board = new Board();
 		gameState.setBoard(board);
 		
-		if (IO.input().equals("Start")) {
+		String input = IO.input(); //leave for debug
+		if (input.equals("Start")) {
 			this.referee = new Referee(this);
+			IO.debug("Referee created");
 			this.player = new Player(this.gameState, PLAYER, this.referee);
+			IO.debug("Player created");
 			this.gameState = this.player.takeTurn(this.gameState);	
-
+			IO.debug("Player turn taken.");
+			
 			this.handleInput();
 		} else {
 			//OUR DEBUG
@@ -42,7 +46,6 @@ public class Manager {
 	}
 	
 	public Manager(boolean testing) {
-		
 	}
 	
 	/**
@@ -115,8 +118,9 @@ public class Manager {
 	 * @throws IOException
 	 */
 	public void handleInput() {
+		IO.debug("Start handle input");	
 		String input = IO.input(); 		
-		IO.debug("Retrieved input: "+input);
+		IO.debug("Start handle input with input: "+input);	
 		while (!input.equals("Quit!")) {
 			IO.debug("Retrieved input: "+input);
 			if (converter.isMoveFormat(input)) {

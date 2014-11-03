@@ -19,10 +19,13 @@ public abstract class IO {
 		InputStreamReader streamReader = new InputStreamReader(System.in);
 		BufferedReader reader = new BufferedReader(streamReader);
 	    try {
-			return reader.readLine();
+			String readLine = reader.readLine();
+			IO.debug("Read line: "+ readLine);
+			return readLine;
 		} catch (IOException e) {
 			IO.debug("IOException: "+e.getMessage());
 		}
+	    IO.debug("Returning null");
 	    return null;
 	}
 	
