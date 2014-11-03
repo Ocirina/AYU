@@ -3,12 +3,11 @@ package nl.codecup.src;
 import java.io.IOException;
 
 public class Manager {
-//	private boolean debugMode = true;
 	private Player player;
-//	private Player player2;
 	private Referee referee;
 	private MoveConverter converter;
-	private Board board;
+	private static final int PLAYER = 1;
+	private static final int COMPUTER = 2;
 
 	/**
 	 * Main
@@ -24,14 +23,19 @@ public class Manager {
 	 */
 	public Manager() {
 		this.converter = new MoveConverter();
-		this.board = new Board();
+		GameState gameState = new GameState(PLAYER, COMPUTER);
+		Board board = new Board();
+		gameState.setBoard(board);
 		
 		if (IO.input().equals("Start")) {
-			this.startPlayer(new Player(this, 1));
-			this.startReferee();
+			this.player = new Player(gameState, PLAYER);
+			this.referee = new Referee(this);
+			this.player.start();
+
+			this.handleInput(gameState);
 		} else {
 			//OUR DEBUG
-			System.out.println(this.getBoard().findOpenMove());
+			System.out.println(gameState);
 		}
 	}
 	
@@ -50,24 +54,6 @@ public class Manager {
 	}
 
 	/**
-	 * This method will start the referee and
-	 */
-	public void startReferee() {
-		this.referee = new Referee(this);
-	}
-
-	/**
-	 * This method will start the player
-	 * 
-	 * @param player
-	 */
-	public void startPlayer(Player player) {
-		this.player = player;
-		player.start();
-		this.handleInput();
-	}
-
-	/**
 	 * This will call the stop method on the player
 	 * 
 	 * @param player
@@ -75,7 +61,6 @@ public class Manager {
 	public void stopPlayer(Player player) {
 		player.stop();
 	}
-	
 	
 	/**
 	 * Gets the player
@@ -92,15 +77,6 @@ public class Manager {
 	public MoveConverter getConverter() {
 		return this.converter;
 	}
-	
-	/**
-	 * Get the board
-	 * 
-	 * @return
-	 */
-	public Board getBoard() {
-		return this.board;
-	}
 
 	/**
 	 * Get the referee
@@ -116,27 +92,22 @@ public class Manager {
 	 * 
 	 * @throws IOException
 	 */
-	public void handleInput() {
+	public void handleInput(GameState state) {
 		String input = IO.input(); 		
 		while (!input.equals("Quit!")) {
 			if (converter.isMoveFormat(input)) {
 				IO.debug("INPUTZ:" + input);
 				Move move = this.converter.readMove(input);
-				this.getBoard().movePiece(move);
+				state = state.makeMove(move);
 				
-				IO.output(this.getConverter().readMove(this.player.takeTurn()).toString() );
+				IO.output(this.player.takeTurn(state).toString());
 			} 
 			
 			input = IO.input();
 		}
 	}
-	
-	public void movePiece(Move move) {
-		this.getBoard().movePiece(move);
-	}
 
 	public Move readMove(String move) {
 		return this.getConverter().readMove(move);
 	}
-
 }
