@@ -3,13 +3,10 @@ package nl.codecup.src;
 public class Board {
 	private MoveConverter moveConverter = new MoveConverter();
 	private static final int SIZE = 11;
-	
-	/**
-	 * The actual players
-	 */
 	private static final int NONE = 0;
 	private static final int WHITE = 1;
 	private static final int BLACK = 2;
+	
 	
 	/**
 	 * The actual board
@@ -34,7 +31,7 @@ public class Board {
 	 * @param grid
 	 */
 	public Board(int[][] grid) {
-		this.boardGrid = grid;
+		this.boardGrid = cloneBoard(grid);
 	}
 	
 	/**
@@ -60,7 +57,10 @@ public class Board {
 	 * Constructor
 	 */
 	public Board() {
-		
+	}
+	
+	public boolean isBlankSpace(int row, int column) {
+		return (this.boardGrid[row][column] == NONE);
 	}
 	
 	/**
@@ -80,6 +80,10 @@ public class Board {
 		return this.getConverter().convertStringToPoint(position);
 	}
 	
+	public Board placePiece(Move move) {
+		this.movePiece(move);
+		return this;
+	}
 	/**
 	 * Move an certain piece
 	 * 
@@ -141,7 +145,7 @@ public class Board {
 	}
 	
 	/**
-	 * Count the ammount of groups
+	 * Count the amount of groups
 	 * 
 	 * @param player
 	 * @return
@@ -155,13 +159,13 @@ public class Board {
 	 * Display board
 	 */
 	public String toString() {
-		String returnString = "    A B C D E F G H I J K\n";
+		String rowSeperator = "    +---+---+---+---+---+---+---+---+---+---+---+\n";
+		String returnString = "      A   B   C   D   E   F   G   H   I   J   K\n" + rowSeperator;
 		for (int column = (SIZE-1); column >= 0; column--) {
 			returnString += String.format("%02d", (column + 1)) + " ";
-			for (int row = 0; row < SIZE; row++) {			
-				returnString += "|" + this.convertPiece(this.boardGrid[row][column]);
-			}
-			returnString += "|\n";
+			for (int row = 0; row < SIZE; row++)	
+				returnString += " | " + this.convertPiece(this.boardGrid[row][column]);
+			returnString += " |\n" + rowSeperator;
 		}
 		return returnString;
 	}
@@ -176,5 +180,33 @@ public class Board {
 			return piece == WHITE ? "W" : "B";
 		}
 		return " ";
+	}
+	
+	/**
+	 * Clones this board instance.
+	 */
+	public Board clone() { 
+		return new Board(this.boardGrid);
+	}
+	
+	/**
+	 * Completely clones the board so no references are made and the board is a perfect
+	 * clone of the given one.
+	 * @param board The board to clone
+	 * @return A clone board
+	 */
+	private int[][] cloneBoard(int[][] board) {
+		int[][] tempBoard = new int[SIZE][SIZE];
+		for (int row = 0; row < SIZE; row++) {
+			for (int column = 0; column < SIZE; column++) {
+				tempBoard[row][column] = board[row][column];
+			}
+		}
+		return tempBoard;
+	}
+	
+	public Board placePiece(int piece, int row, int column) {
+		// Switch the pieces. Should receive Move object?
+		return this;
 	}
 }
