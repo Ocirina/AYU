@@ -53,13 +53,13 @@ public class Board {
 	 * @return True if it's a group, else returns false.
 	 */
 	public boolean hasNeighbour(int x, int y) {
-		if (this.boardGrid[x][y + 1] == WHITE)
+		if (y+1 < SIZE && this.boardGrid[x][y + 1] == WHITE)
 			return true;
-		if (this.boardGrid[x + 1][y] == WHITE)
+		if (x+1 < SIZE && this.boardGrid[x + 1][y] == WHITE)
 			return true;
-		if (this.boardGrid[x][y - 1] == WHITE)
+		if (y-1 >= 0 && this.boardGrid[x][y - 1] == WHITE)
 			return true;
-		if (this.boardGrid[x - 1][y] == WHITE)
+		if (x-1 >= 0 && this.boardGrid[x - 1][y] == WHITE)
 			return true;
 
 		return false;
@@ -68,13 +68,13 @@ public class Board {
 	public boolean onEdges(int x, int y) {
 		int neighBours = 0;
 
-		if (this.boardGrid[x][y + 1] == WHITE)
+		if (y+1 < SIZE && this.boardGrid[x][y + 1] == WHITE)
 			neighBours++;
-		if (this.boardGrid[x + 1][y] == WHITE)
+		if (x+1 < SIZE && this.boardGrid[x + 1][y] == WHITE)
 			neighBours++;
-		if (this.boardGrid[x][y - 1] == WHITE)
+		if (y-1 >= 0 && this.boardGrid[x][y - 1] == WHITE)
 			neighBours++;
-		if (this.boardGrid[x - 1][y] == WHITE)
+		if (x-1 >= 0 && this.boardGrid[x - 1][y] == WHITE)
 			neighBours++;
 
 		return neighBours < 2;
@@ -92,13 +92,13 @@ public class Board {
 		
 		found = isNeighbour(nextX, nextY, targetX, targetY);
 		
-		if (!found && this.boardGrid[nextX][nextY+1] == WHITE && ((nextY + 1) != originY)) 
+		if (!found && nextY+1 < SIZE && this.boardGrid[nextX][nextY+1] == WHITE && ((nextY + 1) != originY)) 
 			found = findPath(nextX, nextY, nextX, nextY+1, targetX, targetY);
-		if (!found && this.boardGrid[nextX + 1][nextY] == WHITE && ((nextX + 1) != originY))
+		if (!found && nextX+1 < SIZE && this.boardGrid[nextX + 1][nextY] == WHITE && ((nextX + 1) != originY))
 			found = findPath(nextX, nextY, nextX+1, nextY, targetX, targetY);
-		if (!found && this.boardGrid[nextX][nextY-1] == WHITE && ((nextY - 1) != originY)) 
+		if (!found && nextY-1 >= 0 && this.boardGrid[nextX][nextY-1] == WHITE && ((nextY - 1) != originY)) 
 			found = findPath(nextX, nextY, nextX, nextY-1, targetX, targetY);
-		if (!found && this.boardGrid[nextX - 1][nextY] == WHITE && ((nextX - 1) != originY))
+		if (!found && nextX-1 >= 0 && this.boardGrid[nextX - 1][nextY] == WHITE && ((nextX - 1) != originY))
 			found = findPath(nextX, nextY, nextX-1, nextY, targetX, targetY);
 		
 		return found;
@@ -166,35 +166,7 @@ public class Board {
 
 		IO.debug(this.toString());
 	}
-
-	/**
-	 * Find an open move
-	 * 
-	 * @return
-	 */
-	public String findOpenMove() {
-		String newMove = "";
-		for (int row = 0; row < SIZE; row++) {
-			for (int column = 0; column < SIZE; column++) {
-				if (this.boardGrid[row][column] == WHITE) {
-					if ((column + 1) < 11
-							&& this.boardGrid[row][column + 1] == NONE) {
-
-						newMove += this.convertPointToString(row) + "";
-						newMove += (column + 1) + "-";
-
-						newMove += this.convertPointToString(row) + "";
-						newMove += (column + 2) + "";
-
-						return newMove;
-					}
-				}
-			}
-		}
-
-		return newMove;
-	}
-
+	
 	/**
 	 * Switch the positions
 	 * 
