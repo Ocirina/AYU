@@ -40,8 +40,8 @@ public class Player {
     			 * Start:  |   | W | W |   | W |
     			 * Result: |   | W | W | W |   |
     			 */
-    			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
-    				if (column > 0 && content[row][column-1] == 1) {
+    			if (column < 8 && content[row][column] == piece && content[row][column+1] == 0 && content[row][column+2] == piece) {
+    				if (column > 0 && content[row][column-1] == piece) {
     					// Move backward
     					return converter.readMove(row, column+1, row, column);
     				}
