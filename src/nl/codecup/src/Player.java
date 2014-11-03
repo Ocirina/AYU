@@ -23,6 +23,10 @@ public class Player {
     		this.manager.getBoard().movePiece(move);
 //    	}
     }
+    
+    public int amountOfGroups() {
+    	return this.getManager().getBoard().amountOfGroups(this);
+    }
 
     public String generateMove() {
     	return this.getManager().getBoard().findOpenMove();
