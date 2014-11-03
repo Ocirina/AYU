@@ -33,7 +33,7 @@ public class Player {
 		}
     }
     
-    private Move chooseMove() {
+    public Move chooseMove() {
     	int[][] content = this.state.getBoardContents();
     	MoveConverter converter = new MoveConverter();
     	int contentLength = content.length - 1;
