@@ -35,13 +35,13 @@ public class Player {
     			 * Start:  |   | W | W |   | W |
     			 * Result: |   | W | W | W |   |
     			 */
-    			if (column < 8 && content[row][column] == piece && content[row][column+1] == 0 && content[row][column+2] == piece) {
-    				if (column > 0 && content[row][column-1] == piece) {
-    					// Move backward
+//    			if (column < 9)
+//    				IO.debug(converter.readMove(row, column+1, row, column).toString()+" => "+content[row][column]+"|"+content[row][column+1]+"|"+content[row][column+2]);
+    			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
+    				if (column > 0 && content[row][column-1] == 1) {
     					return converter.readMove(row, column+1, row, column);
     				}
     				else {
-    					// Move forward
     					return converter.readMove(row, column+1, row, column+2);
     				}
     			}
