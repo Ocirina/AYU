@@ -2,32 +2,35 @@ package nl.codecup.src;
 
 public class Player {
 
-    private Manager manager;
-    private int playerNumber;
+	private GameState state;
+	private int piece;
 
-    public Player(Manager manager, int playerNumber) {
-        this.manager = manager;
-        this.playerNumber = playerNumber;
+    public Player(GameState state, int piece) {
+        this.state = state;
+        this.piece = piece;
     }
 
     public void start() {
-    	System.err.println("R player" + this.playerNumber);
-    	System.out.println(this.playerNumber + " Start");
+    	IO.debug(this.toString());
+    	this.takeTurn(this.state);
     }
-
-    public void stop() { }
     
-    public void setMove(Move move) {
-    	if (manager.getReferee().validMove(move)) {
-    		System.err.print("MOVE" + move);
-    	}
+    public GameState takeTurn(GameState state) {
+    	if (state.isGameOver())
+			return state;
+		this.state = state.clone();
+		this.piece = state.getPlayingPiece();
+		Move move = chooseMove();
+		return state.makeMove(move);
     }
+    
+    private Move chooseMove() {
+    	return new Move("B", "5", "C", "5");
+	}
 
-    public String generateMove() {
-        return null;
-    }
+	public void stop() { }
 
     public String toString() {
-        return "" + this.playerNumber;
+        return "R player: " + this.piece;
     }
 }

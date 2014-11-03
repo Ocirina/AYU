@@ -1,37 +1,50 @@
 package nl.codecup.src;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-
 
 public class Manager {
-//	private boolean debugMode = true;
-//	private Player player1;
-//	private Player player2;
+	private Player player;
 	private Referee referee;
+	private GameState gameState;
+
 	private MoveConverter converter;
-	
-	public Referee getReferee() {
-		return this.referee;
-	}
-	
-	public static void main(String args[]) {		
+	private static final int PLAYER = 1;
+	private static final int COMPUTER = 2;
+
+	/**
+	 * Main
+	 * 
+	 * @param args
+	 */
+	public static void main(String args[]) {				
 		new Manager();
 	}
 	
+	/**
+	 * Constructor
+	 */
 	public Manager() {
 		this.converter = new MoveConverter();
-		this.startPlayer(new Player(this, 9));
-		this.startReferee();
+		gameState = new GameState(PLAYER, COMPUTER);
+		Board board = new Board();
+		gameState.setBoard(board);
+		
+		if (IO.input().equals("Start")) {
+			this.player = new Player(gameState, PLAYER);
+			this.referee = new Referee(this);
+			this.player.start();
+
+			this.handleInput(gameState);
+		} else {
+			//OUR DEBUG
+			System.out.println(gameState);
+		}
 	}
 	
 	/**
 	 * This will load the terminal configuration and the file configuration
-	 * 
-	 * @param configFile
 	 */
-	public void startGame(String configFile) {
+	public void startGame() {
 		this.loadConfig();
 	}
 
@@ -39,29 +52,7 @@ public class Manager {
 	 * Load the system configuration file
 	 */
 	private void loadConfig() {
-		System.out.println("This should load the config via file");
-	}
-
-	/**
-	 * This method will start the referee and
-	 */
-	public void startReferee() {
-		this.referee = new Referee(this);
-	}
-
-	/**
-	 * This method will start the player
-	 * 
-	 * @param player
-	 */
-	public void startPlayer(Player player) {
-		player.start();
-		
-		try {
-			this.handleInput();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		IO.output("This should load the config via file");
 	}
 
 	/**
@@ -74,19 +65,27 @@ public class Manager {
 	}
 	
 	/**
-	 * This method will handle the input for the manager
-	 * 
-	 * @throws IOException
+	 * Returns the current game state
+	 * @return the current game state
 	 */
-	public void handleInput() throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
-		String input = reader.readLine(); 
-		
-		if (converter.isMoveFormat(input)) {
-			Move move = this.converter.readMove(input); 
-			System.out.println(move);
-//			this.player1.setMove(move); 
-		} 
+	public GameState getGameState() {
+		return gameState;
+	}
+
+	/**
+	 * Sets the gamestate with the given game state
+	 * @param gamestate : The new game state
+	 */
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
+	}
+	
+	/**
+	 * Gets the player
+	 * @return the player
+	 */
+	public Player getPlayer() {
+		return this.player;
 	}
 	
 	/**
@@ -97,4 +96,36 @@ public class Manager {
 		return this.converter;
 	}
 
+	/**
+	 * Get the referee
+	 * 
+	 * @return
+	 */
+	public Referee getReferee() {
+		return this.referee;
+	}
+	
+	/**
+	 * This method will handle the input for the manager
+	 * 
+	 * @throws IOException
+	 */
+	public void handleInput(GameState state) {
+		String input = IO.input(); 		
+		while (!input.equals("Quit!")) {
+			if (converter.isMoveFormat(input)) {
+				IO.debug("INPUTZ:" + input);
+				Move move = this.converter.readMove(input);
+				state = state.makeMove(move);
+				
+				IO.output(this.player.takeTurn(state).toString());
+			} 
+			
+			input = IO.input();
+		}
+	}
+
+	public Move readMove(String move) {
+		return this.getConverter().readMove(move);
+	}
 }

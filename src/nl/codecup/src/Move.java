@@ -16,7 +16,7 @@ public class Move {
 	 * From location Y
 	 */
 	private String originY;
-
+	
 	/**
 	 * Target location X
 	 */
@@ -83,6 +83,62 @@ public class Move {
 	 */
 	public String getTo() {
 		return this.targetX + this.targetY;
+	}
+
+	/**
+	 * @return the originX
+	 */
+	public String getOriginX() {
+		return originX;
+	}
+
+	/**
+	 * @param originX the originX to set
+	 */
+	public void setOriginX(String originX) {
+		this.originX = originX;
+	}
+
+	/**
+	 * @return the originY
+	 */
+	public String getOriginY() {
+		return originY;
+	}
+
+	/**
+	 * @param originY the originY to set
+	 */
+	public void setOriginY(String originY) {
+		this.originY = originY;
+	}
+
+	/**
+	 * @return the targetX
+	 */
+	public String getTargetX() {
+		return targetX;
+	}
+
+	/**
+	 * @param targetX the targetX to set
+	 */
+	public void setTargetX(String targetX) {
+		this.targetX = targetX;
+	}
+
+	/**
+	 * @return the targetY
+	 */
+	public String getTargetY() {
+		return targetY;
+	}
+
+	/**
+	 * @param targetY the targetY to set
+	 */
+	public void setTargetY(String targetY) {
+		this.targetY = targetY;
 	}
 
 	/**

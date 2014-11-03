@@ -13,8 +13,6 @@ public class PlayerTest {
 	
 	@Before
 	public void create() {
-		manager = new Manager();
-		player = new Player(manager, y);
 	}
 	
 	@Test

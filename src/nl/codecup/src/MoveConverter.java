@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 public class MoveConverter {
 	
+	private static final String COLUMNS = "ABCDEFGHIJK";
+	
 	/**
 	 * Reads the move and converts it to an Move object.
 	 * The format expected is: xy-xy
@@ -36,6 +38,26 @@ public class MoveConverter {
 		Pattern regex = Pattern.compile(pattern);
 		Matcher matcher = regex.matcher(moveString.toLowerCase());
 	    return matcher.matches();
+	}
+	
+	/**
+	 * Returns a number according to the given string for the board.
+	 * 
+	 * @returns A point
+	 */
+	public int convertStringToPoint(String string) {
+		return COLUMNS.indexOf(string);
+	}
+	
+	/**
+	 * Returns the position of the given string
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public char convertPointToString(int position) {
+		char[] character = COLUMNS.toCharArray();
+		return character[position];
 	}
 	
 	/**

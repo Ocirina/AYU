@@ -1,8 +1,14 @@
 package nl.codecup.src;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-public class IO {
+/**
+ * Abstract Class IO.
+ * Handles the input given by the Caiaio and outputs to the Caiaio
+ */
+public abstract class IO {
 	
 	/**
 	 * Reads input from the System.in stream.
@@ -10,10 +16,12 @@ public class IO {
 	 * @return input from System.in
 	 */
 	public static String input() {
-		Scanner scanIn = new Scanner(System.in);
-	    String input = scanIn.nextLine();
-	    scanIn.close();            
-	    return input;
+		InputStreamReader streamReader = new InputStreamReader(System.in);
+		BufferedReader reader = new BufferedReader(streamReader);
+	    try {
+			return reader.readLine();
+		} catch (IOException e) { }
+	    return null;
 	}
 	
 	/**
@@ -22,6 +30,16 @@ public class IO {
 	 * @param output
 	 */
 	public static void output(String output) {
-		System.err.print(output);
+		IO.debug("WAS SENT TO CAIAIO: " + output);
+		System.out.println(output);
+	}
+	
+	/**
+	 * Log
+	 * 
+	 * @param output
+	 */
+	public static void debug(String output) {
+		System.err.println(output);
 	}
 }
