@@ -51,12 +51,16 @@ public class Player {
 //    			if (column < 9)
 //    				IO.debug(converter.readMove(row, column+1, row, column).toString()+" => "+content[row][column]+"|"+content[row][column+1]+"|"+content[row][column+2]);
     			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
+    				Move move;
     				if (column > 0 && content[row][column-1] == 1) {
-    					return converter.readMove(row, column+1, row, column);
+    					move = converter.readMove(row, column+1, row, column);
     				}
     				else {
-    					return converter.readMove(row, column+1, row, column+2);
+    					move = converter.readMove(row, column+1, row, column+2);
     				}
+    				if(this.referee.validMove(move)) {
+						return move;
+					}
     			}
     		}
     	}
