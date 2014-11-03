@@ -29,7 +29,8 @@ public class GameState {
 	 * @return A new GameState with the move added
 	 */
 	public GameState makeMove(Move move) {
-		GameState newState = this.clone();
+		//TODO fix clone
+		GameState newState = this;
 		newState.setPlayerPiece(opponentPiece);
 		newState.setComputerPiece(playingPiece);
 		newState.setBoard(board.clone().placePiece(move));
