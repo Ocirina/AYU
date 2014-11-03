@@ -16,7 +16,7 @@ public class Move {
 	 * From location Y
 	 */
 	private String originY;
-
+	
 	/**
 	 * Target location X
 	 */
