@@ -25,19 +25,16 @@ public class Manager {
 	 */
 	public Manager() {
 		this.converter = new MoveConverter();
-		gameState = new GameState(PLAYER, COMPUTER);
-		Board board = new Board();
-		gameState.setBoard(board);
+		this.gameState = new GameState(PLAYER, COMPUTER);
+		this.gameState.setBoard(new Board());
 		
 		if (IO.input().equals("Start")) {
-			this.player = new Player(gameState, PLAYER);
+			this.player = new Player(this.gameState, PLAYER);
 			this.referee = new Referee(this);
-			this.player.start();
-
+			this.gameState = this.player.takeTurn(this.gameState);			
 			this.handleInput();
 		} else {
-			//OUR DEBUG
-			System.out.println(gameState);
+			System.out.println(this.gameState);
 		}
 	}
 	
