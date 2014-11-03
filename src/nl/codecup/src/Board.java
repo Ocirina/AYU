@@ -61,6 +61,10 @@ public class Board {
 		return this.getConverter().convertStringToPoint(position);
 	}
 	
+	public Board placePiece(Move move) {
+		this.movePiece(move);
+		return this;
+	}
 	/**
 	 * Move an certain piece
 	 * 

@@ -28,11 +28,11 @@ public class GameState {
 	 * @param column the x coordinates
 	 * @return A new GameState with the move added
 	 */
-	public GameState makeMove(int row, int column) {
+	public GameState makeMove(Move move) {
 		GameState newState = this.clone();
 		newState.setPlayerPiece(opponentPiece);
 		newState.setComputerPiece(playingPiece);
-		newState.setBoard(board.clone().placePiece(playingPiece, row, column));
+		newState.setBoard(board.clone().placePiece(move));
 		return newState;
 	}
 	
@@ -113,5 +113,10 @@ public class GameState {
 	private boolean checkForWin() {
 		winner = 0;
 		return false;
+	}
+
+	public int getPlayingPiece() {
+		// TODO Auto-generated method stub
+		return this.playingPiece;
 	}
 }
