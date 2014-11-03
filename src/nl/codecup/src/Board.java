@@ -72,7 +72,7 @@ public class Board {
 		return this.moveConverter;
 	}
 	
-	private char convertPointToString(int row) {
+	private String convertPointToString(int row) {
 		return this.getConverter().convertPointToString(row);
 	}
 	
@@ -208,5 +208,9 @@ public class Board {
 	public Board placePiece(int piece, int row, int column) {
 		// Switch the pieces. Should receive Move object?
 		return this;
+	}
+	
+	public int[][] getBoardContents() {
+		return this.boardGrid;
 	}
 }
