@@ -2,12 +2,19 @@ package nl.codecup.src;
 
 public class Player {
 
+	private static final int PLAYER = 1;
 	private GameState state;
 	private int piece;
+	private Referee referee;
 
-    public Player(GameState state, int piece) {
+    public Player(GameState state, int piece, Referee referee) {
         this.state = state;
         this.piece = piece;
+        this.referee = referee;
+    }
+    
+    private Referee getReferee() {
+    	return this.referee;
     }
     
     public GameState takeTurn(GameState state) {
@@ -15,9 +22,15 @@ public class Player {
 			return state;
 		this.state = state.clone();
 		this.piece = state.getPlayingPiece();
+		
 		Move move = chooseMove();
-		IO.output(move.toString());
-		return state.makeMove(move);
+		if(this.getReferee().validMove(move)) {
+			IO.output(move.toString());
+			return state.makeMove(move);
+		} else {
+			IO.debug("NO VALID MOVE! " + move.toString());
+			return null;
+		}
     }
     
     private Move chooseMove() {

@@ -62,7 +62,7 @@ public class MoveConverter {
 	 */
 	public String convertPointToString(int position) {
 		char[] character = COLUMNS.toCharArray();
-		return ""+character[position];
+		return position < character.length ? ""+character[position] : " ";
 	}
 	
 	/**

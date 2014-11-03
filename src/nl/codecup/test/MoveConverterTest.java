@@ -72,6 +72,20 @@ public class MoveConverterTest {
 		assertFalse(converter.isMoveFormat(withInvalidPlayer));
 	}
 	
+	@Test
+	public void testConvertStringToPoint() {
+		assertTrue(converter.convertStringToPoint("C") == 2);
+		
+		assertFalse(converter.convertStringToPoint("Z") > 0);
+	}
+	
+	@Test
+	public void testConvertPointToString() {
+		assertTrue(converter.convertPointToString(2).equals("C"));
+		
+		assertTrue(converter.convertPointToString(25).equals(" "));
+	}
+	
 	@After
 	public void cleanUp() {
 		converter = null;

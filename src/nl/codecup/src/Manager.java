@@ -29,9 +29,16 @@ public class Manager {
 		this.gameState.setBoard(new Board());
 		
 		if (IO.input().equals("Start")) {
+<<<<<<< HEAD
 			this.player = new Player(this.gameState, PLAYER);
 			this.referee = new Referee(this);
 			this.gameState = this.player.takeTurn(this.gameState);			
+=======
+			this.referee = new Referee(this);
+			this.player = new Player(gameState, PLAYER, this.referee);
+			this.player.start();
+
+>>>>>>> c12a100388334f0464d141f77cdfacea8cfb09e1
 			this.handleInput();
 		} else {
 			System.out.println(this.gameState);
@@ -112,6 +119,7 @@ public class Manager {
 		while (!input.equals("Quit!")) {
 			if (converter.isMoveFormat(input)) {
 				Move move = this.converter.readMove(input);
+
 				this.gameState = this.gameState.makeMove(move);
 				IO.debug(gameState.toString());
 
