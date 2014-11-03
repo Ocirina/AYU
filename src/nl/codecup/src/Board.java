@@ -129,9 +129,8 @@ public class Board {
 	 */
 	public String toString() {
 		String returnString = "";
-		for (int column = SIZE; column > 1; column--) {
+		for (int column = (SIZE-1); column >= 0; column--) {
 			for (int row = 0; row < SIZE; row++) {			
-				System.out.println(column);
 				returnString += "|" + this.convertPiece(this.boardGrid[row][column]);
 			}
 			returnString += "|\n";
