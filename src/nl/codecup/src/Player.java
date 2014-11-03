@@ -24,10 +24,6 @@ public class Player {
 //    	}
     }
     
-    private Manager getManager() {
-    	return this.manager;
-    }
-    
     private Move readMove(String move) {
     	return this.getManager().readMove(move);
     }
@@ -36,11 +32,19 @@ public class Player {
     	this.getManager().movePiece(move);
     }
     
+    public int amountOfGroups() {
+    	return this.getManager().getBoard().amountOfGroups(this);
+    }
+
     public String generateMove() {
-        return null;
+    	return this.getManager().getBoard().findOpenMove();
     }
 
     public String toString() {
         return "" + this.playerNumber;
+    }
+    
+    public Manager getManager() {
+    	return this.manager;
     }
 }

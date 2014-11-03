@@ -40,7 +40,7 @@ public class Manager {
 	 * 
 	 * @param args
 	 */
-	public static void main(String args[]) {		
+	public static void main(String args[]) {				
 		new Manager();
 	}
 	
@@ -50,10 +50,13 @@ public class Manager {
 	public Manager() {
 		this.converter = new MoveConverter();
 		this.board = new Board();
-		String input = IO.input();
-		if (input.equals("Start")) {
+		
+		if (IO.input().equals("Start")) {
 			this.startPlayer(new Player(this, 1));
 			this.startReferee();
+		} else {
+			//OUR DEBUG
+			System.out.println(this.getBoard().findOpenMove());
 		}
 	}
 	
@@ -119,9 +122,13 @@ public class Manager {
 		while (!input.equals("Quit!")) {
 			if (converter.isMoveFormat(input)) {
 				IO.debug("INPUTZ:" + input);
-//				Move move = this.converter.readMove(input);
-				this.setPlayerMove(this.getConverter().readMove("C5-E5"));
+				Move move = this.converter.readMove(input);
+				this.getBoard().movePiece(move);
+				
+				this.setPlayerMove(this.getConverter().readMove(this.player.generateMove()));
 			} 
+			
+			input = IO.input();
 		}
 	}
 	

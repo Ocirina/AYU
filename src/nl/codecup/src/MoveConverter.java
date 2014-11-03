@@ -42,10 +42,22 @@ public class MoveConverter {
 	
 	/**
 	 * Returns a number according to the given string for the board.
+	 * 
 	 * @returns A point
 	 */
 	public int convertStringToPoint(String string) {
 		return COLUMNS.indexOf(string);
+	}
+	
+	/**
+	 * Returns the position of the given string
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public char convertPointToString(int position) {
+		char[] character = COLUMNS.toCharArray();
+		return character[position];
 	}
 	
 	/**
