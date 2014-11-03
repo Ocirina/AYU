@@ -21,7 +21,7 @@ public class Player {
 		this.state = state.clone();
 		this.piece = state.getPlayingPiece();
 		Move move = chooseMove();
-		IO.debug(move.toString());
+		IO.output(move.toString());
 		return state.makeMove(move);
     }
     
