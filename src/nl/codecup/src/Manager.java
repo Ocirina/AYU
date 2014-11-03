@@ -37,10 +37,8 @@ public class Manager {
 	
 	/**
 	 * This will load the terminal configuration and the file configuration
-	 * 
-	 * @param configFile
 	 */
-	public void startGame(String configFile) {
+	public void startGame() {
 		this.loadConfig();
 	}
 
