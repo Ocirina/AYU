@@ -2,6 +2,7 @@ package nl.codecup.src;
 
 public class Player {
 
+	private static final int PLAYER = 1;
 	private GameState state;
 	private int piece;
 	private Referee referee;
@@ -52,8 +53,9 @@ public class Player {
     			 * Start:  |   | W | W |   | W |
     			 * Result: |   | W | W | W |   |
     			 */
-    			if (column < 8 && content[row][column] == piece && content[row][column+1] == 0 && content[row][column+2] == piece) {
-    				if (column > 0 && content[row][column-1] == piece) {
+    			IO.debug("COLOR: " + this.piece);
+    			if (column < 8 && content[row][column] == PLAYER && content[row][column+1] == 0 && content[row][column+2] == PLAYER) {
+    				if (column > 0 && content[row][column-1] == PLAYER) {
     					// Move backward
     					return converter.readMove(row, column+1, row, column);
     				}
