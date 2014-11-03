@@ -30,8 +30,8 @@ public class Manager {
 		gameState.setBoard(board);
 		
 		if (IO.input().equals("Start")) {
-			this.player = new Player(gameState, PLAYER);
 			this.referee = new Referee(this);
+			this.player = new Player(gameState, PLAYER, this.referee);
 			this.player.start();
 
 			this.handleInput();
