@@ -5,6 +5,8 @@ import java.io.IOException;
 public class Manager {
 	private Player player;
 	private Referee referee;
+	private GameState gameState;
+
 	private MoveConverter converter;
 	private static final int PLAYER = 1;
 	private static final int COMPUTER = 2;
@@ -23,7 +25,7 @@ public class Manager {
 	 */
 	public Manager() {
 		this.converter = new MoveConverter();
-		GameState gameState = new GameState(PLAYER, COMPUTER);
+		gameState = new GameState(PLAYER, COMPUTER);
 		Board board = new Board();
 		gameState.setBoard(board);
 		
@@ -60,6 +62,22 @@ public class Manager {
 	 */
 	public void stopPlayer(Player player) {
 		player.stop();
+	}
+	
+	/**
+	 * Returns the current game state
+	 * @return the current game state
+	 */
+	public GameState getGameState() {
+		return gameState;
+	}
+
+	/**
+	 * Sets the gamestate with the given game state
+	 * @param gamestate : The new game state
+	 */
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
 	}
 	
 	/**

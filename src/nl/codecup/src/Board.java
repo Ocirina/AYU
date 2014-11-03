@@ -40,23 +40,43 @@ public class Board {
 	 * @param y : The Y coordinate
 	 * @return True if it's a group, else returns false.
 	 */
-	public boolean isGroup(int x, int y, int piece) {
-		if(this.boardGrid[x-1][y] == piece) 
+	public boolean hasNeighbour(int x, int y) {
+		if(this.boardGrid[x][y+1] == WHITE) 
 			return true;
-		if(this.boardGrid[x+1][y] == piece) 
+		if(this.boardGrid[x+1][y] == WHITE) 
 			return true;
-		if(this.boardGrid[x][y-1] == piece) 
+		if(this.boardGrid[x][y-1] == WHITE) 
 			return true;
-		if(this.boardGrid[x][y+1] == piece) 
+		if(this.boardGrid[x-1][y] == WHITE) 
 			return true;
 		
 		return false;
+	}
+	
+	public boolean onEdges(int x, int y) {
+		int neighBours = 0;
+		
+		if(this.boardGrid[x][y+1] == WHITE) 
+			neighBours++;
+		if(this.boardGrid[x+1][y] == WHITE) 
+			neighBours++;
+		if(this.boardGrid[x][y-1] == WHITE) 
+			neighBours++;
+		if(this.boardGrid[x-1][y] == WHITE) 
+			neighBours++;
+		
+		return neighBours < 2;
+	}
+	
+	public boolean isMoveNeighbourOfSameGroup(int originX, int originY, int targetX, int targetY) {
+		return true;
 	}
 	
 	/**
 	 * Constructor
 	 */
 	public Board() {
+		
 	}
 	
 	public boolean isBlankSpace(int row, int column) {
