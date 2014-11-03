@@ -114,7 +114,7 @@ public class Manager {
 		String input = IO.input(); 		
 		while (!input.equals("Quit!")) {
 			if (converter.isMoveFormat(input)) {
-				IO.debug("INPUTZ:" + input);
+				IO.debug("INPUT FROM PLAYER:" + input);
 				Move move = this.converter.readMove(input);
 				gameState = gameState.makeMove(move);
 				gameState = this.player.takeTurn(gameState);
