@@ -29,8 +29,8 @@ public class Player {
     	int[][] content = this.state.getBoardContents();
     	MoveConverter converter = new MoveConverter();
     	int contentLength = content.length - 1;
-    	for (int row = 0; row < contentLength; row++) {
-    		for (int column = 0; column < contentLength; column++) {
+		for (int column = 0; column < contentLength; column++) {
+			for (int row = 0; row < contentLength; row++) {
     			/**
     			 * Check if there are 3 items near each other. E.g.:
     			 * Start:  |   | W |   | W |   |
