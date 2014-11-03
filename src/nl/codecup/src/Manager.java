@@ -9,31 +9,6 @@ public class Manager {
 	private Referee referee;
 	private MoveConverter converter;
 	private Board board;
-	/**
-	 * Get the IO
-	 * @return
-	 */
-	public MoveConverter getConverter() {
-		return this.converter;
-	}
-	
-	/**
-	 * Get the board
-	 * 
-	 * @return
-	 */
-	public Board getBoard() {
-		return this.board;
-	}
-
-	/**
-	 * Get the referee
-	 * 
-	 * @return
-	 */
-	public Referee getReferee() {
-		return this.referee;
-	}
 
 	/**
 	 * Main
@@ -104,8 +79,38 @@ public class Manager {
 	}
 	
 	
+	/**
+	 * Gets the player
+	 * @return the player
+	 */
 	public Player getPlayer() {
 		return this.player;
+	}
+	
+	/**
+	 * Get the IO
+	 * @return
+	 */
+	public MoveConverter getConverter() {
+		return this.converter;
+	}
+	
+	/**
+	 * Get the board
+	 * 
+	 * @return
+	 */
+	public Board getBoard() {
+		return this.board;
+	}
+
+	/**
+	 * Get the referee
+	 * 
+	 * @return
+	 */
+	public Referee getReferee() {
+		return this.referee;
 	}
 	
 	/**
