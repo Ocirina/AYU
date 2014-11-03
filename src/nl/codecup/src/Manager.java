@@ -125,7 +125,7 @@ public class Manager {
 				Move move = this.converter.readMove(input);
 				this.getBoard().movePiece(move);
 				
-				this.setPlayerMove(this.getConverter().readMove(this.player.generateMove()));
+				this.setPlayerMove(this.getConverter().readMove(this.player.takeTurn()));
 			} 
 			
 			input = IO.input();

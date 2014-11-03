@@ -14,10 +14,14 @@ public class Player {
     	IO.debug("R player" + this.playerNumber);
     	this.setMove(this.readMove("B5-C5"));
     }
-
+    
+    public String takeTurn() {
+    	return this.getBoard().findOpenMove();
+    }
+    
     public void stop() { }
     
-    public void setMove(Move move) {
+    private void setMove(Move move) {
 //    	if (this.manager.getReferee().validMove(move)) {
     		IO.output(move.toString());
     		this.movePiece(move);
@@ -32,15 +36,7 @@ public class Player {
     	this.getManager().movePiece(move);
     }
     
-    public int amountOfGroups() {
-    	return this.getBoard().amountOfGroups(this);
-    }
-
-    public String generateMove() {
-    	return this.getBoard().findOpenMove();
-    }
-    
-    public Board getBoard() {
+    private Board getBoard() {
     	return this.getManager().getBoard();
     }
 
@@ -48,7 +44,7 @@ public class Player {
         return "" + this.playerNumber;
     }
     
-    public Manager getManager() {
+    private Manager getManager() {
     	return this.manager;
     }
 }
