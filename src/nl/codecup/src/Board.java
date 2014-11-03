@@ -163,8 +163,6 @@ public class Board {
 				.parseInt(move.getTargetY()) - 1;
 
 		switchPosition(originX, originY, targetX, targetY);
-
-		IO.debug(this.toString());
 	}
 	
 	/**

@@ -116,13 +116,14 @@ public class Manager {
 	 */
 	public void handleInput() {
 		String input = IO.input(); 		
+		IO.debug("Retrieved input: "+input);
 		while (!input.equals("Quit!")) {
+			IO.debug("Retrieved input: "+input);
 			if (converter.isMoveFormat(input)) {
 				IO.debug("INPUT FROM PLAYER:" + input);
 				Move move = this.converter.readMove(input);
 				gameState = gameState.makeMove(move);
 				gameState = this.player.takeTurn(gameState);
-				IO.debug(gameState.toString());
 			} 
 			
 			input = IO.input();

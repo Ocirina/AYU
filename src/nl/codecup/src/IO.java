@@ -20,7 +20,9 @@ public abstract class IO {
 		BufferedReader reader = new BufferedReader(streamReader);
 	    try {
 			return reader.readLine();
-		} catch (IOException e) { }
+		} catch (IOException e) {
+			IO.debug("IOException: "+e.getMessage());
+		}
 	    return null;
 	}
 	
