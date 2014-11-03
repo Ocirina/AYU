@@ -9,11 +9,6 @@ public class Player {
         this.state = state;
         this.piece = piece;
     }
-
-    public void start() {
-    	IO.debug(this.toString());
-    	this.takeTurn(this.state);
-    }
     
     public GameState takeTurn(GameState state) {
     	if (state.isGameOver())
