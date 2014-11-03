@@ -16,11 +16,6 @@ public class Player {
     private Referee getReferee() {
     	return this.referee;
     }
-
-    public void start() {
-    	IO.debug(this.toString());
-    	this.takeTurn(this.state);
-    }
     
     public GameState takeTurn(GameState state) {
     	if (state.isGameOver())
@@ -42,8 +37,8 @@ public class Player {
     	int[][] content = this.state.getBoardContents();
     	MoveConverter converter = new MoveConverter();
     	int contentLength = content.length - 1;
-    	for (int row = 0; row < contentLength; row++) {
-    		for (int column = 0; column < contentLength; column++) {
+		for (int column = 0; column < contentLength; column++) {
+			for (int row = 0; row < contentLength; row++) {
     			/**
     			 * Check if there are 3 items near each other. E.g.:
     			 * Start:  |   | W |   | W |   |
@@ -53,14 +48,13 @@ public class Player {
     			 * Start:  |   | W | W |   | W |
     			 * Result: |   | W | W | W |   |
     			 */
-    			IO.debug("COLOR: " + this.piece);
-    			if (column < 8 && content[row][column] == PLAYER && content[row][column+1] == 0 && content[row][column+2] == PLAYER) {
-    				if (column > 0 && content[row][column-1] == PLAYER) {
-    					// Move backward
+//    			if (column < 9)
+//    				IO.debug(converter.readMove(row, column+1, row, column).toString()+" => "+content[row][column]+"|"+content[row][column+1]+"|"+content[row][column+2]);
+    			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
+    				if (column > 0 && content[row][column-1] == 1) {
     					return converter.readMove(row, column+1, row, column);
     				}
     				else {
-    					// Move forward
     					return converter.readMove(row, column+1, row, column+2);
     				}
     			}

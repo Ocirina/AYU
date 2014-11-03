@@ -25,19 +25,23 @@ public class Manager {
 	 */
 	public Manager() {
 		this.converter = new MoveConverter();
-		gameState = new GameState(PLAYER, COMPUTER);
-		Board board = new Board();
-		gameState.setBoard(board);
+		this.gameState = new GameState(PLAYER, COMPUTER);
+		this.gameState.setBoard(new Board());
 		
 		if (IO.input().equals("Start")) {
+<<<<<<< HEAD
+			this.player = new Player(this.gameState, PLAYER);
+			this.referee = new Referee(this);
+			this.gameState = this.player.takeTurn(this.gameState);			
+=======
 			this.referee = new Referee(this);
 			this.player = new Player(gameState, PLAYER, this.referee);
 			this.player.start();
 
+>>>>>>> c12a100388334f0464d141f77cdfacea8cfb09e1
 			this.handleInput();
 		} else {
-			//OUR DEBUG
-			System.out.println(gameState);
+			System.out.println(this.gameState);
 		}
 	}
 	
@@ -115,16 +119,17 @@ public class Manager {
 	 * @throws IOException
 	 */
 	public void handleInput() {
-		String input = IO.input(); 		
+		String input = IO.input();
 		while (!input.equals("Quit!")) {
 			if (converter.isMoveFormat(input)) {
-				IO.debug("INPUT FROM PLAYER:" + input);
 				Move move = this.converter.readMove(input);
-				gameState = gameState.makeMove(move);
-				gameState = this.player.takeTurn(gameState);
+
+				this.gameState = this.gameState.makeMove(move);
 				IO.debug(gameState.toString());
-			} 
-			
+
+				this.gameState = this.player.takeTurn(this.gameState);
+				IO.debug(gameState.toString());
+			} 			
 			input = IO.input();
 		}
 	}

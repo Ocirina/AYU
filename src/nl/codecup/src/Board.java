@@ -189,7 +189,6 @@ public class Board {
 	 * @return
 	 */
 	public int amountOfGroups(Player player) {
-		int playerColor = WHITE;
 		return 0;
 	}
 
