@@ -53,16 +53,24 @@ public class Board {
 		return this.moveConverter;
 	}
 	
+	private char convertPointToString(int row) {
+		return this.getConverter().convertPointToString(row);
+	}
+	
+	private int convertStringToPoint(String position) {
+		return this.getConverter().convertStringToPoint(position);
+	}
+	
 	/**
 	 * Move an certain piece
 	 * 
 	 * @param move
 	 */
 	public void movePiece(Move move) {
-		int originX = this.getConverter().convertStringToPoint(move.getOriginX()),
+		int originX = this.convertStringToPoint(move.getOriginX()),
 			originY = Integer.parseInt(move.getOriginY()) - 1;
 		
-		int targetX = this.getConverter().convertStringToPoint(move.getTargetX()),
+		int targetX = this.convertStringToPoint(move.getTargetX()),
 			targetY = Integer.parseInt(move.getTargetY()) - 1;
 		
 		switchPosition(originX, originY, targetX, targetY);
@@ -82,10 +90,10 @@ public class Board {
 				if(this.boardGrid[row][column] == WHITE) {
 					if((column + 1) < 11 && this.boardGrid[row][column + 1] == NONE) {
 						
-						newMove += this.getConverter().convertPointToString(row) + "";
+						newMove += this.convertPointToString(row) + "";
 						newMove += (column + 1) + "-";
 						
-						newMove += this.getConverter().convertPointToString(row) + "";
+						newMove += this.convertPointToString(row) + "";
 						newMove += (column + 2) + "";
 						
 //						newMove = this.getConverter().convertPointToString(row) + (column + 1) + "-" + this.getConverter().convertPointToString(row) + (column + 2);
