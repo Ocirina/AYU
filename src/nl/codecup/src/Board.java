@@ -38,6 +38,25 @@ public class Board {
 	}
 	
 	/**
+	 * Checks if a coordinate with the given piece is part of a group.
+	 * @param x : The X coordinate.
+	 * @param y : The Y coordinate
+	 * @return True if it's a group, else returns false.
+	 */
+	public boolean isGroup(int x, int y, int piece) {
+		if(this.boardGrid[x-1][y] == piece) 
+			return true;
+		if(this.boardGrid[x+1][y] == piece) 
+			return true;
+		if(this.boardGrid[x][y-1] == piece) 
+			return true;
+		if(this.boardGrid[x][y+1] == piece) 
+			return true;
+		
+		return false;
+	}
+	
+	/**
 	 * Constructor
 	 */
 	public Board() {
