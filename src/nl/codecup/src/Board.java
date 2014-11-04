@@ -67,7 +67,7 @@ public class Board {
 		return false;
 	}
 
-	public boolean onEdges(int x, int y) {
+	public boolean onEdgesOfGroup(int x, int y) {
 		int neighBours = 0;
 		//TODO ELSEIF to improve speed?
 		if (y+1 < SIZE && this.boardGrid[x][y + 1] == WHITE)
@@ -91,7 +91,7 @@ public class Board {
 		return findPath(originX, originY, originX, originY, targetX, targetY);
 	}
 
-	public boolean findPath(int originX, int originY, int nextX, int nextY,
+	private boolean findPath(int originX, int originY, int nextX, int nextY,
 			int targetX, int targetY) {
 		boolean found = false;
 		

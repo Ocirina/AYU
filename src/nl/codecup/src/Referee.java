@@ -57,7 +57,7 @@ public class Referee {
 			int x = move.getOriginXConverted();
 			int y = move.getOriginYConverted();
 			
-			if (board.hasNeighbour(x,y) && board.onEdges(x, y)) {
+			if (board.hasNeighbour(x,y) && board.onEdgesOfGroup(x, y)) {
 				return this.mayBePlaced(move, board, true);
 			} else if(!board.hasNeighbour(x, y)) {
 				return this.mayBePlaced(move, board, false);
