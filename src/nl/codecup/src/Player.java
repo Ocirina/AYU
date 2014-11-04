@@ -51,6 +51,7 @@ public class Player {
     			 */
     			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
     				if (column > 0 && content[row][column-1] == 1) {
+    					//TODO new move constructor with int?
     					move = converter.readMove(row, column+1, row, column);
     				} else {
     					move = converter.readMove(row, column+1, row, column+2);

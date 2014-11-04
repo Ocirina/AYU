@@ -31,12 +31,7 @@ public class Referee {
 	 * @return
 	 */
 	public boolean validMove(Move move) {
-		Board board = this.manager.getGameState().getBoard();
-		if(this.mayBeMoved(move, board)) {
-			return true;
-		} 
-		
-		return false;
+		return this.mayBeMoved(move, this.manager.getGameState().getBoard());
 	}
 
 	private boolean mayBePlaced(Move move, Board board, boolean inGroup){ 

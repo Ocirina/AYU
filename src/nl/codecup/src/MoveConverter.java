@@ -10,7 +10,7 @@ public class MoveConverter {
 	/**
 	 * Reads the move and converts it to an Move object.
 	 * The format expected is: xy-xy
-	 * An example: d10-h6
+	 * An example: D10-H6
 	 * 
 	 * @param moveString
 	 * @return Move move
@@ -26,13 +26,12 @@ public class MoveConverter {
 	}
 	
 	public Move readMove(int FromX, int FromY, int TargetX, int TargetY) {
-		return new Move(this.convertPointToString(FromX), ""+FromY,
-						this.convertPointToString(TargetX), ""+TargetY);
+		return new Move(this.convertPointToString(FromX), "" + FromY, this.convertPointToString(TargetX), "" + TargetY);
 	}
 	
 	/**
 	 * Checks if the string is in the move format.
-	 * An example: 2 d10-h6
+	 * An example: 2 D10-H6
 	 * The player (number 2 in example) is optional.
 	 * 
 	 * @param moveString
