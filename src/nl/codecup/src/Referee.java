@@ -10,7 +10,7 @@ public class Referee {
 
 	public void handleInput() {
 		String input = IO.input();
-		IO.output(input);
+		IO.debug(input);
 	}
 
 	/**
@@ -35,18 +35,21 @@ public class Referee {
 		if(this.mayBeMoved(move, board)) {
 			return true;
 		} 
-		// this.manager.getConverter().displayMove(move);
+		
 		return false;
 	}
 
-	private boolean mayBePlaced(Move move, Board board, boolean inGroup){
-		int originX = this.manager.getConverter().convertStringToPoint(move.getOriginX());
-		int originY = (Integer.parseInt(move.getOriginY()) - 1);
-		int targetX = this.manager.getConverter().convertStringToPoint(move.getTargetX());
-		int targetY = (Integer.parseInt(move.getTargetY()) - 1);
+	private boolean mayBePlaced(Move move, Board board, boolean inGroup){ 
+		int originX = move.getOriginXConverted();
+		int originY = move.getOriginYConverted();
+		
+		int targetX = move.getTargetXConverted();
+		int targetY = move.getTargetYConverted();
+		
 		if(board.isBlankSpace(targetX, targetY)) {
 			if(!inGroup && board.hasNeighbour(targetX, targetY)) {
 				return true;
+				//TODO MOVE object as PARAM??
 			} else if(inGroup && board.isMoveNeighbourOfSameGroup(originX, originY, targetX, targetY)) {
 				return true;
 			}
@@ -56,8 +59,9 @@ public class Referee {
 	
 	private boolean mayBeMoved(Move move, Board board) {
 		if(move != null) {
-			int x = this.manager.getConverter().convertStringToPoint(move.getOriginX());
-			int y = (Integer.parseInt(move.getOriginY()) - 1);
+			int x = move.getOriginXConverted();
+			int y = move.getOriginYConverted();
+			
 			if (board.hasNeighbour(x,y) && board.onEdges(x, y)) {
 				return this.mayBePlaced(move, board, true);
 			} else if(!board.hasNeighbour(x, y)) {

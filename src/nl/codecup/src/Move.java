@@ -67,6 +67,42 @@ public class Move {
 		this.targetX = targetX;
 		this.targetY = targetY;
 	}
+	
+	/**
+	 * Returns converted
+	 * 
+	 * @return
+	 */
+	public int getOriginXConverted() {
+		return MoveConverter.convertStringToPoint(this.originX);
+	}
+	
+	/**
+	 * Returns converted
+	 * 
+	 * @return
+	 */
+	public int getOriginYConverted() {
+		return (Integer.parseInt(this.originY) - 1);
+	}
+	
+	/**
+	 * Returns converted
+	 * 
+	 * @return
+	 */
+	public int getTargetXConverted() {
+		return MoveConverter.convertStringToPoint(this.targetX);
+	}
+	
+	/**
+	 * Returns converted
+	 * 
+	 * @return
+	 */
+	public int getTargetYConverted() {
+		return (Integer.parseInt(this.targetY) - 1);
+	}
 
 	/**
 	 * Get From Location

@@ -50,7 +50,7 @@ public class MoveConverter {
 	 * 
 	 * @returns A point
 	 */
-	public int convertStringToPoint(String string) {
+	public static int convertStringToPoint(String string) {
 		return COLUMNS.indexOf(string);
 	}
 	
@@ -63,14 +63,5 @@ public class MoveConverter {
 	public String convertPointToString(int position) {
 		char[] character = COLUMNS.toCharArray();
 		return position < character.length ? ""+character[position] : " ";
-	}
-	
-	/**
-	 * This method will display an given move
-	 * 
-	 * @param move
-	 */
-	public void displayMove(Move move) {
-		System.out.println(move);
 	}
 }

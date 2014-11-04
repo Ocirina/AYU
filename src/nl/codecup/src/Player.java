@@ -1,8 +1,6 @@
 package nl.codecup.src;
 
 public class Player {
-
-	private static final int PLAYER = 1;
 	private GameState state;
 	private int piece;
 	private Referee referee;
@@ -18,8 +16,10 @@ public class Player {
     }
     
     public GameState takeTurn(GameState state) {
-    	if (state.isGameOver())
+    	if (state.isGameOver()) {
 			return state;
+    	}
+    	
 		this.state = state.clone();
 		this.piece = state.getPlayingPiece();
 		
@@ -27,10 +27,10 @@ public class Player {
 		if(this.getReferee().validMove(move)) {
 			IO.output(move.toString());
 			return state.makeMove(move);
-		} else {
-			IO.debug("NO VALID MOVE! " + move.toString());
-			return null;
-		}
+		} 
+		
+		IO.debug("NO VALID MOVE! " + move.toString());
+		return null;		
     }
     
     public Move chooseMove() {
@@ -52,10 +52,10 @@ public class Player {
     			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
     				if (column > 0 && content[row][column-1] == 1) {
     					move = converter.readMove(row, column+1, row, column);
-    				}
-    				else {
+    				} else {
     					move = converter.readMove(row, column+1, row, column+2);
     				}
+    				
     				if(this.referee.validMove(move)) {
 						return move;
 					}

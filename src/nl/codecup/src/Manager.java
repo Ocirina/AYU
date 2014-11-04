@@ -32,12 +32,8 @@ public class Manager {
 		String input = IO.input(); //leave for debug
 		if (input.equals("Start")) {
 			this.referee = new Referee(this);
-			IO.debug("Referee created");
 			this.player = new Player(this.gameState, PLAYER, this.referee);
-			IO.debug("Player created");
-			this.gameState = this.player.takeTurn(this.gameState);	
-			IO.debug("Player turn taken.");
-			
+			this.gameState = this.player.takeTurn(this.gameState);				
 			this.handleInput();
 		} else {
 			//OUR DEBUG
