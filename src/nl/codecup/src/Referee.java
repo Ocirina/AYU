@@ -55,12 +55,14 @@ public class Referee {
 	}
 	
 	private boolean mayBeMoved(Move move, Board board) {
-		int x = this.manager.getConverter().convertStringToPoint(move.getOriginX());
-		int y = (Integer.parseInt(move.getOriginY()) - 1);
-		if (board.hasNeighbour(x,y) && board.onEdges(x, y)) {
-			return this.mayBePlaced(move, board, true);
-		} else if(!board.hasNeighbour(x, y)) {
-			return this.mayBePlaced(move, board, false);
+		if(move != null) {
+			int x = this.manager.getConverter().convertStringToPoint(move.getOriginX());
+			int y = (Integer.parseInt(move.getOriginY()) - 1);
+			if (board.hasNeighbour(x,y) && board.onEdges(x, y)) {
+				return this.mayBePlaced(move, board, true);
+			} else if(!board.hasNeighbour(x, y)) {
+				return this.mayBePlaced(move, board, false);
+			}
 		}
 		
 		return false;

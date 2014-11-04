@@ -36,6 +36,7 @@ public class Player {
     public Move chooseMove() {
     	int[][] content = this.state.getBoardContents();
     	MoveConverter converter = new MoveConverter();
+    	Move move = null;
     	int contentLength = content.length - 1;
 		for (int column = 0; column < contentLength; column++) {
 			for (int row = 0; row < contentLength; row++) {
@@ -48,10 +49,7 @@ public class Player {
     			 * Start:  |   | W | W |   | W |
     			 * Result: |   | W | W | W |   |
     			 */
-//    			if (column < 9)
-//    				IO.debug(converter.readMove(row, column+1, row, column).toString()+" => "+content[row][column]+"|"+content[row][column+1]+"|"+content[row][column+2]);
     			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
-    				Move move;
     				if (column > 0 && content[row][column-1] == 1) {
     					move = converter.readMove(row, column+1, row, column);
     				}
@@ -64,7 +62,8 @@ public class Player {
     			}
     		}
     	}
-    	return null;
+		
+    	return move;
 	}
 
 	public void stop() { }
