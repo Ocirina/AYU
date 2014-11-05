@@ -58,7 +58,7 @@ public class Player {
     			 * Start:  |   |   | W | W | W |   | W |   |
     			 * Result: |   |   |   | W | W | W | W |   |
     			 */
-    			boolean gapScenario = (column <= 8 && content[row][column] == piece && content[row+1][column] == 0 && content[row+2][column] == piece);
+    			boolean gapScenario = (column < 8 && content[row][column] == piece && content[row+1][column] == 0 && content[row+2][column] == piece);
     			
     			if (gapScenario) {
 	    			int firstPieceInColumn = 0;
