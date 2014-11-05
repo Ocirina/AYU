@@ -51,35 +51,35 @@ public class Board {
 	 *            : The Y coordinate
 	 * @return True if it's a group, else returns false.
 	 */
-	public boolean hasNeighbour(int x, int y, int piece) {
-		if (y+1 < SIZE && this.boardGrid[x][y + 1] == piece)
+	public boolean hasNeighbour(int x, int y) {
+		if (y+1 < SIZE && this.boardGrid[x][y + 1] == Player.piece)
 			return true;
 		//TODO ELSEIF to improve speed?
-		if (x+1 < SIZE && this.boardGrid[x + 1][y] == piece)
+		if (x+1 < SIZE && this.boardGrid[x + 1][y] == Player.piece)
 			return true;
 		//TODO ELSEIF to improve speed?
-		if (y-1 >= 0 && this.boardGrid[x][y - 1] == piece)
+		if (y-1 >= 0 && this.boardGrid[x][y - 1] == Player.piece)
 			return true;
 		//TODO ELSEIF to improve speed?
-		if (x-1 >= 0 && this.boardGrid[x - 1][y] == piece)
+		if (x-1 >= 0 && this.boardGrid[x - 1][y] == Player.piece)
 			return true;
 
 		return false;
 	}
 
-	public boolean onEdgesOfGroup(int x, int y,int piece) {
+	public boolean onEdgesOfGroup(int x, int y) {
 		int neighBours = 0;
 		//TODO ELSEIF to improve speed?
-		if (y+1 < SIZE && this.boardGrid[x][y + 1] == piece)
+		if (y+1 < SIZE && this.boardGrid[x][y + 1] == Player.piece)
 			neighBours++;
 		//TODO ELSEIF to improve speed?
-		if (x+1 < SIZE && this.boardGrid[x + 1][y] == piece)
+		if (x+1 < SIZE && this.boardGrid[x + 1][y] == Player.piece)
 			neighBours++;
 		//TODO ELSEIF to improve speed?
-		if (y-1 >= 0 && this.boardGrid[x][y - 1] == piece)
+		if (y-1 >= 0 && this.boardGrid[x][y - 1] == Player.piece)
 			neighBours++;
 		//TODO ELSEIF to improve speed?
-		if (x-1 >= 0 && this.boardGrid[x - 1][y] == piece)
+		if (x-1 >= 0 && this.boardGrid[x - 1][y] == Player.piece)
 			neighBours++;
 
 		return neighBours < 2;

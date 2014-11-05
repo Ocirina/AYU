@@ -2,12 +2,12 @@ package nl.codecup.src;
 
 public class Player {
 	private GameState state;
-	private int piece;
+	public static int piece;
 	private Referee referee;
 
     public Player(GameState state, int piece, Referee referee) {
         this.state = state;
-        this.piece = piece;
+        Player.piece = piece;
         this.referee = referee;
     }
     
