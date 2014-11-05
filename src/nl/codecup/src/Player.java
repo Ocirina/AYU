@@ -22,7 +22,7 @@ public class Player {
     	
 		this.state = state.clone();
 		this.piece = state.getPlayingPiece();
-		
+		System.out.println(this.piece);
 		Move move = chooseMove();
 		if(this.getReferee().validMove(move)) {
 			IO.output(move.toString());

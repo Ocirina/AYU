@@ -29,6 +29,7 @@ public class Manager {
 		
 		String input = IO.input(); //leave for debug
 		if (input.equals("Start")) {
+			
 			this.referee = new Referee(this);
 			this.player = new Player(this.gameState, PLAYER, this.referee);
 			this.gameState = this.player.takeTurn(this.gameState);				
@@ -87,6 +88,14 @@ public class Manager {
 	 */
 	public Player getPlayer() {
 		return this.player;
+	}
+	
+	/**
+	 * Sets the player
+	 * @param player: the player
+	 */
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 	
 	/**
