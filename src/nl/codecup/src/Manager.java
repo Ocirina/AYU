@@ -32,7 +32,7 @@ public class Manager {
 			this.referee = new Referee(this);
 			this.player = new Player(this.gameState, PLAYER, this.referee);
 			this.gameState = this.player.takeTurn(this.gameState);				
-			this.handleInput();
+			handleInput();
 		} else {
 			//OUR DEBUG
 			System.out.println(gameState);
@@ -46,7 +46,7 @@ public class Manager {
 	 * This will load the terminal configuration and the file configuration
 	 */
 	public void startGame() {
-		this.loadConfig();
+		loadConfig();
 	}
 
 	/**
@@ -125,6 +125,6 @@ public class Manager {
 	}
 
 	public Move readMove(String move) {
-		return this.getConverter().readMove(move);
+		return getConverter().readMove(move);
 	}
 }
