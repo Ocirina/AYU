@@ -40,7 +40,6 @@ public class Player {
      */
     public Move chooseMove() {
     	int[][] content = this.state.getBoardContents();
-    	MoveConverter converter = new MoveConverter();
     	Move move = null;
     	int contentLength = content.length - 1;
 		for (int column = 0; column < contentLength; column++) {
@@ -60,10 +59,10 @@ public class Player {
     			 */
     			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
     				if (column > 0 && content[row][column-1] == 1) {
-    					//TODO new move constructor with int? instead of converting it
-    					move = converter.readMove(row, column+1, row, column);
+    					move = new Move(row, column, row, column);
+    					
     				} else {
-    					move = converter.readMove(row, column+1, row, column+2);
+    					move = new Move(row, column, row, column + 2);
     				}
     				
     				if (this.referee.validMove(move)) {

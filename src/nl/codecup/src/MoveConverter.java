@@ -26,10 +26,6 @@ public class MoveConverter {
 		return move;
 	}
 	
-	public Move readMove(int FromX, int FromY, int TargetX, int TargetY) {
-		return new Move(this.convertPointToString(FromX), "" + FromY, this.convertPointToString(TargetX), "" + TargetY);
-	}
-	
 	/**
 	 * Checks if the string is in the move format.
 	 * An example: 2 D10-H6
@@ -60,7 +56,7 @@ public class MoveConverter {
 	 * @param position
 	 * @return
 	 */
-	public String convertPointToString(int position) {
+	public static String convertPointToString(int position) {
 		char[] character = COLUMNS.toCharArray();
 		return position < character.length ? ""+character[position] : " ";
 	}
