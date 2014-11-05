@@ -33,6 +33,7 @@ public class Referee {
 	 * @return
 	 */
 	public boolean validMove(Move move) {
+		IO.debug("IS VALID?: " + move);
 		return this.mayBeMoved(move, this.manager.getGameState().getBoard());
 	}
 
