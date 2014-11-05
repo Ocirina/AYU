@@ -40,7 +40,6 @@ public class Player {
      */
     public Move chooseMove() {
     	int[][] content = this.state.getBoardContents();
-    	MoveConverter converter = new MoveConverter();
     	Move move = null;
     	int contentLength = content.length - 1;
 		for (int column = 0; column < contentLength; column++) {
