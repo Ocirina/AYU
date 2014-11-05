@@ -117,7 +117,7 @@ public class Board {
 		return ((originX == targetX && ((originY - 1) == targetY)) ||
 				(originX == targetX && ((originY + 1) == targetY)) ||
 				(originY == targetY && ((originX - 1) == targetX)) ||
-				(originY == targetY && ((originX - 1) == targetX)) );
+				(originY == targetY && ((originX + 1) == targetX)) );
 	}
 
 	/**
