@@ -38,6 +38,18 @@ public class Move {
 	public Move(String originX, String originY, String targetX, String targetY) {
 		this.setUpMove(originX, originY, targetX, targetY);
 	}
+	
+	/**
+	 * Constructor from int
+	 *
+	 * @param originX
+	 * @param originY
+	 * @param targetX
+	 * @param targetY
+	 */
+	public Move(int originX, int originY, int targetX, int targetY) {
+		this.setUpMove(MoveConverter.convertPointToString(originX), "" + (originY + 1), MoveConverter.convertPointToString(targetX), "" + targetY);
+	}
 
 	/**
 	 * Create move with player
