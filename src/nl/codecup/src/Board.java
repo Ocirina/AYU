@@ -98,17 +98,17 @@ public class Board {
 		if(!(originX == nextX && originY == nextY))
 			found = isNeighbour(nextX, nextY, targetX, targetY);
 		
-		if (!found && nextY+1 < SIZE && this.boardGrid[nextX][nextY+1] == WHITE && ((nextY + 1) != originY)) 
+		if (!found && nextY+1 < SIZE && this.boardGrid[nextX][nextY+1] == Player.piece && ((nextY + 1) != originY)) 
 			found = findPath(nextX, nextY, nextX, nextY+1, targetX, targetY);
 		
 		//TODO ELSEIF to improve speed?
-		if (!found && nextX+1 < SIZE && this.boardGrid[nextX + 1][nextY] == WHITE && ((nextX + 1) != originY))
+		if (!found && nextX+1 < SIZE && this.boardGrid[nextX + 1][nextY] == Player.piece && ((nextX + 1) != originY))
 			found = findPath(nextX, nextY, nextX+1, nextY, targetX, targetY);
 		//TODO same..
-		if (!found && nextY-1 >= 0 && this.boardGrid[nextX][nextY-1] == WHITE && ((nextY - 1) != originY)) 
+		if (!found && nextY-1 >= 0 && this.boardGrid[nextX][nextY-1] == Player.piece && ((nextY - 1) != originY)) 
 			found = findPath(nextX, nextY, nextX, nextY-1, targetX, targetY);
 		//TODO same..
-		if (!found && nextX-1 >= 0 && this.boardGrid[nextX - 1][nextY] == WHITE && ((nextX - 1) != originY))
+		if (!found && nextX-1 >= 0 && this.boardGrid[nextX - 1][nextY] == Player.piece && ((nextX - 1) != originY))
 			found = findPath(nextX, nextY, nextX-1, nextY, targetX, targetY);
 		
 		return found;
