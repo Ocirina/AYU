@@ -3,8 +3,9 @@ package nl.codecup.src;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//TODO STATIC METHODS?
 public class MoveConverter {
-	
+
 	private static final String COLUMNS = "ABCDEFGHIJK";
 	
 	/**

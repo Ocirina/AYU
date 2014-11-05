@@ -10,6 +10,13 @@ public class GameState {
 		this.playingPiece = playerPiece;
 		this.opponentPiece = opponentPiece;
 	}
+	
+	public GameState(Board board, int playerPiece, int opponentPiece) {
+		this.board = board;
+		this.playingPiece = playerPiece;
+		this.opponentPiece = opponentPiece;
+		this.checkForWin();
+	}
 
 	public GameState(GameState state) {
 		this.playingPiece = state.playingPiece;

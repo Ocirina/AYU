@@ -22,7 +22,9 @@ public class Referee {
 	/**
 	 * This method will stop the object itself
 	 */
-	// private void stopReferee() { }
+	 private void stopReferee() { 
+		 //TODO stop has to be implementend
+	 }
 
 	/**
 	 * This will return if an move is valid
@@ -34,6 +36,7 @@ public class Referee {
 		return this.mayBeMoved(move, this.manager.getGameState().getBoard());
 	}
 
+	//TODO MOVE object as param
 	private boolean mayBePlaced(Move move, Board board, boolean inGroup){ 
 		int originX = move.getOriginXConverted();
 		int originY = move.getOriginYConverted();
@@ -73,6 +76,7 @@ public class Referee {
 	 * @return
 	 */
 	public String writeLog() {
+		//TODO WRITE STUFF TO LOG
 		return null;
 	}
 

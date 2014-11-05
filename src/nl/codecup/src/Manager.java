@@ -25,9 +25,7 @@ public class Manager {
 	 */
 	public Manager() {
 		this.converter = new MoveConverter();
-		gameState = new GameState(PLAYER, COMPUTER);
-		Board board = new Board();
-		gameState.setBoard(board);
+		gameState = new GameState(new Board(), PLAYER, COMPUTER);
 		
 		String input = IO.input(); //leave for debug
 		if (input.equals("Start")) {
@@ -114,15 +112,11 @@ public class Manager {
 	 * @throws IOException
 	 */
 	public void handleInput() {
-		IO.debug("Start handle input");	
-		String input = IO.input(); 		
-		IO.debug("Start handle input with input: "+input);	
+		String input = IO.input(); 			
 		while (!input.equals("Quit!")) {
-			IO.debug("Retrieved input: "+input);
+			IO.debug("Retrieved input: " + input);
 			if (converter.isMoveFormat(input)) {
-				IO.debug("INPUT FROM PLAYER:" + input);
-				Move move = this.converter.readMove(input);
-				gameState = gameState.makeMove(move);
+				gameState = gameState.makeMove(this.readMove(input));
 				gameState = this.player.takeTurn(gameState);
 			} 
 			

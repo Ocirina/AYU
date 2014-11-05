@@ -136,6 +136,13 @@ public class Board {
 
 	}
 
+	/**
+	 * Check if the given position is empty
+	 * 
+	 * @param row
+	 * @param column
+	 * @return
+	 */
 	public boolean isBlankSpace(int row, int column) {
 		return (this.boardGrid[row][column] == NONE);
 	}
@@ -151,12 +158,7 @@ public class Board {
 	 * @param move
 	 */
 	public void movePiece(Move move) {
-		int originX = move.getOriginXConverted();
-		int originY = move.getOriginYConverted();		
-		int targetX = move.getTargetXConverted();
-		int targetY = move.getTargetYConverted();
-
-		switchPosition(originX, originY, targetX, targetY);
+		switchPosition(move.getOriginXConverted(), move.getOriginYConverted(), move.getTargetXConverted(), move.getTargetYConverted());
 	}
 	
 	/**
@@ -220,7 +222,7 @@ public class Board {
 	 * Clones this board instance.
 	 */
 	public Board clone() {
-		return new Board(this.boardGrid);
+		return new Board(this.cloneBoard(this.boardGrid));
 	}
 
 	/**
@@ -238,6 +240,7 @@ public class Board {
 				tempBoard[row][column] = board[row][column];
 			}
 		}
+		
 		return tempBoard;
 	}
 
