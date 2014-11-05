@@ -71,7 +71,7 @@ public class Player {
 	    					
 	    			}
 	    			int columnPieceToMove = (column - firstPieceInColumn);
-	    			move = new Move(row, columnPieceToMove, row, column + 1);
+	    			return new Move(row, columnPieceToMove, row, column + 1);
 	    			//TODO: validMoveCheck?
     			}
     		}
