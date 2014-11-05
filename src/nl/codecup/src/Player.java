@@ -46,6 +46,7 @@ public class Player {
 		for (int column = 0; column < contentLength; column++) {
 			for (int row = 0; row < contentLength; row++) {
 
+
 				/**
 				 * Situation 1 Start: | | W | | W | | | Result: | | | W | W | |
 				 * |
@@ -80,6 +81,41 @@ public class Player {
 			}
 		}
 		return move;
+
+    			
+    			/**
+    			 * Situation 1
+    			 * Start:  |   | W |   | W |   |   |
+    			 * Result: |   |   | W | W |   |   |
+    			 * 
+    			 * Situation 2
+    			 * Start:  |   | W | W |   | W |   |
+    			 * Result: |   |   | W | W | W |   |
+    			 * 
+    			 * Situation 3
+    			 * Start:  |   |   | W | W | W |   | W |   |
+    			 * Result: |   |   |   | W | W | W | W |   |
+    			 */
+    			boolean gapScenario = (column <= 8 && content[row][column] == piece && content[row+1][column] == 0 && content[row+2][column] == piece);
+    			
+    			if (gapScenario) {
+	    			int firstPieceInColumn = 0;
+	    			for (int i = column; i > 0; i--) {
+	    				if (content[row][column] == piece)
+	    					firstPieceInColumn++;
+	    				else
+	    					break;
+	    					
+	    			}
+	    			int columnPieceToMove = (column - firstPieceInColumn);
+	    			
+	    			return new Move(row, columnPieceToMove, row, column + 1);
+	    			//TODO: validMoveCheck?
+    			}
+    		}
+    	}
+    	return move;
+
 	}
 
 	public void stop() {
