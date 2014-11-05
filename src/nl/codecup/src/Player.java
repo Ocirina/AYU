@@ -63,8 +63,8 @@ public class Player {
     			
     			if (gapScenario) {
 	    			int firstPieceInColumn = 0;
-	    			for (int i = column; i >= 0; i--) {
-	    				if (content[row - i][column] == piece)
+	    			for (int i = column; i > 0; i--) {
+	    				if (content[row][column] == piece)
 	    					firstPieceInColumn++;
 	    				else
 	    					break;
@@ -72,9 +72,7 @@ public class Player {
 	    			}
 	    			int columnPieceToMove = (column - firstPieceInColumn);
 	    			
-	    			if(columnPieceToMove > 0) {
-	    				return new Move(row, columnPieceToMove + 1, row, column+1);
-	    			}
+	    			return new Move(row, columnPieceToMove + 1, row, column+1);
 	    			//TODO: validMoveCheck?
     			}
     		}
