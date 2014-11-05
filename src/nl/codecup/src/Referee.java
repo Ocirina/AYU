@@ -3,9 +3,11 @@ package nl.codecup.src;
 public class Referee {
 
 	private Manager manager;
-
+   
 	public Referee(Manager manager) {
 		this.manager = manager;
+		
+		
 	}
 
 	public void handleInput() {
@@ -38,6 +40,7 @@ public class Referee {
 
 	// TODO MOVE object as param
 	private boolean mayBePlaced(Move move, Board board, boolean inGroup) {
+		int piece = manager.getGameState().getPlayingPiece();
 		int originX = move.getOriginXConverted();
 		int originY = move.getOriginYConverted();
 
@@ -45,7 +48,7 @@ public class Referee {
 		int targetY = move.getTargetYConverted();
 
 		if (board.isBlankSpace(targetX, targetY)) {
-			if (!inGroup && board.hasNeighbour(targetX, targetY)) {
+			if (!inGroup && board.hasNeighbour(targetX, targetY, piece)) {
 				return true;
 				// TODO MOVE object as PARAM??
 			} else if (inGroup
@@ -58,16 +61,21 @@ public class Referee {
 	}
 
 	private boolean mayBeMoved(Move move, Board board) {
+		int piece = manager.getGameState().getPlayingPiece();
+//		System.out.println(piece);
 		if (move != null) {
 			int x = move.getOriginXConverted();
 			int y = move.getOriginYConverted();
-			if (board.getBoardContents()[x][y] == this.manager.getPlayer().getPiece()) {
-				if (board.hasNeighbour(x, y) && board.onEdgesOfGroup(x, y)) {
+			
+			if (board.getBoardContents()[x][y] == piece) {
+				if (board.hasNeighbour(x, y, piece) && board.onEdgesOfGroup(x, y, piece)) {
 					return this.mayBePlaced(move, board, true);
-				} else if (!board.hasNeighbour(x, y)) {
+				} 
+				else if (!board.hasNeighbour(x, y, piece)) {
 					return this.mayBePlaced(move, board, false);
 				}
 			}
+
 		}
 
 		return false;
