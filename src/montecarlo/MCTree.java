@@ -7,7 +7,7 @@ public class MCTree {
 	private MCNode root;
 	
 	public static void main(String[] args) {
-		MCTree tree = new MCTree(10, 1);
+		MCTree tree = new MCTree(10, 2);
 	}
 	
 	/**
@@ -16,36 +16,36 @@ public class MCTree {
 	 * @param treeWidth		- number of children for the root
 	 * @param searchTime	- search time in milliseconds
 	 */
-	public MCTree(int treeWidth, int searchTime) {
+	public MCTree(int treeWidth, int searchDepth) {
 		MCNode root = new MCNode(false);
 		setRoot(root);
-		long finishTime = System.nanoTime() + (searchTime * 1000 * 1000);
-		while(System.nanoTime() <= finishTime) {
-			generateTree(getRoot(), treeWidth);
-		}
+		generateTree(getRoot(), treeWidth, searchDepth);
 		printTree(getRoot(), "");
 	}
 	
 	/**
 	 * generates the monte-carlo tree
 	 * 
-	 * @param node		- base node, this is where the new children will be added
-	 * @param numChilds - number of children for the node
+	 * @param node			- base node, this is where the new children will be added
+	 * @param numChilds 	- number of children for the node
+	 * @param searchDepth	- the search depth of the tree
 	 */
-	private void generateTree(MCNode node, int numChilds) {
-		for (int i = 0; i < numChilds; i++) {
-			boolean isLeaf = getRandomBoolean();
-			MCNode child = new MCNode(isLeaf);
-			if (!isLeaf) {
-				generateTree(child, randInt(0, numChilds));
-			} else {
-				boolean win = getRandomBoolean();
-				child.setWin(win);
-				child.setWinpercentage((win) ? (float) 1.0 : (float) 0.0);
+	private void generateTree(MCNode node, int numChilds, int searchDepth) {
+		if (searchDepth > 0) {
+			for (int i = 0; i < numChilds; i++) {
+				boolean isLeaf = getRandomBoolean();
+				MCNode child = new MCNode(isLeaf);
+				if (!isLeaf) {
+					generateTree(child, randInt(0, numChilds), searchDepth - 1);
+				} else {
+					boolean win = getRandomBoolean();
+					child.setWin(win);
+					child.setWinpercentage((win) ? (float) 1.0 : (float) 0.0);
+				}
+				node.addChild(child);
 			}
-			node.addChild(child);
+			updateWinpercentage(node);
 		}
-		updateWinpercentage(node);
 	}
 	
 	/**
