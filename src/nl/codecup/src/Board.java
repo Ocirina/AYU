@@ -114,19 +114,10 @@ public class Board {
 	}
 	
 	private boolean isNeighbour(int originX, int originY, int targetX, int targetY) {
-		if(originX == targetX && ((originY - 1) == targetY))
-			return true;
-		//TODO ELSEIF?
-		if(originX == targetX && ((originY + 1) == targetY))
-			return true;
-		//TODO ELSEIF?
-		if(originY == targetY && ((originX - 1) == targetX))
-			return true;
-		//TODO ELSEIF?
-		if(originY == targetY && ((originX - 1) == targetX))
-			return true;
-			
-		return false;
+		return ((originX == targetX && ((originY - 1) == targetY)) ||
+				(originX == targetX && ((originY + 1) == targetY)) ||
+				(originY == targetY && ((originX - 1) == targetX)) ||
+				(originY == targetY && ((originX - 1) == targetX)) );
 	}
 
 	/**
