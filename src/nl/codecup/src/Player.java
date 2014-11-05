@@ -46,13 +46,17 @@ public class Player {
 		for (int column = 0; column < contentLength; column++) {
 			for (int row = 0; row < contentLength; row++) {
     			/**
-    			 * Check if there are 3 items near each other. E.g.:
-    			 * Start:  |   | W |   | W |   |
-    			 * Result: |   |   | W | W |   |
+    			 * Situation 1
+    			 * Start:  |   | W |   | W |   |   |
+    			 * Result: |   |   | W | W |   |   |
     			 * 
-    			 * But also when 2 are already connected
-    			 * Start:  |   | W | W |   | W |
-    			 * Result: |   | W | W | W |   |
+    			 * Situation 2
+    			 * Start:  |   | W | W |   | W |   |
+    			 * Result: |   |   | W | W | W |   |
+    			 * 
+    			 * Situation 3
+    			 * Start:  |   |   | W | W | W |   | W |   |
+    			 * Result: |   |   |   | W | W | W | W |   |
     			 */
     			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
     				if (column > 0 && content[row][column-1] == 1) {
