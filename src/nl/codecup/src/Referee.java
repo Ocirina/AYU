@@ -49,7 +49,7 @@ public class Referee {
 		int targetY = move.getTargetYConverted();
 
 		if (validCoordinates(targetX, targetY) && board.isBlankSpace(targetX, targetY)) {
-			if (!inGroup && board.hasNeighbour(targetX, targetY, piece)) {
+			if (!inGroup && board.hasNeighbour(targetX, targetY)) {
 				return true;
 				// TODO MOVE object as PARAM??
 			} else if (inGroup
@@ -62,17 +62,16 @@ public class Referee {
 	}
 
 	private boolean mayBeMoved(Move move, Board board) {
-		int piece = manager.getGameState().getPlayingPiece();
-//		System.out.println(piece);
+
 		if (move != null) {
 			int x = move.getOriginXConverted();
 			int y = move.getOriginYConverted();
 			
-			if (validCoordinates(x,y) && board.getBoardContents()[x][y] == piece) {
-				if (board.hasNeighbour(x, y, piece) && board.onEdgesOfGroup(x, y, piece)) {
+			if (validCoordinates(x,y) && board.getBoardContents()[x][y] == Player.piece) {
+				if (board.hasNeighbour(x, y) && board.onEdgesOfGroup(x, y)) {
 					return this.mayBePlaced(move, board, true);
 				} 
-				else if (!board.hasNeighbour(x, y, piece)) {
+				else if (!board.hasNeighbour(x, y)) {
 					return this.mayBePlaced(move, board, false);
 				}
 			}
