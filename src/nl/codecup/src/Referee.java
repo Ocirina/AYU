@@ -22,9 +22,9 @@ public class Referee {
 	/**
 	 * This method will stop the object itself
 	 */
-	 private void stopReferee() { 
-		 //TODO stop has to be implementend
-	 }
+	private void stopReferee() {
+		// TODO stop has to be implementend
+	}
 
 	/**
 	 * This will return if an move is valid
@@ -36,37 +36,40 @@ public class Referee {
 		return this.mayBeMoved(move, this.manager.getGameState().getBoard());
 	}
 
-	//TODO MOVE object as param
-	private boolean mayBePlaced(Move move, Board board, boolean inGroup){ 
+	// TODO MOVE object as param
+	private boolean mayBePlaced(Move move, Board board, boolean inGroup) {
 		int originX = move.getOriginXConverted();
 		int originY = move.getOriginYConverted();
-		
+
 		int targetX = move.getTargetXConverted();
 		int targetY = move.getTargetYConverted();
-		
-		if(board.isBlankSpace(targetX, targetY)) {
-			if(!inGroup && board.hasNeighbour(targetX, targetY)) {
+
+		if (board.isBlankSpace(targetX, targetY)) {
+			if (!inGroup && board.hasNeighbour(targetX, targetY)) {
 				return true;
-				//TODO MOVE object as PARAM??
-			} else if(inGroup && board.isMoveNeighbourOfSameGroup(originX, originY, targetX, targetY)) {
+				// TODO MOVE object as PARAM??
+			} else if (inGroup
+					&& board.isMoveNeighbourOfSameGroup(originX, originY,
+							targetX, targetY)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	private boolean mayBeMoved(Move move, Board board) {
-		if(move != null) {
+		if (move != null) {
 			int x = move.getOriginXConverted();
 			int y = move.getOriginYConverted();
-			
-			if (board.hasNeighbour(x,y) && board.onEdgesOfGroup(x, y)) {
-				return this.mayBePlaced(move, board, true);
-			} else if(!board.hasNeighbour(x, y)) {
-				return this.mayBePlaced(move, board, false);
+			if (board.getBoardContents()[x][y] == this.manager.getPlayer().getPiece()) {
+				if (board.hasNeighbour(x, y) && board.onEdgesOfGroup(x, y)) {
+					return this.mayBePlaced(move, board, true);
+				} else if (!board.hasNeighbour(x, y)) {
+					return this.mayBePlaced(move, board, false);
+				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -76,7 +79,7 @@ public class Referee {
 	 * @return
 	 */
 	public String writeLog() {
-		//TODO WRITE STUFF TO LOG
+		// TODO WRITE STUFF TO LOG
 		return null;
 	}
 

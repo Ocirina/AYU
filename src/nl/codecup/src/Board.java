@@ -95,7 +95,8 @@ public class Board {
 			int targetX, int targetY) {
 		boolean found = false;
 		
-		found = isNeighbour(nextX, nextY, targetX, targetY);
+		if(!(originX == nextX && originY == nextY))
+			found = isNeighbour(nextX, nextY, targetX, targetY);
 		
 		if (!found && nextY+1 < SIZE && this.boardGrid[nextX][nextY+1] == WHITE && ((nextY + 1) != originY)) 
 			found = findPath(nextX, nextY, nextX, nextY+1, targetX, targetY);
@@ -117,7 +118,7 @@ public class Board {
 		return ((originX == targetX && ((originY - 1) == targetY)) ||
 				(originX == targetX && ((originY + 1) == targetY)) ||
 				(originY == targetY && ((originX - 1) == targetX)) ||
-				(originY == targetY && ((originX - 1) == targetX)) );
+				(originY == targetY && ((originX + 1) == targetX)) );
 	}
 
 	/**
