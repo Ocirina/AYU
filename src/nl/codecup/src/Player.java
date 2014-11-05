@@ -40,10 +40,12 @@ public class Player {
      */
     public Move chooseMove() {
     	int[][] content = this.state.getBoardContents();
+    	int piece = 1;
     	Move move = null;
     	int contentLength = content.length - 1;
 		for (int column = 0; column < contentLength; column++) {
 			for (int row = 0; row < contentLength; row++) {
+    			
     			/**
     			 * Situation 1
     			 * Start:  |   | W |   | W |   |   |
@@ -57,21 +59,23 @@ public class Player {
     			 * Start:  |   |   | W | W | W |   | W |   |
     			 * Result: |   |   |   | W | W | W | W |   |
     			 */
-    			if (column < 8 && content[row][column] == 1 && content[row][column+1] == 0 && content[row][column+2] == 1) {
-    				if (column > 0 && content[row][column-1] == 1) {
-    					move = new Move(row, column, row, column);
-    					
-    				} else {
-    					move = new Move(row, column, row, column + 2);
-    				}
-    				
-    				if (this.referee.validMove(move)) {
-						return move;
-					}
+    			boolean gapScenario = (column <= 8 && content[row][column] == piece && content[row+1][column] == 0 && content[row+2][column] == piece);
+    			
+    			if (gapScenario) {
+	    			int firstPieceInColumn = 0;
+	    			for (int i = column; i >= 0; i--) {
+	    				if (content[row - i][column] == piece)
+	    					firstPieceInColumn++;
+	    				else
+	    					break;
+	    					
+	    			}
+	    			int columnPieceToMove = (column - firstPieceInColumn);
+	    			return new Move(row, columnPieceToMove, row + 1, column);
+	    			//TODO: validMoveCheck?
     			}
     		}
     	}
-		
     	return move;
 	}
 
