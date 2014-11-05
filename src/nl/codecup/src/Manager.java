@@ -29,14 +29,13 @@ public class Manager {
 		
 		String input = IO.input(); //leave for debug
 		if (input.equals("Start")) {
-			
 			this.referee = new Referee(this);
 			this.player = new Player(this.gameState, PLAYER, this.referee);
 			this.gameState = this.player.takeTurn(this.gameState);				
 			handleInput();
 		} else {
 			//OUR DEBUG
-			System.out.println(gameState);
+			IO.debug(gameState.toString());
 		}
 	}
 	

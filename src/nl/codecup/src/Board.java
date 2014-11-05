@@ -188,7 +188,7 @@ public class Board {
 	public String toString(boolean normal) {
 		String rowSeperator = "    +---+---+---+---+---+---+---+---+---+---+---+\n";
 		String returnString = "      A   B   C   D   E   F   G   H   I   J   K\n" + rowSeperator;
-		if(normal) {			
+		if(!normal) {			
 			for (int column = (SIZE - 1); column >= 0; column--) {
 				returnString += String.format("%02d", (column + 1)) + " ";
 				for (int row = 0; row < SIZE; row++)

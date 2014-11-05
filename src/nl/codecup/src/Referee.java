@@ -48,7 +48,7 @@ public class Referee {
 		int targetX = move.getTargetXConverted();
 		int targetY = move.getTargetYConverted();
 
-		if (validCoordinates(targetX, targetY) && board.isBlankSpace(targetX, targetY)) {
+		if (board.isBlankSpace(targetX, targetY)) {
 			if (!inGroup && board.hasNeighbour(targetX, targetY, piece)) {
 				return true;
 				// TODO MOVE object as PARAM??
@@ -68,7 +68,7 @@ public class Referee {
 			int x = move.getOriginXConverted();
 			int y = move.getOriginYConverted();
 			
-			if (validCoordinates(x,y) && board.getBoardContents()[x][y] == piece) {
+			if (board.getBoardContents()[x][y] == piece) {
 				if (board.hasNeighbour(x, y, piece) && board.onEdgesOfGroup(x, y, piece)) {
 					return this.mayBePlaced(move, board, true);
 				} 
@@ -78,11 +78,8 @@ public class Referee {
 			}
 
 		}
+
 		return false;
-	}
-	
-	private boolean validCoordinates(int x, int y) {
-		return (x >= 0 && x < Board.SIZE && y >= 0 && y < Board.SIZE);
 	}
 
 	/**
