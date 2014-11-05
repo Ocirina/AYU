@@ -82,7 +82,7 @@ public class Referee {
 	}
 	
 	private boolean validCoordinates(int x, int y) {
-		return (x > 0 && x < Board.SIZE && y > 0 && y < Board.SIZE);
+		return (x >= 0 && x < Board.SIZE && y >= 0 && y < Board.SIZE);
 	}
 
 	/**
