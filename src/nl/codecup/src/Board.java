@@ -177,22 +177,36 @@ public class Board {
 	public int amountOfGroups(Player player) {
 		return 0;
 	}
+	
+	public String toString() {
+		return this.toString(false);
+	}
 
 	/**
 	 * Display board
 	 */
-	public String toString() {
+	public String toString(boolean normal) {
 		String rowSeperator = "    +---+---+---+---+---+---+---+---+---+---+---+\n";
-		String returnString = "      A   B   C   D   E   F   G   H   I   J   K\n"
-				+ rowSeperator;
-		for (int column = (SIZE - 1); column >= 0; column--) {
-			returnString += String.format("%02d", (column + 1)) + " ";
-			for (int row = 0; row < SIZE; row++)
-				returnString += " | "
-						+ this.convertPiece(this.boardGrid[row][column]);
-			returnString += " |\n" + rowSeperator;
+		String returnString = "      A   B   C   D   E   F   G   H   I   J   K\n" + rowSeperator;
+		if(normal) {			
+			for (int column = (SIZE - 1); column >= 0; column--) {
+				returnString += String.format("%02d", (column + 1)) + " ";
+				for (int row = 0; row < SIZE; row++)
+					returnString += " | "
+							+ this.convertPiece(this.boardGrid[row][column]);
+				returnString += " |\n" + rowSeperator;
+			}
+		} else {
+			for (int column = 0; column < SIZE; column++) {
+				returnString += String.format("%02d", (column + 1)) + " ";
+				for (int row = 0; row < SIZE; row++)
+					returnString += " | "
+							+ this.convertPiece(this.boardGrid[row][column]);
+				returnString += " |\n" + rowSeperator;
+			}
+			
+			
 		}
-		
 		return returnString;
 	}
 
