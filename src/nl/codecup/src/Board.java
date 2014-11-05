@@ -95,7 +95,8 @@ public class Board {
 			int targetX, int targetY) {
 		boolean found = false;
 		
-		found = isNeighbour(nextX, nextY, targetX, targetY);
+		if(!(originX == nextX && originY == nextY))
+			found = isNeighbour(nextX, nextY, targetX, targetY);
 		
 		if (!found && nextY+1 < SIZE && this.boardGrid[nextX][nextY+1] == WHITE && ((nextY + 1) != originY)) 
 			found = findPath(nextX, nextY, nextX, nextY+1, targetX, targetY);
