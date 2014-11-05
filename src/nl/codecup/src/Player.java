@@ -59,19 +59,19 @@ public class Player {
     			 * Start:  |   |   | W | W | W |   | W |   |
     			 * Result: |   |   |   | W | W | W | W |   |
     			 */
-    			boolean gapScenario = (column <= 8 && content[row][column] == piece && content[row][column+1] == 0 && content[row][column+2] == piece);
+    			boolean gapScenario = (column <= 8 && content[row][column] == piece && content[row+1][column] == 0 && content[row+2][column] == piece);
     			
     			if (gapScenario) {
 	    			int firstPieceInColumn = 0;
 	    			for (int i = column; i >= 0; i--) {
-	    				if (content[row][column - i] == piece)
+	    				if (content[row - i][column] == piece)
 	    					firstPieceInColumn++;
 	    				else
 	    					break;
 	    					
 	    			}
 	    			int columnPieceToMove = (column - firstPieceInColumn);
-	    			return new Move(row, columnPieceToMove, row, column + 1);
+	    			return new Move(row, columnPieceToMove, row + 1, column);
 	    			//TODO: validMoveCheck?
     			}
     		}
