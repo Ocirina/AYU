@@ -48,7 +48,7 @@ public class Move {
 	 * @param targetY
 	 */
 	public Move(int originX, int originY, int targetX, int targetY) {
-		this.setUpMove(MoveConverter.convertPointToString(originX), "" + originY, MoveConverter.convertPointToString(targetX), "" + targetY);
+		this.setUpMove(MoveConverter.convertPointToString(originX), "" + (originY + 1), MoveConverter.convertPointToString(targetX), "" + (targetY + 1));
 	}
 
 	/**
