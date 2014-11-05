@@ -80,4 +80,13 @@ public class Player {
     public String toString() {
         return "R player: " + this.piece;
     }
+
+    /**
+     * 
+     * @return players piece
+     */
+	public int getPiece() {
+	
+		return this.piece;
+	}
 }
