@@ -1,7 +1,7 @@
 package nl.codecup.src;
 
 public class Board {
-	private static final int SIZE = 11;
+	public static final int SIZE = 11;
 	private static final int NONE = 0;
 	private static final int WHITE = 1;
 	private static final int BLACK = 2;
