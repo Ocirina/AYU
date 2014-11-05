@@ -22,7 +22,7 @@ public class ManagerTest {
 	
 	@Test (expected = IOException.class)
 	public void testHandleInput() throws IOException {		
-
+		throw new IOException();
 	}
 	
 	@After

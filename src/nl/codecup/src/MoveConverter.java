@@ -3,12 +3,15 @@ package nl.codecup.src;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//TODO STATIC METHODS?
 public class MoveConverter {
+
+	private static final String COLUMNS = "ABCDEFGHIJK";
 	
 	/**
 	 * Reads the move and converts it to an Move object.
 	 * The format expected is: xy-xy
-	 * An example: d10-h6
+	 * An example: D10-H6
 	 * 
 	 * @param moveString
 	 * @return Move move
@@ -25,7 +28,7 @@ public class MoveConverter {
 	
 	/**
 	 * Checks if the string is in the move format.
-	 * An example: 2 d10-h6
+	 * An example: 2 D10-H6
 	 * The player (number 2 in example) is optional.
 	 * 
 	 * @param moveString
@@ -39,11 +42,22 @@ public class MoveConverter {
 	}
 	
 	/**
-	 * This method will display an given move
+	 * Returns a number according to the given string for the board.
 	 * 
-	 * @param move
+	 * @returns A point
 	 */
-	public void displayMove(Move move) {
-		System.out.println(move);
+	public static int convertStringToPoint(String string) {
+		return COLUMNS.indexOf(string);
+	}
+	
+	/**
+	 * Returns the position of the given string
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public static String convertPointToString(int position) {
+		char[] character = COLUMNS.toCharArray();
+		return position < character.length ? ""+character[position] : " ";
 	}
 }

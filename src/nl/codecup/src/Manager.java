@@ -3,44 +3,20 @@ package nl.codecup.src;
 import java.io.IOException;
 
 public class Manager {
-//	private boolean debugMode = true;
 	private Player player;
-//	private Player player2;
 	private Referee referee;
-	private MoveConverter converter;
-	private Board board;
-	/**
-	 * Get the IO
-	 * @return
-	 */
-	public MoveConverter getConverter() {
-		return this.converter;
-	}
-	
-	/**
-	 * Get the board
-	 * 
-	 * @return
-	 */
-	public Board getBoard() {
-		return this.board;
-	}
+	private GameState gameState;
 
-	/**
-	 * Get the referee
-	 * 
-	 * @return
-	 */
-	public Referee getReferee() {
-		return this.referee;
-	}
+	private MoveConverter converter;
+	private static final int PLAYER = 1;
+	private static final int COMPUTER = 2;
 
 	/**
 	 * Main
 	 * 
 	 * @param args
 	 */
-	public static void main(String args[]) {		
+	public static void main(String args[]) {				
 		new Manager();
 	}
 	
@@ -49,21 +25,28 @@ public class Manager {
 	 */
 	public Manager() {
 		this.converter = new MoveConverter();
-		this.board = new Board();
-		String input = IO.input();
+		gameState = new GameState(new Board(), PLAYER, COMPUTER);
+		
+		String input = IO.input(); //leave for debug
 		if (input.equals("Start")) {
-			this.startPlayer(new Player(this, 1));
-			this.startReferee();
+			this.referee = new Referee(this);
+			this.player = new Player(this.gameState, PLAYER, this.referee);
+			this.gameState = this.player.takeTurn(this.gameState);				
+			handleInput();
+		} else {
+			//OUR DEBUG
+			IO.debug(gameState.toString());
 		}
+	}
+	
+	public Manager(boolean testing) {
 	}
 	
 	/**
 	 * This will load the terminal configuration and the file configuration
-	 * 
-	 * @param configFile
 	 */
-	public void startGame(String configFile) {
-		this.loadConfig();
+	public void startGame() {
+		loadConfig();
 	}
 
 	/**
@@ -71,24 +54,6 @@ public class Manager {
 	 */
 	private void loadConfig() {
 		IO.output("This should load the config via file");
-	}
-
-	/**
-	 * This method will start the referee and
-	 */
-	public void startReferee() {
-		this.referee = new Referee(this);
-	}
-
-	/**
-	 * This method will start the player
-	 * 
-	 * @param player
-	 */
-	public void startPlayer(Player player) {
-		this.player = player;
-		player.start();
-		this.handleInput();
 	}
 
 	/**
@@ -101,19 +66,73 @@ public class Manager {
 	}
 	
 	/**
+	 * Returns the current game state
+	 * @return the current game state
+	 */
+	public GameState getGameState() {
+		return gameState;
+	}
+
+	/**
+	 * Sets the gamestate with the given game state
+	 * @param gamestate : The new game state
+	 */
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
+	}
+	
+	/**
+	 * Gets the player
+	 * @return the player
+	 */
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+	/**
+	 * Sets the player
+	 * @param player: the player
+	 */
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	
+	/**
+	 * Get the IO
+	 * @return
+	 */
+	public MoveConverter getConverter() {
+		return this.converter;
+	}
+
+	/**
+	 * Get the referee
+	 * 
+	 * @return
+	 */
+	public Referee getReferee() {
+		return this.referee;
+	}
+	
+	/**
 	 * This method will handle the input for the manager
 	 * 
 	 * @throws IOException
 	 */
 	public void handleInput() {
-		String input = IO.input(); 		
+		String input = IO.input(); 			
 		while (!input.equals("Quit!")) {
+			IO.debug("Retrieved input: " + input);
 			if (converter.isMoveFormat(input)) {
-				IO.debug("INPUTZ:" + input);
-//				Move move = this.converter.readMove(input);
-				this.player.setMove(this.getConverter().readMove("C5-E5"));
+				gameState = gameState.makeMove(this.readMove(input));
+				gameState = this.player.takeTurn(gameState);
 			} 
+			
+			input = IO.input();
 		}
 	}
 
+	public Move readMove(String move) {
+		return getConverter().readMove(move);
+	}
 }

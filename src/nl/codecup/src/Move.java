@@ -16,7 +16,7 @@ public class Move {
 	 * From location Y
 	 */
 	private String originY;
-
+	
 	/**
 	 * Target location X
 	 */
@@ -37,6 +37,18 @@ public class Move {
 	 */
 	public Move(String originX, String originY, String targetX, String targetY) {
 		this.setUpMove(originX, originY, targetX, targetY);
+	}
+	
+	/**
+	 * Constructor from int
+	 *
+	 * @param originX
+	 * @param originY
+	 * @param targetX
+	 * @param targetY
+	 */
+	public Move(int originX, int originY, int targetX, int targetY) {
+		this.setUpMove(MoveConverter.convertPointToString(originX), "" + (originY + 1), MoveConverter.convertPointToString(targetX), "" + (targetY + 1));
 	}
 
 	/**
@@ -67,6 +79,42 @@ public class Move {
 		this.targetX = targetX;
 		this.targetY = targetY;
 	}
+	
+	/**
+	 * Returns converted
+	 * 
+	 * @return
+	 */
+	public int getOriginXConverted() {
+		return MoveConverter.convertStringToPoint(this.originX);
+	}
+	
+	/**
+	 * Returns converted
+	 * 
+	 * @return
+	 */
+	public int getOriginYConverted() {
+		return (Integer.parseInt(this.originY) - 1);
+	}
+	
+	/**
+	 * Returns converted
+	 * 
+	 * @return
+	 */
+	public int getTargetXConverted() {
+		return MoveConverter.convertStringToPoint(this.targetX);
+	}
+	
+	/**
+	 * Returns converted
+	 * 
+	 * @return
+	 */
+	public int getTargetYConverted() {
+		return (Integer.parseInt(this.targetY) - 1);
+	}
 
 	/**
 	 * Get From Location
@@ -83,6 +131,62 @@ public class Move {
 	 */
 	public String getTo() {
 		return this.targetX + this.targetY;
+	}
+
+	/**
+	 * @return the originX
+	 */
+	public String getOriginX() {
+		return originX;
+	}
+
+	/**
+	 * @param originX the originX to set
+	 */
+	public void setOriginX(String originX) {
+		this.originX = originX;
+	}
+
+	/**
+	 * @return the originY
+	 */
+	public String getOriginY() {
+		return originY;
+	}
+
+	/**
+	 * @param originY the originY to set
+	 */
+	public void setOriginY(String originY) {
+		this.originY = originY;
+	}
+
+	/**
+	 * @return the targetX
+	 */
+	public String getTargetX() {
+		return targetX;
+	}
+
+	/**
+	 * @param targetX the targetX to set
+	 */
+	public void setTargetX(String targetX) {
+		this.targetX = targetX;
+	}
+
+	/**
+	 * @return the targetY
+	 */
+	public String getTargetY() {
+		return targetY;
+	}
+
+	/**
+	 * @param targetY the targetY to set
+	 */
+	public void setTargetY(String targetY) {
+		this.targetY = targetY;
 	}
 
 	/**
