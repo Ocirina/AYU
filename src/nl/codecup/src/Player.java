@@ -62,7 +62,7 @@ public class Player {
     					move = converter.readMove(row, column+1, row, column+2);
     				}
     				
-    				if(this.referee.validMove(move)) {
+    				if (this.referee.validMove(move)) {
 						return move;
 					}
     			}
