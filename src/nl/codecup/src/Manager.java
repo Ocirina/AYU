@@ -90,6 +90,14 @@ public class Manager {
 	}
 	
 	/**
+	 * Sets the player
+	 * @param player: the player
+	 */
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+	
+	/**
 	 * Get the IO
 	 * @return
 	 */
