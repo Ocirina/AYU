@@ -5,10 +5,12 @@ public class Board {
 	private static final int NONE = 0;
 	private static final int WHITE = 1;
 	private static final int BLACK = 2;
+	private static final int MAX_WHITESPACES = 61;
 
 	/**
 	 * The actual board
 	 */
+	private int[][] blankSpaces = new int[MAX_WHITESPACES][2];
 	private int[][] boardGrid = new int[][] {
 			{ NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK,
 					NONE },
@@ -35,11 +37,32 @@ public class Board {
 
 	/**
 	 * Constructor
+	 */
+	public Board() {
+		initBlankSpaces();
+	}
+
+	/**
+	 * Constructor
 	 * 
 	 * @param grid
 	 */
 	public Board(int[][] grid) {
 		this.boardGrid = cloneBoard(grid);
+		initBlankSpaces();
+	}
+
+	private void initBlankSpaces() {
+		int index = 0;
+		blankSpaces = new int[MAX_WHITESPACES][2];
+		for (int row = 0; row < SIZE; row++) {
+			for (int column = 0; column < SIZE; column++) {
+				if (boardGrid[row][column] == NONE) {
+					blankSpaces[index] = new int[] { row, column };
+					index++;
+				}
+			}
+		}
 	}
 
 	/**
