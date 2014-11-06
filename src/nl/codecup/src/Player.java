@@ -26,7 +26,7 @@ public class Player {
 		Move move = chooseMove();
 		if(this.getReferee().validMove(move)) {
 			IO.output(move.toString());
-			int gaps = state.getBoard().getGapsInCol(0,1).length;
+			int gaps = state.getBoard().getPiecesInCol(0,1).length;
 			IO.debug("GAPS IN Col 1: " + gaps);
 			return state.makeMove(move);
 		} 
