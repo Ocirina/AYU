@@ -30,12 +30,8 @@ public class Player {
 			IO.debug("GAPS IN Col 1: " + gaps);
 			return state.makeMove(move);
 		} 
-		
 
 		IO.debug("NO VALID MOVE! " + move.toString());
-		
-
-		IO.output("NO VALID MOVE! " + move.toString());
 
 		return null;		
     }
