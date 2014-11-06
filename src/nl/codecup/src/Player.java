@@ -45,6 +45,8 @@ public class Player {
     	int[][] content = this.state.getBoardContents();
     	Move move = null;
     	int contentLength = content.length - 1;
+    	
+    	// Strategy 1: Make long groups in each column. (Should make a group of 6 on each row).
 		for (int column = 0; column < contentLength; column++) {
 			for (int row = 0; row < contentLength; row++) {
     			
@@ -57,13 +59,11 @@ public class Player {
     			 * Start:  |   | W | W |   | W |   |
     			 * Result: |   |   | W | W | W |   |
     			 * 
-    			 * Situation 3
     			 * Start:  |   |   | W | W | W |   | W |   |
     			 * Result: |   |   |   | W | W | W | W |   |
     			 */
     			boolean gapScenario = (column < 8 && row < 8 && content[row][column] == Player.piece && content[row+1][column] == 0 && content[row+2][column] == Player.piece);
     			int columnPieceToMove = 0;
-    			
     			if (gapScenario) {
 	    			for (int i = column; i > 0; i--) {
 	    				IO.debug("DEBUG: " + content[row][i + 1]);
@@ -74,13 +74,27 @@ public class Player {
 	    					}
 	    				}   				    					
 	    			}
-	    			
 	    			return new Move(row, columnPieceToMove, row, column + 1);
-
     			}
     		}
-			
     	}
+		
+		// Strategy 2: If there are no more possibilities of making a group on a column.
+		// Connect them.
+		/**
+		 * Situation:
+		 * 
+		 * Start:  
+		 * |   |   | W | W | W | W | W | W |
+		 * |   |   |   |   |   |   |   |   |
+		 * |   |   | W | W | W | W | W | W |
+		 * 
+		 * Result: 
+		 * |   |   |   | W | W | W | W | W |
+		 * |   |   |   |   |   |   |   | W |
+		 * |   |   | W | W | W | W | W | W |
+		 * 
+		 */
 		
     	return move;
 	}
