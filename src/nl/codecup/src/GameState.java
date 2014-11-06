@@ -23,7 +23,7 @@ public class GameState {
 		this.checkForWin();
 		this.createGroupsForPlayer();
 	}
-	
+
 	public GameState(GameState state) {
 		this.playingPiece = state.playingPiece;
 		this.opponentPiece = state.opponentPiece;
@@ -35,24 +35,52 @@ public class GameState {
 	public Board getBoard() {
 		return board;
 	}
-	
-	private void createGroupsForPlayer(){
-		for(int i = 0; i < playerGroups.length; i++) {
-			playerGroups[i] = new Group(i);
-			/* Get piece in board */
+
+	private void createGroupsForPlayer() {
+		int[][] contents = board.getBoardContents();
+		int count = 0;
+		for (int i = 0; i < contents.length; i++) {
+			for (int j = 0; j < contents[i].length; j++) {
+				if (contents[i][j] == playingPiece) {
+					Group group = new Group(count);
+					group.addCoordinate(i + "," + j);
+					playerGroups[count] = group;
+					count++;
+				}
+			}
 		}
 	}
-	
+
 	/**
-	 * Adds a group to the player groups.
-	 * @param group: A new group
+	 * Sets a group to null.
+	 * 
+	 * @param group
+	 *            : The group to set to null
 	 */
-	public void removePlayerGroup(Group group) {
-		if(group != null && Arrays.asList(playerGroups).contains(group)) {
+	public void setPlayerGroupNull(Group group) {
+		if (group != null && Arrays.asList(playerGroups).contains(group)) {
 			playerGroups[group.getIndexInList()] = null;
 		}
 	}
-	
+
+	/**
+	 * Returns a group
+	 * 
+	 * @param x
+	 *            : row
+	 * @param y
+	 *            : column
+	 * @return The group that contains the coordinate.
+	 */
+	public Group getGroupByCoordinate(int x, int y) {
+		for (Group group : playerGroups) {
+			if (group.getCoordinates().contains(x + "," + y))
+				return group;
+		}
+
+		return null;
+	}
+
 	/**
 	 * Places the move on the board and returns this in a new state.
 	 * 
@@ -68,7 +96,88 @@ public class GameState {
 		newState.setPlayerPiece(opponentPiece);
 		newState.setComputerPiece(playingPiece);
 		newState.setBoard(newBoard.placePiece(move));
+		this.checkGroupsForMove(move.getOriginXConverted(),
+				move.getOriginYConverted(), move.getTargetXConverted(),
+				move.getTargetYConverted());
 		return newState;
+	}
+
+	private void checkGroupsForMove(int originX, int originY, int targetX, int targetY) {
+		/* If piece is not in group */
+		if (!board.hasNeighbour(originX, originY)) {
+			mergeNonGroupedPiece(originX, originY, targetX, targetY);
+		} else {
+			mergeGroupedPiece(originX, originY, targetX, targetY);
+		}
+	}
+
+	/**
+	 * Merges the group of the piece of the origin to the group(s) of the targetX and targetY's neighbours.
+	 */
+	private void mergeGroupedPiece(int originX, int originY, int targetX, int targetY){
+		Group[] groups = new Group[5];
+		Group group = groups[0] = this.getGroupByCoordinate(originX, originY);
+		if(group != null) {
+			int position = group.getPositionOfCoordinate(originX+","+originY);
+			if(position != -1) {
+				group.getCoordinates().set(position, targetX+","+targetY);
+ 			}
+			String[] neighBours = board.getNeighbours(targetX, targetY);
+			for(int i = 0; i < neighBours.length && (i+1) < groups.length; i++) {
+				if(!neighBours[i].equalsIgnoreCase("") && neighBours[i] != null) {
+					groups[i+1] = this.getGroupByCoordinate(originX, originY);
+				}
+			}
+			mergeGroups(groups);
+		}
+	}
+	
+	private void mergeNonGroupedPiece(int originX, int originY, int targetX, int targetY) {
+		Group group = this.getGroupByCoordinate(originX, originY);
+		Group[] groups = new Group[4];
+		if (group != null) {
+			List<String> tempList = group.getCoordinates();
+			tempList.set(0, targetX+","+targetY);
+			this.playerGroups[group.getIndexInList()] = null;
+			String[] neighBours = board.getNeighbours(targetX, targetY);
+			for(int i = 0; i < neighBours.length; i++) {
+				if(!neighBours[i].equalsIgnoreCase("") && neighBours[i] != null) {
+					groups[i] = this.getGroupByCoordinate(originX, originY);
+				}
+			}
+			this.setPlayerGroupNull(group); // Set origin group to null
+			mergeGroups(groups, tempList);
+		}
+	}
+	
+	/**
+	 * Merges the given groups
+	 * @param groups
+	 */
+	private Group mergeGroups(Group[] groups) {
+		Group mergedGroup = new Group(0);
+		for(Group group : groups) {
+			if(group != null) {
+				for(String coordinate : group.getCoordinates()) {
+					mergedGroup.addCoordinate(coordinate);
+					this.setPlayerGroupNull(group);
+				}
+			}
+		}
+		mergedGroup.setIndexInList(groups[0].getIndexInList());
+		return mergedGroup;
+	}
+	
+	/**
+	 * Merges the given groups and adds the given coordinates to the merged group.
+	 * @param groups
+	 * @param coordinates
+	 */
+	private void mergeGroups(Group[] groups, List<String> coordinates) {
+		Group mergedGroup = this.mergeGroups(groups);
+		for(String coordinate : coordinates) {
+			mergedGroup.addCoordinate(coordinate);
+		}
 	}
 
 	/**
