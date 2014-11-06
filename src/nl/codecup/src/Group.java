@@ -44,6 +44,15 @@ public class Group {
 	public void setCoordinates(List<String> coordinates) {
 		this.coordinates = coordinates;
 	}
+	
+	public int getPositionOfCoordinate(String coordinate) {
+		for(int i = 0; i < coordinates.size(); i++) {
+			if(coordinates.get(i).equalsIgnoreCase(coordinate)) {
+				return i;
+			}
+		}
+		return -1;
+	}
 
 	/**
 	 * @return the indexInList

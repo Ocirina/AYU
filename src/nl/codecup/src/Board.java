@@ -83,13 +83,10 @@ public class Board {
 	public boolean hasNeighbour(int x, int y) {
 		if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece)
 			return true;
-		// TODO ELSEIF to improve speed?
 		if (x + 1 < SIZE && this.boardGrid[x + 1][y] == Player.piece)
 			return true;
-		// TODO ELSEIF to improve speed?
 		if (y - 1 >= 0 && this.boardGrid[x][y - 1] == Player.piece)
 			return true;
-		// TODO ELSEIF to improve speed?
 		if (x - 1 >= 0 && this.boardGrid[x - 1][y] == Player.piece)
 			return true;
 
@@ -98,16 +95,12 @@ public class Board {
 
 	public boolean onEdgesOfGroup(int x, int y) {
 		int neighBours = 0;
-		// TODO ELSEIF to improve speed?
 		if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece)
 			neighBours++;
-		// TODO ELSEIF to improve speed?
 		if (x + 1 < SIZE && this.boardGrid[x + 1][y] == Player.piece)
 			neighBours++;
-		// TODO ELSEIF to improve speed?
 		if (y - 1 >= 0 && this.boardGrid[x][y - 1] == Player.piece)
 			neighBours++;
-		// TODO ELSEIF to improve speed?
 		if (x - 1 >= 0 && this.boardGrid[x - 1][y] == Player.piece)
 			neighBours++;
 
@@ -116,7 +109,6 @@ public class Board {
 
 	public boolean isMoveNeighbourOfSameGroup(int originX, int originY,
 			int targetX, int targetY) {
-		// TODO move object?
 		return findPath(originX, originY, originX, originY, targetX, targetY);
 	}
 
@@ -151,6 +143,20 @@ public class Board {
 		return found;
 	}
 
+	public String[] getNeighbours(int x, int y) {
+		String[] neighBours = new String[4];
+		if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece)
+			neighBours[0] = x+","+(y+1);
+		if (x + 1 < SIZE && this.boardGrid[x + 1][y] == Player.piece)
+			neighBours[1] = (x+1)+","+y;
+		if (y - 1 >= 0 && this.boardGrid[x][y - 1] == Player.piece)
+			neighBours[2] = x+","+(y-1);
+		if (x - 1 >= 0 && this.boardGrid[x - 1][y] == Player.piece)
+			neighBours[3] = (x-1)+","+y;
+
+		return neighBours;
+	}
+	
 	private boolean isNeighbour(int originX, int originY, int targetX,
 			int targetY) {
 		return ((originX == targetX && ((originY - 1) == targetY))
