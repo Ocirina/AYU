@@ -45,8 +45,7 @@ public class Player {
      * 
      * @return
      */
-    public Move chooseMove() {
-    	
+    public Move chooseMove() {    	
     	int[][] content = this.state.getBoardContents();
     	Move move = null;
     	int contentLength = content.length - 1;
@@ -79,16 +78,8 @@ public class Player {
 	    					}
 	    				}   				    					
 	    			}
-
-	    			int columnPieceToMove = (column - firstPieceInColumn);
 	    			
 	    			return new Move(row, columnPieceToMove, row, column + 1);
-	    			
-	    			//TODO: validMoveCheck?
-
-
-	    			IO.debug("COLPIECE: " + columnPieceToMove);
-	    			return new Move(row, columnPieceToMove, row + 1, column);
 
     			}
     		}
