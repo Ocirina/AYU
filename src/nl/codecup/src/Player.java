@@ -7,7 +7,7 @@ public class Player {
 
     public Player(GameState state, int piece, Referee referee) {
         this.state = state;
-        Player.piece = piece;
+        this.piece = piece;
         this.referee = referee;
     }
     
@@ -25,10 +25,13 @@ public class Player {
 		Move move = chooseMove();
 		if(this.getReferee().validMove(move)) {
 			IO.output(move.toString());
+			int gaps = state.getBoard().getGapsInCol(0).size();
+			IO.debug("GAPS IN Col 1: " + gaps);
 			return state.makeMove(move);
 		} 
 		
 		IO.debug("NO VALID MOVE! " + move.toString());
+		
 		return null;		
     }
     
@@ -38,6 +41,7 @@ public class Player {
      * @return
      */
     public Move chooseMove() {
+    	
     	int[][] content = this.state.getBoardContents();
     	Move move = null;
     	int contentLength = content.length - 1;
@@ -71,10 +75,13 @@ public class Player {
 	    			int columnPieceToMove = (column - firstPieceInColumn);
 	    			
 	    			return new Move(row, columnPieceToMove, row, column + 1);
+	    			
 	    			//TODO: validMoveCheck?
     			}
     		}
+			
     	}
+		
     	return move;
 	}
 
