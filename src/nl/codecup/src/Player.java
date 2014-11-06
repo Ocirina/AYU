@@ -47,8 +47,9 @@ public class Player {
     	int contentLength = content.length - 1;
     	
     	// Strategy 1: Make long groups in each column. (Should make a group of 6 on each row).
-		for (int column = 0; column < contentLength; column++) {
-			for (int row = 0; row < contentLength; row++) {
+		for (int row = 0; row < contentLength; row++) {
+			for (int column = 0; column < contentLength; column++) {
+				IO.debug("row: "+row + ", column: "+column + " => "+ content[row][column]);
     			
     			/**
     			 * Situation 1
@@ -62,21 +63,21 @@ public class Player {
     			 * Start:  |   |   | W | W | W |   | W |   |
     			 * Result: |   |   |   | W | W | W | W |   |
     			 */
-    			boolean gapScenario = (column < 8 && row < 8 && content[row][column] == Player.piece && content[row+1][column] == 0 && content[row+2][column] == Player.piece);
+    			boolean gapScenario = (column < 8 && row < 8 && content[row][column] == Player.piece && content[row][column+1] == 0 && content[row][column+2] == Player.piece);
     			int columnPieceToMove = 0;
     			if (gapScenario) {
-	    			for (int i = column; i > 0; i--) {
+	    			for (int i = (column-1); i > 0; i--) {
 	    				IO.debug("DEBUG: " + content[row][i + 1]);
-	    				if (content[row][i + 1] == Player.piece){
-	    					if(content[row][i] != Player.piece ){
-		    					columnPieceToMove = i;
-		    					break;
-	    					}
+	    				if (content[row][i] == Player.piece){
+	    					columnPieceToMove = i;
+	    					break;
 	    				}   				    					
 	    			}
 	    			return new Move(row, columnPieceToMove, row, column + 1);
     			}
     		}
+			IO.debug("\n");
+
     	}
 		
 		// Strategy 2: If there are no more possibilities of making a group on a column.
