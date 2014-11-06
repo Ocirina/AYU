@@ -101,4 +101,15 @@ public class Group {
 		}
 		return minimumDistance;
 	}
+	
+	/**
+	 * 
+	 */
+	public String toString() {
+		String output = "Group :"+this.getIndexInList();
+		for(int i = 0; i < this.coordinates.size(); i++) {
+			output += "-"+this.getCoordinates().get(i);
+		}
+		return output;
+	}
 }

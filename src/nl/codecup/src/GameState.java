@@ -29,7 +29,7 @@ public class GameState {
 		this.opponentPiece = state.opponentPiece;
 		this.winner = state.winner;
 		this.board = state.board.clone();
-		this.createGroupsForPlayer();
+		this.playerGroups = state.playerGroups;
 	}
 
 	public Board getBoard() {
@@ -77,7 +77,6 @@ public class GameState {
 			if (group != null && group.getCoordinates().contains(x + "," + y))
 				return group;
 		}
-
 		return null;
 	}
 	
@@ -104,6 +103,7 @@ public class GameState {
 		this.checkGroupsForMove(move.getOriginXConverted(),
 				move.getOriginYConverted(), move.getTargetXConverted(),
 				move.getTargetYConverted());
+		IO.debug(groupsToString());
 		return newState;
 	}
 
@@ -173,6 +173,7 @@ public class GameState {
 				}
 			}
 		}
+		playerGroups[mergedGroup.getIndexInList()] = mergedGroup;
 		return mergedGroup;
 	}
 	
@@ -186,6 +187,7 @@ public class GameState {
 		for(String coordinate : coordinates) {
 			mergedGroup.addCoordinate(coordinate);
 		}
+		
 	}
 
 	/**
@@ -258,6 +260,18 @@ public class GameState {
 	 */
 	public String toString() {
 		return this.board.toString();
+	}
+	
+	/**
+	 * Prints the groa
+	 * @return
+	 */
+	public String groupsToString() {
+		String groups = "Groups: \n";
+		for(Group group : playerGroups) {
+			groups += group == null ? "Empty Group\n" : group.toString() + "\n";
+		}
+		return groups;
 	}
 
 	/**
