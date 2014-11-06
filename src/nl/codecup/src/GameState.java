@@ -103,7 +103,6 @@ public class GameState {
 		this.checkGroupsForMove(move.getOriginXConverted(),
 				move.getOriginYConverted(), move.getTargetXConverted(),
 				move.getTargetYConverted());
-		IO.debug(groupsToString());
 		return newState;
 	}
 
