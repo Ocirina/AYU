@@ -106,19 +106,28 @@ public class Player {
 		 * Situation:
 		 * 
 		 * Start: 
-		 * | | | W | W | W | W | W | W | 
-		 * | | | | | | | | | | | | W | W |
-		 * W | W | W | W |
+		 * |   |   | W | W | W | W | W | W | 
+		 * |   |   |   |   |   |   |   |   |
+		 * |   |   | W | W | W | W | W | W | 
 		 * 
-		 * Result: | | | | W | W | W | W | W | | | | | | | | | W | | | | W | W |
-		 * W | W | W | W |
+		 * Result:
+		 * |   |   |   | W | W | W | W | W | 
+		 * |   |   |   |   |   |   |   | W |
+		 * |   |   | W | W | W | W | W | W | 
 		 * 
 		 */
 
 		for (int row = 1; row < (contentLength-1); row++) {
-			if (content[row][9] == 0) {
+			if (content[row][10] == 0) {
 				IO.debug("Got it!");
-				return new Move((row -1), 5, row, 10);
+				int columnPieceToMove = 5;
+				for (int i = 10; i > 0; i--) {
+					if (content[row][i] == Player.piece)
+						columnPieceToMove = i;
+					else
+						break;
+				}
+				return new Move((row -1), columnPieceToMove, row, 10);
 			}
 		}
 		return move;
