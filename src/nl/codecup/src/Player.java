@@ -51,9 +51,6 @@ public class Player {
 		// 6 on each row).
 		for (int row = 0; row < contentLength; row++) {
 			for (int column = 0; column < contentLength; column++) {
-				IO.debug("row: " + row + ", column: " + column + " => "
-						+ content[row][column]);
-
 				/**
 				 * Situation 1 Start: | | W | | W | | | Result: | | | W | W | |
 				 * |
@@ -66,34 +63,51 @@ public class Player {
 				 */
 				boolean gapScenario = (column < 9 && row < 9
 						&& content[row][column] == Player.piece
-						&& content[row][column + 1] == 0 && content[row][column + 2] == Player.piece);
+						&& content[row][column + 1] == 0 
+						&& content[row][column + 2] == Player.piece);
+				
 				int columnPieceToMove = 0;
 				if (gapScenario) {
 					for (int i = column; i > 0; i--) {
-						// IO.debug("DEBUG: " + content[row][i + 1]);
-//						IO.debug("C: " + i + " => " + content[row][i]);
-						if (content[row][i] == Player.piece) {
-//							IO.debug("test");
+						if (content[row][i] == Player.piece)
 							columnPieceToMove = i;
-						} else {
+						else
 							break;
-						}
 					}
-//					IO.debug("column Piece" + columnPieceToMove);
 					return new Move(row, columnPieceToMove, row, column + 1);
 				}
 			}
-			IO.debug("\n");
+		}
+		
+		for (int row = 0; row < contentLength; row++) {
+			for (int column = 0; column < contentLength; column++) {
+				boolean gapScenario = (column <= 9
+						&& content[row][column] == Player.piece
+						&& content[row][column + 1] == 0);
+				
+				int columnPieceToMove = 0;
+				if (gapScenario) {
+					for (int i = column; i > 0; i--) {
+						if (content[row][i] == Player.piece)
+							columnPieceToMove = i;
+						else
+							break;
+					}
+					return new Move(row, columnPieceToMove, row, column + 1);
+				}
+			}
 
 		}
 
-		// Strategy 2: If there are no more possibilities of making a group on a
+		// Strategy 3: If there are no more possibilities of making a group on a
 		// column.
 		// Connect them.
 		/**
 		 * Situation:
 		 * 
-		 * Start: | | | W | W | W | W | W | W | | | | | | | | | | | | | W | W |
+		 * Start: 
+		 * | | | W | W | W | W | W | W | 
+		 * | | | | | | | | | | | | W | W |
 		 * W | W | W | W |
 		 * 
 		 * Result: | | | | W | W | W | W | W | | | | | | | | | W | | | | W | W |
@@ -101,6 +115,12 @@ public class Player {
 		 * 
 		 */
 
+		for (int row = 1; row < (contentLength-1); row++) {
+			if (content[row][9] == 0) {
+				IO.debug("Got it!");
+				return new Move((row -1), 5, row, 10);
+			}
+		}
 		return move;
 	}
 
