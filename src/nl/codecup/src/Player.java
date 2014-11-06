@@ -8,7 +8,7 @@ public class Player {
 
     public Player(GameState state, int piece, Referee referee) {
         this.state = state;
-        Player.piece = piece;
+        this.piece = piece;
         this.referee = referee;
     }
     
@@ -26,10 +26,13 @@ public class Player {
 		Move move = chooseMove();
 		if(this.getReferee().validMove(move)) {
 			IO.output(move.toString());
+			int gaps = state.getBoard().getGapsInCol(0).size();
+			IO.debug("GAPS IN Col 1: " + gaps);
 			return state.makeMove(move);
 		} 
-		
-		IO.output("NO VALID MOVE! " + move.toString());
+
+		IO.debug("NO VALID MOVE! " + move.toString());
+
 		return null;		
     }
     
@@ -38,7 +41,7 @@ public class Player {
      * 
      * @return
      */
-    public Move chooseMove() {
+    public Move chooseMove() {    	
     	int[][] content = this.state.getBoardContents();
     	Move move = null;
     	int contentLength = content.length - 1;
@@ -66,17 +69,19 @@ public class Player {
 	    				IO.debug("DEBUG: " + content[row][i + 1]);
 	    				if (content[row][i + 1] == Player.piece){
 	    					if(content[row][i] != Player.piece ){
-		    					columnPieceToMove = i + 1;
+		    					columnPieceToMove = i;
 		    					break;
 	    					}
 	    				}   				    					
 	    			}
-
-	    			IO.debug("COLPIECE: " + columnPieceToMove);
+	    			
 	    			return new Move(row, columnPieceToMove, row, column + 1);
+
     			}
     		}
+			
     	}
+		
     	return move;
 	}
 
