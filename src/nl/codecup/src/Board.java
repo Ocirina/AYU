@@ -1,5 +1,7 @@
 package nl.codecup.src;
 
+import java.util.ArrayList;
+
 public class Board {
 	public static final int SIZE = 11;
 	private static final int NONE = 0;
@@ -283,5 +285,37 @@ public class Board {
 
 	public int[][] getBoardContents() {
 		return this.boardGrid;
+	}
+	public ArrayList<Integer> getGapsInCol(int col)
+	{
+		ArrayList<Integer> gapsInCol = new ArrayList<Integer>();
+		int[][] content = getBoardContents();
+		for (int row=0; row< SIZE-1;row++ )
+		{
+			if(content[row][col]==0)
+			{
+				
+				gapsInCol.add(row);	
+				
+			}
+		}
+		
+		return gapsInCol;
+	}
+
+	public ArrayList<Integer> getGapsInRow(int row)
+	{
+		ArrayList<Integer>  gapsInRow = new ArrayList<Integer>();
+		int[][] content = getBoardContents();
+		for (int col=0; col <= SIZE-1;col++ )
+		{
+			if(content[row][col]==0)
+			{
+				gapsInRow.add(col);	
+			
+			}
+		}
+		
+		return gapsInRow;
 	}
 }
