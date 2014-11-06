@@ -41,7 +41,7 @@ public class Board {
 	 * Constructor
 	 */
 	public Board() {
-		initBlankSpaces();
+		setBlankSpaces();
 	}
 
 	/**
@@ -51,20 +51,24 @@ public class Board {
 	 */
 	public Board(int[][] grid) {
 		this.boardGrid = cloneBoard(grid);
-		initBlankSpaces();
+		setBlankSpaces();
 	}
 
-	private void initBlankSpaces() {
+	private void setBlankSpaces() {
 		int index = 0;
 		blankSpaces = new int[MAX_WHITESPACES][2];
 		for (int row = 0; row < SIZE; row++) {
 			for (int column = 0; column < SIZE; column++) {
-				if (boardGrid[row][column] == NONE) {
+				if (isBlankSpace(row, column)) {
 					blankSpaces[index] = new int[] { row, column };
 					index++;
 				}
 			}
 		}
+	}
+
+	public int[][] getBlankSpaces() {
+		return this.blankSpaces;
 	}
 
 	/**
@@ -178,6 +182,7 @@ public class Board {
 	public void movePiece(Move move) {
 		switchPosition(move.getOriginXConverted(), move.getOriginYConverted(),
 				move.getTargetXConverted(), move.getTargetYConverted());
+		setBlankSpaces();
 	}
 
 	/**
@@ -286,36 +291,31 @@ public class Board {
 	public int[][] getBoardContents() {
 		return this.boardGrid;
 	}
-	public ArrayList<Integer> getGapsInCol(int col)
-	{
+
+	public ArrayList<Integer> getGapsInCol(int col) {
 		ArrayList<Integer> gapsInCol = new ArrayList<Integer>();
 		int[][] content = getBoardContents();
-		for (int row=0; row< SIZE-1;row++ )
-		{
-			if(content[row][col]==0)
-			{
-				
-				gapsInCol.add(row);	
-				
+		for (int row = 0; row < SIZE - 1; row++) {
+			if (content[row][col] == 0) {
+
+				gapsInCol.add(row);
+
 			}
 		}
-		
+
 		return gapsInCol;
 	}
 
-	public ArrayList<Integer> getGapsInRow(int row)
-	{
-		ArrayList<Integer>  gapsInRow = new ArrayList<Integer>();
+	public ArrayList<Integer> getGapsInRow(int row) {
+		ArrayList<Integer> gapsInRow = new ArrayList<Integer>();
 		int[][] content = getBoardContents();
-		for (int col=0; col <= SIZE-1;col++ )
-		{
-			if(content[row][col]==0)
-			{
-				gapsInRow.add(col);	
-			
+		for (int col = 0; col <= SIZE - 1; col++) {
+			if (content[row][col] == 0) {
+				gapsInRow.add(col);
+
 			}
 		}
-		
+
 		return gapsInRow;
 	}
 }
