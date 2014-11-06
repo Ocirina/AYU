@@ -3,6 +3,7 @@ package nl.codecup.src;
 public class Player {
 	private GameState state;
 	public static int piece;
+	public static int empty = 0;
 	private Referee referee;
 
     public Player(GameState state, int piece, Referee referee) {
@@ -30,8 +31,12 @@ public class Player {
 			return state.makeMove(move);
 		} 
 		
+<<<<<<< HEAD
 		IO.debug("NO VALID MOVE! " + move.toString());
 		
+=======
+		IO.output("NO VALID MOVE! " + move.toString());
+>>>>>>> ecfe4e40f8958ccc329dcd8447a655a18201687d
 		return null;		
     }
     
@@ -61,22 +66,30 @@ public class Player {
     			 * Start:  |   |   | W | W | W |   | W |   |
     			 * Result: |   |   |   | W | W | W | W |   |
     			 */
-    			boolean gapScenario = (column < 8 && content[row][column] == Player.piece && content[row+1][column] == 0 && content[row+2][column] == Player.piece);
+    			boolean gapScenario = (column < 8 && row < 8 && content[row][column] == Player.piece && content[row+1][column] == 0 && content[row+2][column] == Player.piece);
+    			int columnPieceToMove = 0;
     			
     			if (gapScenario) {
-	    			int firstPieceInColumn = 0;
 	    			for (int i = column; i > 0; i--) {
-	    				if (content[row][column] == Player.piece)
-	    					firstPieceInColumn++;
-	    				else
-	    					break;
-	    					
+	    				IO.debug("DEBUG: " + content[row][i + 1]);
+	    				if (content[row][i + 1] == Player.piece){
+	    					if(content[row][i] != Player.piece ){
+		    					columnPieceToMove = i;
+		    					break;
+	    					}
+	    				}   				    					
 	    			}
+<<<<<<< HEAD
 	    			int columnPieceToMove = (column - firstPieceInColumn);
 	    			
 	    			return new Move(row, columnPieceToMove, row, column + 1);
 	    			
 	    			//TODO: validMoveCheck?
+=======
+
+	    			IO.debug("COLPIECE: " + columnPieceToMove);
+	    			return new Move(row, columnPieceToMove, row + 1, column);
+>>>>>>> ecfe4e40f8958ccc329dcd8447a655a18201687d
     			}
     		}
 			
