@@ -7,10 +7,12 @@ public class Board {
 	private static final int NONE = 0;
 	private static final int WHITE = 1;
 	private static final int BLACK = 2;
+	private static final int MAX_WHITESPACES = 61;
 
 	/**
 	 * The actual board
 	 */
+	private int[][] blankSpaces = new int[MAX_WHITESPACES][2];
 	private int[][] boardGrid = new int[][] {
 			{ NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK,
 					NONE },
@@ -37,11 +39,32 @@ public class Board {
 
 	/**
 	 * Constructor
+	 */
+	public Board() {
+		initBlankSpaces();
+	}
+
+	/**
+	 * Constructor
 	 * 
 	 * @param grid
 	 */
 	public Board(int[][] grid) {
 		this.boardGrid = cloneBoard(grid);
+		initBlankSpaces();
+	}
+
+	private void initBlankSpaces() {
+		int index = 0;
+		blankSpaces = new int[MAX_WHITESPACES][2];
+		for (int row = 0; row < SIZE; row++) {
+			for (int column = 0; column < SIZE; column++) {
+				if (boardGrid[row][column] == NONE) {
+					blankSpaces[index] = new int[] { row, column };
+					index++;
+				}
+			}
+		}
 	}
 
 	/**
@@ -54,16 +77,16 @@ public class Board {
 	 * @return True if it's a group, else returns false.
 	 */
 	public boolean hasNeighbour(int x, int y) {
-		if (y+1 < SIZE && this.boardGrid[x][y + 1] == Player.piece)
+		if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece)
 			return true;
-		//TODO ELSEIF to improve speed?
-		if (x+1 < SIZE && this.boardGrid[x + 1][y] == Player.piece)
+		// TODO ELSEIF to improve speed?
+		if (x + 1 < SIZE && this.boardGrid[x + 1][y] == Player.piece)
 			return true;
-		//TODO ELSEIF to improve speed?
-		if (y-1 >= 0 && this.boardGrid[x][y - 1] == Player.piece)
+		// TODO ELSEIF to improve speed?
+		if (y - 1 >= 0 && this.boardGrid[x][y - 1] == Player.piece)
 			return true;
-		//TODO ELSEIF to improve speed?
-		if (x-1 >= 0 && this.boardGrid[x - 1][y] == Player.piece)
+		// TODO ELSEIF to improve speed?
+		if (x - 1 >= 0 && this.boardGrid[x - 1][y] == Player.piece)
 			return true;
 
 		return false;
@@ -71,63 +94,64 @@ public class Board {
 
 	public boolean onEdgesOfGroup(int x, int y) {
 		int neighBours = 0;
-		//TODO ELSEIF to improve speed?
-		if (y+1 < SIZE && this.boardGrid[x][y + 1] == Player.piece)
+		// TODO ELSEIF to improve speed?
+		if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece)
 			neighBours++;
-		//TODO ELSEIF to improve speed?
-		if (x+1 < SIZE && this.boardGrid[x + 1][y] == Player.piece)
+		// TODO ELSEIF to improve speed?
+		if (x + 1 < SIZE && this.boardGrid[x + 1][y] == Player.piece)
 			neighBours++;
-		//TODO ELSEIF to improve speed?
-		if (y-1 >= 0 && this.boardGrid[x][y - 1] == Player.piece)
+		// TODO ELSEIF to improve speed?
+		if (y - 1 >= 0 && this.boardGrid[x][y - 1] == Player.piece)
 			neighBours++;
-		//TODO ELSEIF to improve speed?
-		if (x-1 >= 0 && this.boardGrid[x - 1][y] == Player.piece)
+		// TODO ELSEIF to improve speed?
+		if (x - 1 >= 0 && this.boardGrid[x - 1][y] == Player.piece)
 			neighBours++;
 
 		return neighBours < 2;
 	}
 
 	public boolean isMoveNeighbourOfSameGroup(int originX, int originY,
-			int targetX, int targetY) {				
-		//TODO move object?
+			int targetX, int targetY) {
+		// TODO move object?
 		return findPath(originX, originY, originX, originY, targetX, targetY);
 	}
 
 	private boolean findPath(int originX, int originY, int nextX, int nextY,
 			int targetX, int targetY) {
 		boolean found = false;
-		
-		if(!(originX == nextX && originY == nextY))
+
+		if (!(originX == nextX && originY == nextY))
 			found = isNeighbour(nextX, nextY, targetX, targetY);
-		
-		if (!found && nextY+1 < SIZE && this.boardGrid[nextX][nextY+1] == Player.piece && ((nextY + 1) != originY)) 
-			found = findPath(nextX, nextY, nextX, nextY+1, targetX, targetY);
-		
-		//TODO ELSEIF to improve speed?
-		if (!found && nextX+1 < SIZE && this.boardGrid[nextX + 1][nextY] == Player.piece && ((nextX + 1) != originY))
-			found = findPath(nextX, nextY, nextX+1, nextY, targetX, targetY);
-		//TODO same..
-		if (!found && nextY-1 >= 0 && this.boardGrid[nextX][nextY-1] == Player.piece && ((nextY - 1) != originY)) 
-			found = findPath(nextX, nextY, nextX, nextY-1, targetX, targetY);
-		//TODO same..
-		if (!found && nextX-1 >= 0 && this.boardGrid[nextX - 1][nextY] == Player.piece && ((nextX - 1) != originY))
-			found = findPath(nextX, nextY, nextX-1, nextY, targetX, targetY);
-		
+
+		if (!found && nextY + 1 < SIZE
+				&& this.boardGrid[nextX][nextY + 1] == Player.piece
+				&& ((nextY + 1) != originY))
+			found = findPath(nextX, nextY, nextX, nextY + 1, targetX, targetY);
+
+		// TODO ELSEIF to improve speed?
+		if (!found && nextX + 1 < SIZE
+				&& this.boardGrid[nextX + 1][nextY] == Player.piece
+				&& ((nextX + 1) != originY))
+			found = findPath(nextX, nextY, nextX + 1, nextY, targetX, targetY);
+		// TODO same..
+		if (!found && nextY - 1 >= 0
+				&& this.boardGrid[nextX][nextY - 1] == Player.piece
+				&& ((nextY - 1) != originY))
+			found = findPath(nextX, nextY, nextX, nextY - 1, targetX, targetY);
+		// TODO same..
+		if (!found && nextX - 1 >= 0
+				&& this.boardGrid[nextX - 1][nextY] == Player.piece
+				&& ((nextX - 1) != originY))
+			found = findPath(nextX, nextY, nextX - 1, nextY, targetX, targetY);
+
 		return found;
 	}
-	
-	private boolean isNeighbour(int originX, int originY, int targetX, int targetY) {
-		return ((originX == targetX && ((originY - 1) == targetY)) ||
-				(originX == targetX && ((originY + 1) == targetY)) ||
-				(originY == targetY && ((originX - 1) == targetX)) ||
-				(originY == targetY && ((originX + 1) == targetX)) );
-	}
 
-	/**
-	 * Constructor
-	 */
-	public Board() {
-
+	private boolean isNeighbour(int originX, int originY, int targetX,
+			int targetY) {
+		return ((originX == targetX && ((originY - 1) == targetY))
+				|| (originX == targetX && ((originY + 1) == targetY))
+				|| (originY == targetY && ((originX - 1) == targetX)) || (originY == targetY && ((originX + 1) == targetX)));
 	}
 
 	/**
@@ -152,9 +176,10 @@ public class Board {
 	 * @param move
 	 */
 	public void movePiece(Move move) {
-		switchPosition(move.getOriginXConverted(), move.getOriginYConverted(), move.getTargetXConverted(), move.getTargetYConverted());
+		switchPosition(move.getOriginXConverted(), move.getOriginYConverted(),
+				move.getTargetXConverted(), move.getTargetYConverted());
 	}
-	
+
 	/**
 	 * Switch the positions
 	 * 
@@ -163,7 +188,8 @@ public class Board {
 	 * @param targetX
 	 * @param targetY
 	 */
-	private void switchPosition(int originX, int originY, int targetX, int targetY) {
+	private void switchPosition(int originX, int originY, int targetX,
+			int targetY) {
 		int tempPiece = this.boardGrid[originX][originY];
 		this.boardGrid[originX][originY] = this.boardGrid[targetX][targetY];
 		this.boardGrid[targetX][targetY] = tempPiece;
@@ -179,7 +205,7 @@ public class Board {
 	public int amountOfGroups(Player player) {
 		return 0;
 	}
-	
+
 	public String toString() {
 		return this.toString(false);
 	}
@@ -189,8 +215,9 @@ public class Board {
 	 */
 	public String toString(boolean normal) {
 		String rowSeperator = "    +---+---+---+---+---+---+---+---+---+---+---+\n";
-		String returnString = "      A   B   C   D   E   F   G   H   I   J   K\n" + rowSeperator;
-		if(!normal) {			
+		String returnString = "      A   B   C   D   E   F   G   H   I   J   K\n"
+				+ rowSeperator;
+		if (!normal) {
 			for (int column = (SIZE - 1); column >= 0; column--) {
 				returnString += String.format("%02d", (column + 1)) + " ";
 				for (int row = 0; row < SIZE; row++)
@@ -206,8 +233,7 @@ public class Board {
 							+ this.convertPiece(this.boardGrid[row][column]);
 				returnString += " |\n" + rowSeperator;
 			}
-			
-			
+
 		}
 		return returnString;
 	}
@@ -222,7 +248,7 @@ public class Board {
 		if (piece != NONE) {
 			return piece == WHITE ? "W" : "B";
 		}
-		
+
 		return " ";
 	}
 
@@ -248,15 +274,15 @@ public class Board {
 				tempBoard[row][column] = board[row][column];
 			}
 		}
-		
+
 		return tempBoard;
 	}
 
 	public Board placePiece(int piece, int row, int column) {
-		//TODO Switch the pieces. Should receive Move object?
+		// TODO Switch the pieces. Should receive Move object?
 		return this;
 	}
-	
+
 	public int[][] getBoardContents() {
 		return this.boardGrid;
 	}
