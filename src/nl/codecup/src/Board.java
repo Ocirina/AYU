@@ -292,30 +292,29 @@ public class Board {
 		return this.boardGrid;
 	}
 
-	public ArrayList<Integer> getGapsInCol(int col) {
-		ArrayList<Integer> gapsInCol = new ArrayList<Integer>();
+	public int[] getPiecesInCol(int col, int piece) {
+		int[] gapsInCol = new int[11];
+		int counter = 0;
 		int[][] content = getBoardContents();
 		for (int row = 0; row < SIZE - 1; row++) {
-			if (content[row][col] == 0) {
-
-				gapsInCol.add(row);
-
+			if (content[row][col] == piece) {
+				gapsInCol[counter] = row;
+				counter++;
 			}
 		}
-
 		return gapsInCol;
 	}
 
-	public ArrayList<Integer> getGapsInRow(int row) {
-		ArrayList<Integer> gapsInRow = new ArrayList<Integer>();
+	public int[] getPiecesInRow(int row, int piece) {
+		int[] gapsInRow = new int[11];
+		int counter = 0;
 		int[][] content = getBoardContents();
 		for (int col = 0; col <= SIZE - 1; col++) {
-			if (content[row][col] == 0) {
-				gapsInRow.add(col);
-
+			if (content[row][col] == piece) {
+				gapsInRow[counter] = col;
 			}
 		}
-
 		return gapsInRow;
 	}
+	
 }
