@@ -29,7 +29,7 @@ public class GameState {
 		this.opponentPiece = state.opponentPiece;
 		this.winner = state.winner;
 		this.board = state.board.clone();
-		this.createGroupsForPlayer();
+		this.playerGroups = state.playerGroups;
 	}
 
 	public Board getBoard() {
@@ -74,11 +74,15 @@ public class GameState {
 	 */
 	public Group getGroupByCoordinate(int x, int y) {
 		for (Group group : playerGroups) {
-			if (group.getCoordinates().contains(x + "," + y))
+			if (group != null && group.getCoordinates().contains(x + "," + y))
 				return group;
 		}
-
 		return null;
+	}
+	
+	public Group getGroupByCoordinate(String coordinate) {
+		String[] coords = coordinate.split(",");
+		return this.getGroupByCoordinate(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
 	}
 
 	/**
@@ -124,8 +128,11 @@ public class GameState {
  			}
 			String[] neighBours = board.getNeighbours(targetX, targetY);
 			for(int i = 0; i < neighBours.length && (i+1) < groups.length; i++) {
-				if(!neighBours[i].equalsIgnoreCase("") && neighBours[i] != null) {
-					groups[i+1] = this.getGroupByCoordinate(originX, originY);
+				if(neighBours[i] != null && !neighBours[i].equalsIgnoreCase("")) {
+					Group tempGroup = this.getGroupByCoordinate(neighBours[i]);
+					if(group != tempGroup) {
+						groups[i+1] = tempGroup;
+					}
 				}
 			}
 			mergeGroups(groups);
@@ -141,8 +148,8 @@ public class GameState {
 			this.playerGroups[group.getIndexInList()] = null;
 			String[] neighBours = board.getNeighbours(targetX, targetY);
 			for(int i = 0; i < neighBours.length; i++) {
-				if(!neighBours[i].equalsIgnoreCase("") && neighBours[i] != null) {
-					groups[i] = this.getGroupByCoordinate(originX, originY);
+				if(neighBours[i] != null && !neighBours[i].equalsIgnoreCase("")) {
+					groups[i] = this.getGroupByCoordinate(neighBours[i]);
 				}
 			}
 			this.setPlayerGroupNull(group); // Set origin group to null
@@ -156,6 +163,7 @@ public class GameState {
 	 */
 	private Group mergeGroups(Group[] groups) {
 		Group mergedGroup = new Group(0);
+		mergedGroup.setIndexInList(groups[0].getIndexInList());
 		for(Group group : groups) {
 			if(group != null) {
 				for(String coordinate : group.getCoordinates()) {
@@ -164,7 +172,7 @@ public class GameState {
 				}
 			}
 		}
-		mergedGroup.setIndexInList(groups[0].getIndexInList());
+		playerGroups[mergedGroup.getIndexInList()] = mergedGroup;
 		return mergedGroup;
 	}
 	
@@ -178,6 +186,7 @@ public class GameState {
 		for(String coordinate : coordinates) {
 			mergedGroup.addCoordinate(coordinate);
 		}
+		
 	}
 
 	/**
@@ -250,6 +259,18 @@ public class GameState {
 	 */
 	public String toString() {
 		return this.board.toString();
+	}
+	
+	/**
+	 * Prints the groa
+	 * @return
+	 */
+	public String groupsToString() {
+		String groups = "Groups: \n";
+		for(Group group : playerGroups) {
+			groups += group == null ? "Empty Group\n" : group.toString() + "\n";
+		}
+		return groups;
 	}
 
 	/**
