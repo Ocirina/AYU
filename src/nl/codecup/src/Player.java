@@ -64,9 +64,11 @@ public class Player {
     			if (gapScenario) {
 	    			for (int i = column; i > 0; i--) {
 	    				IO.debug("DEBUG: " + content[row][i + 1]);
-	    				if (content[row][i] != Player.piece && content[row][i + 1] == Player.piece){
-	    					columnPieceToMove = i;
-	    					break;
+	    				if (content[row][i + 1] == Player.piece){
+	    					if(content[row][i] != Player.piece ){
+		    					columnPieceToMove = i + 1;
+		    					break;
+	    					}
 	    				}   				    					
 	    			}
 
