@@ -1,10 +1,15 @@
 package nl.codecup.src;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class GameState {
 	private Board board;
 	private int playingPiece;
 	private int opponentPiece;
 	private int winner = 0;
+	private Group[] playerGroups = new Group[30];
 
 	public GameState(int playerPiece, int opponentPiece) {
 		this.playingPiece = playerPiece;
@@ -16,19 +21,38 @@ public class GameState {
 		this.playingPiece = playerPiece;
 		this.opponentPiece = opponentPiece;
 		this.checkForWin();
+		this.createGroupsForPlayer();
 	}
-
+	
 	public GameState(GameState state) {
 		this.playingPiece = state.playingPiece;
 		this.opponentPiece = state.opponentPiece;
 		this.winner = state.winner;
 		this.board = state.board.clone();
+		this.createGroupsForPlayer();
 	}
 
 	public Board getBoard() {
 		return board;
 	}
-
+	
+	private void createGroupsForPlayer(){
+		for(int i = 0; i < playerGroups.length; i++) {
+			playerGroups[i] = new Group(i);
+			/* Get piece in board */
+		}
+	}
+	
+	/**
+	 * Adds a group to the player groups.
+	 * @param group: A new group
+	 */
+	public void removePlayerGroup(Group group) {
+		if(group != null && Arrays.asList(playerGroups).contains(group)) {
+			playerGroups[group.getIndexInList()] = null;
+		}
+	}
+	
 	/**
 	 * Places the move on the board and returns this in a new state.
 	 * 

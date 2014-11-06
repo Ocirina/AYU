@@ -16,12 +16,18 @@ public class Group {
 	 */
 	private List<String> coordinates = new ArrayList<String>();
 	
-	public Group() {
-		
+	/**
+	 * The index of this group in the list.
+	 */
+	private int indexInList = 0;
+	
+	public Group(int index) {
+		this.indexInList = index;
 	}
 	
-	public Group(List<String> coordinates) {
+	public Group(List<String> coordinates, int index) {
 		this.coordinates = coordinates;
+		this.indexInList = index;
 	}
 	
 	/**
@@ -37,6 +43,20 @@ public class Group {
 	 */
 	public void setCoordinates(List<String> coordinates) {
 		this.coordinates = coordinates;
+	}
+
+	/**
+	 * @return the indexInList
+	 */
+	public int getIndexInList() {
+		return indexInList;
+	}
+
+	/**
+	 * @param indexInList the indexInList to set
+	 */
+	public void setIndexInList(int indexInList) {
+		this.indexInList = indexInList;
 	}
 
 	/**
