@@ -125,7 +125,10 @@ public class GameState {
 			String[] neighBours = board.getNeighbours(targetX, targetY);
 			for(int i = 0; i < neighBours.length && (i+1) < groups.length; i++) {
 				if(!neighBours[i].equalsIgnoreCase("") && neighBours[i] != null) {
-					groups[i+1] = this.getGroupByCoordinate(originX, originY);
+					Group tempGroup = this.getGroupByCoordinate(originX, originY);
+					if(group != tempGroup) {
+						groups[i+1] = tempGroup;
+					}
 				}
 			}
 			mergeGroups(groups);
