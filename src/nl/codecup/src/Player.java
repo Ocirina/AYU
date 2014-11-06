@@ -31,12 +31,12 @@ public class Player {
 			return state.makeMove(move);
 		} 
 		
-<<<<<<< HEAD
+
 		IO.debug("NO VALID MOVE! " + move.toString());
 		
-=======
+
 		IO.output("NO VALID MOVE! " + move.toString());
->>>>>>> ecfe4e40f8958ccc329dcd8447a655a18201687d
+
 		return null;		
     }
     
@@ -79,17 +79,17 @@ public class Player {
 	    					}
 	    				}   				    					
 	    			}
-<<<<<<< HEAD
+
 	    			int columnPieceToMove = (column - firstPieceInColumn);
 	    			
 	    			return new Move(row, columnPieceToMove, row, column + 1);
 	    			
 	    			//TODO: validMoveCheck?
-=======
+
 
 	    			IO.debug("COLPIECE: " + columnPieceToMove);
 	    			return new Move(row, columnPieceToMove, row + 1, column);
->>>>>>> ecfe4e40f8958ccc329dcd8447a655a18201687d
+
     			}
     		}
 			
