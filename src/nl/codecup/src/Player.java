@@ -66,14 +66,14 @@ public class Player {
 	    				IO.debug("DEBUG: " + content[row][i + 1]);
 	    				if (content[row][i + 1] == Player.piece){
 	    					if(content[row][i] != Player.piece ){
-		    					columnPieceToMove = i + 1;
+		    					columnPieceToMove = i;
 		    					break;
 	    					}
 	    				}   				    					
 	    			}
 
 	    			IO.debug("COLPIECE: " + columnPieceToMove);
-	    			return new Move(row, columnPieceToMove, row, column + 1);
+	    			return new Move(row, columnPieceToMove, row + 1, column);
     			}
     		}
     	}
