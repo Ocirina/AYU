@@ -2,6 +2,8 @@ package nl.codecup.src;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Group {
 	
@@ -30,6 +32,7 @@ public class Group {
 	}
 
 	/**
+	 * Sets the coordinates
 	 * @param coordinates the coordinates to set
 	 */
 	public void setCoordinates(List<String> coordinates) {
@@ -37,10 +40,18 @@ public class Group {
 	}
 
 	/**
-	 * 
+	 * Adds a coordinate to the group.
+	 * Coordinate must match pattern.
 	 */
-	public void addCoordinate(String coordinate) {
-		coordinates.add(coordinate);
+	public boolean addCoordinate(String coordinate) {
+		String pattern = "[0-9]{1,2}\\,[0-9]{1,2}";
+		Pattern regex = Pattern.compile(pattern);
+		Matcher matcher = regex.matcher(coordinate.toLowerCase());
+		if(matcher.matches()) {
+			coordinates.add(coordinate);	
+			return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -53,7 +64,7 @@ public class Group {
 		int minimumDistance = 0;
 		for(int i = 0; i < this.coordinates.size(); i++) {
 			coords = this.coordinates.get(i).split(",");
-			int tempDistance = Math.abs(Integer.parseInt(coords[0]) - x);
+			int tempDistance  = Math.abs(Integer.parseInt(coords[0]) - x);
 				tempDistance += Math.abs(Integer.parseInt(coords[1]) - y);
 				
 			if(minimumDistance > tempDistance || minimumDistance == 0) 

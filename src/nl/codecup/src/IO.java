@@ -37,6 +37,7 @@ public abstract class IO {
 	public static void output(String output) {
 		IO.debug("WAS SENT TO CAIAIO: " + output);
 		System.out.println(output);
+		System.out.flush(); 
 	}
 	
 	/**
