@@ -45,10 +45,10 @@ public class Player {
 	public Move chooseMove() {
 		int[][] content = this.state.getBoardContents();
 		int contentLength = content.length - 1;
-
+		int[] rows = new int[] { 0, 1, 2, 10, 9, 8, 3, 4, 7, 6, 5 };
 		// Strategy 1: Make long groups in each column. (Should make a group of
 		// 6 on each row).
-		for (int row = 0; row < contentLength; row++) {
+		for (int row : rows) {
 			for (int column = 0; column < contentLength; column++) {
 				/**
 				 * Situation 1 Start: | | W | | W | | | Result: | | | W | W | |
@@ -72,7 +72,7 @@ public class Player {
 			}
 		}
 		
-		for (int row = 0; row < contentLength; row++) {
+		for (int row : rows) {
 			for (int column = 0; column < contentLength; column++) {
 				boolean gapScenario = (column <= 9
 						&& content[row][column] == Player.piece
