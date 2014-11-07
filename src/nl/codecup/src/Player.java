@@ -130,6 +130,9 @@ public class Player {
 				return new Move((row -1), columnPieceToMove, row, 10);
 			}
 		}
+		
+		IO.debug("NOTHING FOUND!");
+		
 		return move;
 	}
 
