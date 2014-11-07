@@ -3,7 +3,9 @@ package nl.codecup.src;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameState {
 	private Board board;
@@ -37,18 +39,91 @@ public class GameState {
 		return board;
 	}
 	
+
 	/**
 	 * Returns a list of coordinates to get the shortest path between groups.
 	 * Tries to find a path of empty cells.
-	 * @param group1 : The first group
-	 * @param group2 : The second group
+	 * 
+	 * @param group1
+	 *            : The first group
+	 * @param group2
+	 *            : The second group
 	 * @return A list of coordinates in a String array with ["x,y"] notation.
 	 */
 	public String[] getShortestPathBetweenGroups(Group group1, Group group2) {
-		
-		return null;
+		String[] coordinateList = null;
+		int minimumDistance = 0;
+		for (String coordinate1 : group1.getCoordinates()) {
+			for (String coordinate2 : group2.getCoordinates()) {
+				Map<String, Integer> distanceValues = new HashMap<String, Integer>();
+				List<String> visitedNodes = new ArrayList<String>();
+				visitedNodes.add(coordinate1);
+				List<String> unvisitedNodes = this.fillListWithUnvistedNodes(
+						coordinate1.split(","), distanceValues);
+				String[] temp = findShortestPath(coordinate1.split(","),
+						coordinate2, visitedNodes, unvisitedNodes,
+						distanceValues, (List<String>) new ArrayList<String>());
+				if (coordinateList == null
+						|| temp.length < coordinateList.length) {
+					String str = "Path: \n";
+					for(int i = 0; i < temp.length; i++) {
+						str += temp[0]+"\n";
+					}
+					IO.debug(str);
+					coordinateList = temp;
+				}
+			}
+		}
+		return coordinateList;
 	}
-	
+
+	private String[] findShortestPath(String[] current, String end,
+			List<String> visited, List<String> unvisited,
+			Map<String, Integer> distanceValues, List<String> path) {
+
+		String[] neighBours = board.getNeighbours(Integer.parseInt(current[0]),
+				Integer.parseInt(current[1]));
+		IO.debug("Neighbours length: "+neighBours.length);
+		IO.debug("Unvisited size: "+unvisited.size());
+
+		for (int i = 0; i < neighBours.length; i++) {
+			String neighBour = neighBours[i];
+			if (neighBour != null && unvisited.contains(neighBour)) {
+				String[] coords = neighBour.split(",");
+				int x = Integer.parseInt(coords[0]);
+				int y = Integer.parseInt(coords[1]);
+
+				if (!neighBour.equals(end) && board.isBlankSpace(x, y)) {
+					unvisited.remove(unvisited.indexOf(neighBour));
+					List<String> newPath = new ArrayList<String>(path);
+					newPath.add(neighBour);
+					findShortestPath(coords, end, visited,
+							unvisited, distanceValues, newPath);
+				} else {
+					return path.toArray(new String[path.size()]);
+				}
+			}
+		}
+		return new String[1];
+	}
+
+	private List<String> fillListWithUnvistedNodes(String[] start,
+			Map<String, Integer> distanceValues) {
+		List<String> coordinates = new ArrayList<String>();
+		int x = Integer.parseInt(start[0]);
+		int y = Integer.parseInt(start[1]);
+		int[][] contents = board.getBoardContents();
+		for (int i = 0; i < contents.length; i++) {
+			for (int j = 0; j < contents[i].length; j++) {
+				if (i != x && j != y) {
+					coordinates.add(i + "," + j);
+					distanceValues.put(i + "," + j,
+							(Math.abs(i - x) + Math.abs(j - y)));
+				}
+			}
+		}
+		return coordinates;
+	}
 	private int getAmountOfRemainingGroups() {
 		int count = 0;
 		for(Group group : playerGroups) {
