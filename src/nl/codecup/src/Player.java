@@ -43,11 +43,14 @@ public class Player {
 	public Move chooseMove() {
 		int[][] content = this.state.getBoardContents();
 		int contentLength = content.length - 1;
-
+		int[] rows = new int[] { 0, 1, 2, 10, 9, 8, 3, 4, 7, 6, 5 };
 		// Strategy 1: Make long groups in each column. (Should make a group of
 		// 6 on each row).
-		for (int row = 0; row < contentLength; row++) {
+		for (int row : rows) {
 			for (int column = 0; column < contentLength; column++) {
+				IO.debug("row: " + row + ", column: " + column + " => "
+						+ content[row][column]);
+
 				/**
 				 * Situation 1 Start: | | W | | W | | | Result: | | | W | W | |
 				 * |
@@ -62,6 +65,23 @@ public class Player {
 						&& content[row][column] == Player.piece
 						&& content[row][column + 1] == 0 
 						&& content[row][column + 2] == Player.piece);
+<<<<<<< HEAD
+				int columnPieceToMove = 0;
+				if (gapScenario) {
+					for (int i = column; i > 0; i--) {
+						// IO.debug("DEBUG: " + content[row][i + 1]);
+//						IO.debug("C: " + i + " => " + content[row][i]);
+						if (content[row][i] != Player.piece) {
+//							IO.debug("test");
+							columnPieceToMove = i-1;
+							break;
+						} 
+//						else {
+//							break;
+//						}
+					}
+//					IO.debug("column Piece" + columnPieceToMove);
+=======
 				
 				if (gapScenario) {
 					int columnPieceToMove = findLastPieceInTheRow(content, row,	column, 0);
@@ -70,7 +90,7 @@ public class Player {
 			}
 		}
 		
-		for (int row = 0; row < contentLength; row++) {
+		for (int row : rows) {
 			for (int column = 0; column < contentLength; column++) {
 				boolean gapScenario = (column <= 9
 						&& content[row][column] == Player.piece
@@ -78,22 +98,29 @@ public class Player {
 				
 				if (gapScenario) {
 					int columnPieceToMove = findLastPieceInTheRow(content, row,	column, 0);
+>>>>>>> cfd2e23639b644606c66393db6ed07aa8a1cc9f7
 					return new Move(row, columnPieceToMove, row, column + 1);
 				}
 			}
+			IO.debug("\n");
 
 		}
 
-		// Strategy 3: If there are no more possibilities of making a group on a
+		// Strategy 2: If there are no more possibilities of making a group on a
 		// column.
 		// Connect them.
 		/**
 		 * Situation:
 		 * 
+<<<<<<< HEAD
+		 * Start: | | | W | W | W | W | W | W | | | | | | | | | | | | | W | W |
+		 * W | W | W | W |
+=======
 		 * Start: 
 		 * |   |   | W | W | W | W | W | W | 
 		 * |   |   |   |   |   |   |   |   |
 		 * |   |   | W | W | W | W | W | W | 
+>>>>>>> cfd2e23639b644606c66393db6ed07aa8a1cc9f7
 		 * 
 		 * Result:
 		 * |   |   |   | W | W | W | W | W | 
@@ -102,6 +129,9 @@ public class Player {
 		 * 
 		 */
 
+<<<<<<< HEAD
+		return move;
+=======
 		for (int row = 1; row < (contentLength-1); row++) {
 			if (content[row][10] == 0) {
 				IO.debug("Got it!");
@@ -121,6 +151,7 @@ public class Player {
 				break;
 		}
 		return columnPieceToMove;
+>>>>>>> cfd2e23639b644606c66393db6ed07aa8a1cc9f7
 	}
 
 	public void stop() {
