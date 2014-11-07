@@ -6,27 +6,28 @@ public class Referee {
    
 	public Referee(Manager manager) {
 		this.manager = manager;
-		
-		
 	}
 
-	public void handleInput() {
-		String input = IO.input();
-		IO.debug(input);
-	}
+//	/**
+//	 * Handles input and debugs this
+//	 */
+//	public void handleInput() {
+//		String input = IO.input();
+//		IO.debug(input);
+//	}
 
-	/**
-	 * This method will send the report
-	 */
-	public void sendReport() {
-	}
+//	/**
+//	 * This method will send the report
+//	 */
+//	public void sendReport() {
+//	}
 
-	/**
-	 * This method will stop the object itself
-	 */
-	private void stopReferee() {
-		// TODO stop has to be implementend
-	}
+//	/**
+//	 * This method will stop the object itself
+//	 */
+//	private void stopReferee() {
+//		// TODO stop has to be implementend
+//	}
 
 	/**
 	 * This will return if an move is valid
@@ -44,7 +45,14 @@ public class Referee {
 		
 	}
 
-	// TODO MOVE object as param
+	/**
+	 * Check if a certain move is allowed
+	 * 
+	 * @param move
+	 * @param board
+	 * @param inGroup
+	 * @return
+	 */
 	private boolean mayBePlaced(Move move, Board board, boolean inGroup) {
 		int originX = move.getOriginXConverted();
 		int originY = move.getOriginYConverted();
@@ -55,7 +63,6 @@ public class Referee {
 		if (board.isBlankSpace(targetX, targetY)) {
 			if (!inGroup && board.hasNeighbour(targetX, targetY)) {
 				return true;
-				// TODO MOVE object as PARAM??
 			} else if (inGroup
 					&& board.isMoveNeighbourOfSameGroup(originX, originY,
 							targetX, targetY)) {

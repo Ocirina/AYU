@@ -4,7 +4,6 @@ import java.io.IOException;
 
 public class Manager {
 	private Player player;
-	private Player computer;
 	private Referee referee;
 	private GameState gameState;
 
