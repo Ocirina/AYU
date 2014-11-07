@@ -2,7 +2,6 @@ package nl.codecup.src;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class GameState {
@@ -35,6 +34,26 @@ public class GameState {
 
 	public Board getBoard() {
 		return board;
+	}
+	
+	/**
+	 * Returns a list of coordinates to get the shortest path between groups.
+	 * Tries to find a path of empty cells.
+	 * @param group1 : The first group
+	 * @param group2 : The second group
+	 * @return A list of coordinates in a String array with ["x,y"] notation.
+	 */
+	public String[] getShortestPathBetweenGroups(Group group1, Group group2) {
+		
+		return null;
+	}
+	
+	private int getAmountOfRemainingGroups() {
+		int count = 0;
+		for(Group group : playerGroups) {
+			count += (group != null ? 1 : 0);
+		}
+		return count;
 	}
 	
 	/**
@@ -123,6 +142,11 @@ public class GameState {
 		this.checkGroupsForMove(move.getOriginXConverted(),
 				move.getOriginYConverted(), move.getTargetXConverted(),
 				move.getTargetYConverted());
+		
+		if(checkForWin()) {
+			// Player has won.
+			IO.debug("Player has won.");
+		}
 		return newState;
 	}
 
@@ -155,7 +179,7 @@ public class GameState {
 				if (neighBours[i] != null
 						&& !neighBours[i].equalsIgnoreCase("")) {
 					Group tempGroup = this.getGroupByCoordinate(neighBours[i]);
-					if (group != tempGroup) {
+					if (tempGroup != null && group != tempGroup) {
 						groups[i + 1] = tempGroup;
 					}
 				}
@@ -173,11 +197,13 @@ public class GameState {
 			tempList.set(0, targetX + "," + targetY);
 			this.playerGroups[group.getIndexInList()] = null;
 			String[] neighBours = board.getNeighbours(targetX, targetY);
+			
 			for (int i = 0; i < neighBours.length; i++) {
-				if (neighBours[i] != null
-						&& !neighBours[i].equalsIgnoreCase("")) {
+				
+				if (neighBours[i] != null && !neighBours[i].equalsIgnoreCase("")) {
 					Group tempGroup = this.getGroupByCoordinate(neighBours[i]);
-					if (group != tempGroup) {
+					
+					if (tempGroup != null && group != tempGroup) {
 						groups[i] = tempGroup;
 					}
 				}
@@ -317,8 +343,7 @@ public class GameState {
 	}
 
 	private boolean checkForWin() {
-		winner = 0;
-		return false;
+		return (getAmountOfRemainingGroups() == 1);
 	}
 
 	public int getPlayingPiece() {
