@@ -4,7 +4,7 @@ public class Player {
     private GameState state;
     public static int piece;
     public static int empty = 0;
-    private Referee   referee;
+    private Referee referee;
 
     public Player(GameState state, int piece, Referee referee) {
         this.state = state;

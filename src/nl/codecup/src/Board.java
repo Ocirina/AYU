@@ -1,17 +1,17 @@
 package nl.codecup.src;
 
 public class Board {
-    public static final int  SIZE            = 11;
-    private static final int NONE            = 0;
-    private static final int WHITE           = 1;
-    private static final int BLACK           = 2;
+    public static final int SIZE = 11;
+    private static final int NONE = 0;
+    private static final int WHITE = 1;
+    private static final int BLACK = 2;
     private static final int MAX_WHITESPACES = 61;
 
     /**
      * The actual board
      */
-    private int[][]          blankSpaces     = new int[MAX_WHITESPACES][2];
-    private int[][]          boardGrid       = new int[][] {
+    private int[][] blankSpaces = new int[MAX_WHITESPACES][2];
+    private int[][] boardGrid = new int[][] {
             { NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE },
             { WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE },
             { NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE },

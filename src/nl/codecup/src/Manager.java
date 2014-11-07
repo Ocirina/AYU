@@ -3,12 +3,12 @@ package nl.codecup.src;
 import java.io.IOException;
 
 public class Manager {
-    private Player           player;
-    private Referee          referee;
-    private GameState        gameState;
+    private Player player;
+    private Referee referee;
+    private GameState gameState;
 
-    private MoveConverter    converter;
-    private static final int PLAYER   = 1;
+    private MoveConverter converter;
+    private static final int PLAYER = 1;
     private static final int COMPUTER = 2;
 
     /**
@@ -54,15 +54,6 @@ public class Manager {
      */
     private void loadConfig() {
         IO.output("This should load the config via file");
-    }
-
-    /**
-     * This will call the stop method on the player
-     * 
-     * @param player
-     */
-    public void stopPlayer(Player player) {
-        player.stop();
     }
 
     /**

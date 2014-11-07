@@ -5,374 +5,374 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GameState {
-	private Board board;
-	private int playingPiece;
-	private int opponentPiece;
-	private int winner = 0;
-	private Group[] playerGroups = new Group[30];
+    private Board board;
+    private int playingPiece;
+    private int opponentPiece;
+    private int winner = 0;
+    private Group[] playerGroups = new Group[30];
 
-	public GameState(int playerPiece, int opponentPiece) {
-		this.playingPiece = playerPiece;
-		this.opponentPiece = opponentPiece;
-	}
+    public GameState(int playerPiece, int opponentPiece) {
+        this.playingPiece = playerPiece;
+        this.opponentPiece = opponentPiece;
+    }
 
-	public GameState(Board board, int playerPiece, int opponentPiece) {
-		this.board = board;
-		this.playingPiece = playerPiece;
-		this.opponentPiece = opponentPiece;
-		this.checkForWin();
-		this.createGroupsForPlayer();
-	}
+    public GameState(Board board, int playerPiece, int opponentPiece) {
+        this.board = board;
+        this.playingPiece = playerPiece;
+        this.opponentPiece = opponentPiece;
+        this.checkForWin();
+        this.createGroupsForPlayer();
+    }
 
-	public GameState(GameState state) {
-		this.playingPiece = state.playingPiece;
-		this.opponentPiece = state.opponentPiece;
-		this.winner = state.winner;
-		this.board = state.board.clone();
-		this.playerGroups = state.playerGroups;
-	}
+    public GameState(GameState state) {
+        this.playingPiece = state.playingPiece;
+        this.opponentPiece = state.opponentPiece;
+        this.winner = state.winner;
+        this.board = state.board.clone();
+        this.playerGroups = state.playerGroups;
+    }
 
-	public Board getBoard() {
-		return board;
-	}
-	
-	/**
-	 * Returns a list of coordinates to get the shortest path between groups.
-	 * Tries to find a path of empty cells.
-	 * @param group1 : The first group
-	 * @param group2 : The second group
-	 * @return A list of coordinates in a String array with ["x,y"] notation.
-	 */
-	public String[] getShortestPathBetweenGroups(Group group1, Group group2) {
-		
-		return null;
-	}
-	
-	private int getAmountOfRemainingGroups() {
-		int count = 0;
-		for(Group group : playerGroups) {
-			count += (group != null ? 1 : 0);
-		}
-		return count;
-	}
-	
-	/**
-	 * Returns the indexes of real ayu groups.
-	 * Real ayu groups have a length of 2 or higher.
-	 * @return An integer array.
-	 */
-	public Integer[] getIndexesOfAyuGroups() {
-		List<Integer> groups = new ArrayList<Integer>();
-		for(Group group : playerGroups) {
-			if(group.getCoordinates().size() >= 2) {
-				groups.add(group.getIndexInList());
-			}
-		}
-		return groups.toArray(new Integer[groups.size()]);
-	}
-	
-	/**
-	 * Creates the groups for the player for a start board.
-	 */
-	private void createGroupsForPlayer() {
-		int[][] contents = board.getBoardContents();
-		int count = 0;
-		for (int i = 0; i < contents.length; i++) {
-			for (int j = 0; j < contents[i].length; j++) {
-				if (contents[i][j] == playingPiece) {
-					Group group = new Group(count);
-					group.addCoordinate(i + "," + j);
-					playerGroups[count] = group;
-					count++;
-				}
-			}
-		}
-	}
+    public Board getBoard() {
+        return board;
+    }
 
-	/**
-	 * Sets a group to null.
-	 * 
-	 * @param group
-	 *            : The group to set to null
-	 */
-	public void setPlayerGroupNull(Group group) {
-		if (group != null && Arrays.asList(playerGroups).contains(group)) {
-			playerGroups[group.getIndexInList()] = null;
-		}
-	}
+    /**
+     * Returns a list of coordinates to get the shortest path between groups.
+     * Tries to find a path of empty cells.
+     * 
+     * @param group1
+     *            : The first group
+     * @param group2
+     *            : The second group
+     * @return A list of coordinates in a String array with ["x,y"] notation.
+     */
+    public String[] getShortestPathBetweenGroups(Group group1, Group group2) {
 
-	/**
-	 * Returns a group
-	 * 
-	 * @param x
-	 *            : row
-	 * @param y
-	 *            : column
-	 * @return The group that contains the coordinate.
-	 */
-	public Group getGroupByCoordinate(int x, int y) {
-		for (Group group : playerGroups) {
-			if (group != null && group.getCoordinates().contains(x + "," + y))
-				return group;
-		}
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * Returns the group object by coordinates
-	 * 
-	 * @param coordinate
-	 * @return The group of the given coordinates
-	 */
-	public Group getGroupByCoordinate(String coordinate) {
-		String[] coords = coordinate.split(",");
-		return this.getGroupByCoordinate(Integer.parseInt(coords[0]),
-				Integer.parseInt(coords[1]));
-	}
+    private int getAmountOfRemainingGroups() {
+        int count = 0;
+        for (Group group : playerGroups) {
+            count += (group != null ? 1 : 0);
+        }
+        return count;
+    }
 
-	/**
-	 * Places the move on the board and returns this in a new state.
-	 * 
-	 * @param row
-	 *            the y coordinates
-	 * @param column
-	 *            the x coordinates
-	 * @return A new GameState with the move added
-	 */
-	public GameState makeMove(Move move) {
-		GameState newState = this.clone();
-		Board newBoard = this.board.clone();
-		newState.setPlayerPiece(opponentPiece);
-		newState.setComputerPiece(playingPiece);
-		newState.setBoard(newBoard.placePiece(move));
-		this.checkGroupsForMove(move.getOriginXConverted(),
-				move.getOriginYConverted(), move.getTargetXConverted(),
-				move.getTargetYConverted());
-		
-		if(checkForWin()) {
-			// Player has won.
-			IO.debug("Player has won.");
-		}
-		return newState;
-	}
+    /**
+     * Returns the indexes of real ayu groups. Real ayu groups have a length of
+     * 2 or higher.
+     * 
+     * @return An integer array.
+     */
+    public Integer[] getIndexesOfAyuGroups() {
+        List<Integer> groups = new ArrayList<Integer>();
+        for (Group group : playerGroups) {
+            if (group.getCoordinates().size() >= 2) {
+                groups.add(group.getIndexInList());
+            }
+        }
+        return groups.toArray(new Integer[groups.size()]);
+    }
 
-	/**
-	 * Checks if a group or a single items needs to be replaced
-	 * 
-	 * @param originX
-	 * @param originY
-	 * @param targetX
-	 * @param targetY
-	 */
-	private void checkGroupsForMove(int originX, int originY, int targetX, int targetY) {
-		/* If piece is not in group */
-		if (!board.hasNeighbour(originX, originY)) {
-			mergeNonGroupedPiece(originX, originY, targetX, targetY);
-		} else {
-			mergeGroupedPiece(originX, originY, targetX, targetY);
-		}
-	}
+    /**
+     * Creates the groups for the player for a start board.
+     */
+    private void createGroupsForPlayer() {
+        int[][] contents = board.getBoardContents();
+        int count = 0;
+        for (int i = 0; i < contents.length; i++) {
+            for (int j = 0; j < contents[i].length; j++) {
+                if (contents[i][j] == playingPiece) {
+                    Group group = new Group(count);
+                    group.addCoordinate(i + "," + j);
+                    playerGroups[count] = group;
+                    count++;
+                }
+            }
+        }
+    }
 
-	/**
-	 * Merges the group of the piece of the origin to the group(s) of the
-	 * targetX and targetY's neighbors.
-	 */
-	private void mergeGroupedPiece(int originX, int originY, int targetX,
-			int targetY) {
-		Group[] groups = new Group[5];
-		Group group = groups[0] = this.getGroupByCoordinate(originX, originY);
-		if (group != null) {
-			int position = group.getPositionOfCoordinate(originX + "," + originY);
-			if (position != -1) {
-				group.getCoordinates().set(position, targetX + "," + targetY);
-			}
-			
-			String[] neighBours = board.getNeighbours(targetX, targetY);
-			for (int i = 0; i < neighBours.length && (i + 1) < groups.length; i++) {
-				if (neighBours[i] != null && !neighBours[i].equalsIgnoreCase("")) {
-					Group tempGroup = this.getGroupByCoordinate(neighBours[i]);
-					if (tempGroup != null && group != tempGroup) {
-						groups[i + 1] = tempGroup;
-					}
-				}
-			}
-			mergeGroups(groups);
-		}
-	}
+    /**
+     * Sets a group to null.
+     * 
+     * @param group
+     *            : The group to set to null
+     */
+    public void setPlayerGroupNull(Group group) {
+        if (group != null && Arrays.asList(playerGroups).contains(group)) {
+            playerGroups[group.getIndexInList()] = null;
+        }
+    }
 
-	/**
-	 * Merges single piece and groups the items together
-	 * 
-	 * @param originX
-	 * @param originY
-	 * @param targetX
-	 * @param targetY
-	 */
-	private void mergeNonGroupedPiece(int originX, int originY, int targetX,
-			int targetY) {
-		Group group = this.getGroupByCoordinate(originX, originY);
-		Group[] groups = new Group[4];
-		if (group != null) {
-			List<String> tempList = group.getCoordinates();
-			tempList.set(0, targetX + "," + targetY);
-			this.playerGroups[group.getIndexInList()] = null;
-			String[] neighBours = board.getNeighbours(targetX, targetY);
-			
-			for (int i = 0; i < neighBours.length; i++) {
-				if (neighBours[i] != null && !neighBours[i].equalsIgnoreCase("")) {
-					Group tempGroup = this.getGroupByCoordinate(neighBours[i]);
-					
-					if (tempGroup != null && group != tempGroup) {
-						groups[i] = tempGroup;
-					}
-				}
-			}
-			this.setPlayerGroupNull(group); // Set origin group to null
-			mergeGroupsWithCordinates(groups, tempList);
-		}
-	}
+    /**
+     * Returns a group
+     * 
+     * @param x
+     *            : row
+     * @param y
+     *            : column
+     * @return The group that contains the coordinate.
+     */
+    public Group getGroupByCoordinate(int x, int y) {
+        for (Group group : playerGroups) {
+            if (group != null && group.getCoordinates().contains(x + "," + y))
+                return group;
+        }
+        return null;
+    }
 
-	/**
-	 * Merges the given groups
-	 * 
-	 * @param groups
-	 */
-	private Group mergeGroups(Group[] groups) {
-		Group mergedGroup = new Group(0);
-		if(groups[0] != null) {
-			mergedGroup.setIndexInList(groups[0].getIndexInList());
-			for (Group group : groups) {
-				if (group != null) {
-					for (String coordinate : group.getCoordinates()) {
-						mergedGroup.addCoordinate(coordinate);
-						this.setPlayerGroupNull(group);
-					}
-				}
-			}
-			
-			playerGroups[mergedGroup.getIndexInList()] = mergedGroup;
-		}
-		return mergedGroup;
-	}
+    /**
+     * Returns the group object by coordinates
+     * 
+     * @param coordinate
+     * @return The group of the given coordinates
+     */
+    public Group getGroupByCoordinate(String coordinate) {
+        String[] coords = coordinate.split(",");
+        return this.getGroupByCoordinate(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
+    }
 
-	/**
-	 * Merges the given groups and adds the given coordinates to the merged
-	 * group.
-	 * 
-	 * @param groups
-	 * @param coordinates
-	 */
-	private void mergeGroupsWithCordinates(Group[] groups, List<String> coordinates) {
-		Group mergedGroup = this.mergeGroups(groups);
-		for (String coordinate : coordinates) {
-			mergedGroup.addCoordinate(coordinate);
-		}
+    /**
+     * Places the move on the board and returns this in a new state.
+     * 
+     * @param row
+     *            the y coordinates
+     * @param column
+     *            the x coordinates
+     * @return A new GameState with the move added
+     */
+    public GameState makeMove(Move move) {
+        GameState newState = this.clone();
+        Board newBoard = this.board.clone();
+        newState.setPlayerPiece(opponentPiece);
+        newState.setComputerPiece(playingPiece);
+        newState.setBoard(newBoard.placePiece(move));
+        this.checkGroupsForMove(move.getOriginXConverted(), move.getOriginYConverted(), move.getTargetXConverted(),
+                move.getTargetYConverted());
 
-	}
+        if (checkForWin()) {
+            // Player has won.
+            IO.debug("Player has won.");
+        }
+        return newState;
+    }
 
-	/**
-	 * Returns the current opponent piece.
-	 * 
-	 * @return returns the opponent piece
-	 */
-	private void setComputerPiece(int computerPiece) {
-		this.opponentPiece = computerPiece;
-	}
+    /**
+     * Checks if a group or a single items needs to be replaced
+     * 
+     * @param originX
+     * @param originY
+     * @param targetX
+     * @param targetY
+     */
+    private void checkGroupsForMove(int originX, int originY, int targetX, int targetY) {
+        /* If piece is not in group */
+        if (!board.hasNeighbour(originX, originY)) {
+            mergeNonGroupedPiece(originX, originY, targetX, targetY);
+        } else {
+            mergeGroupedPiece(originX, originY, targetX, targetY);
+        }
+    }
 
-	/**
-	 * Sets the board on the state. It also sets the size of the board. And
-	 * calculates the minimum moves required to win. After this it checks if
-	 * there is a winner.
-	 * 
-	 * @param board
-	 */
-	public void setBoard(Board board) {
-		this.board = board;
-		checkForWin();
-	}
+    /**
+     * Merges the group of the piece of the origin to the group(s) of the
+     * targetX and targetY's neighbors.
+     */
+    private void mergeGroupedPiece(int originX, int originY, int targetX, int targetY) {
+        Group[] groups = new Group[5];
+        Group group = groups[0] = this.getGroupByCoordinate(originX, originY);
+        if (group != null) {
+            int position = group.getPositionOfCoordinate(originX + "," + originY);
+            if (position != -1) {
+                group.getCoordinates().set(position, targetX + "," + targetY);
+            }
 
-	/**
-	 * Sets the current player piece.
-	 * 
-	 * @param playerPiece
-	 */
-	private void setPlayerPiece(int playerPiece) {
-		this.playingPiece = playerPiece;
-	}
+            String[] neighBours = board.getNeighbours(targetX, targetY);
+            for (int i = 0; i < neighBours.length && (i + 1) < groups.length; i++) {
+                if (neighBours[i] != null && !neighBours[i].equalsIgnoreCase("")) {
+                    Group tempGroup = this.getGroupByCoordinate(neighBours[i]);
+                    if (tempGroup != null && group != tempGroup) {
+                        groups[i + 1] = tempGroup;
+                    }
+                }
+            }
+            mergeGroups(groups);
+        }
+    }
 
-	public boolean isGameOver() {
-		return false;
-	}
+    /**
+     * Merges single piece and groups the items together
+     * 
+     * @param originX
+     * @param originY
+     * @param targetX
+     * @param targetY
+     */
+    private void mergeNonGroupedPiece(int originX, int originY, int targetX, int targetY) {
+        Group group = this.getGroupByCoordinate(originX, originY);
+        Group[] groups = new Group[4];
+        if (group != null) {
+            List<String> tempList = group.getCoordinates();
+            tempList.set(0, targetX + "," + targetY);
+            this.playerGroups[group.getIndexInList()] = null;
+            String[] neighBours = board.getNeighbours(targetX, targetY);
 
-	/**
-	 * Checks if the given piece wins.
-	 * 
-	 * @param piece
-	 * @return true if there is a winner and it is the given piece
-	 */
-	public boolean hasWon(int piece) {
-		return hasWinner() && winner == piece;
-	}
+            for (int i = 0; i < neighBours.length; i++) {
+                if (neighBours[i] != null && !neighBours[i].equalsIgnoreCase("")) {
+                    Group tempGroup = this.getGroupByCoordinate(neighBours[i]);
 
-	/**
-	 * Checks if the given piece loses.
-	 * 
-	 * @param piece
-	 * @return true if there is a loser and it is the given piece
-	 */
-	public boolean hasLost(int piece) {
-		return hasWinner() && winner != piece;
-	}
+                    if (tempGroup != null && group != tempGroup) {
+                        groups[i] = tempGroup;
+                    }
+                }
+            }
+            this.setPlayerGroupNull(group); // Set origin group to null
+            mergeGroupsWithCordinates(groups, tempList);
+        }
+    }
 
-	/**
-	 * Makes a clone of the state object.
-	 * 
-	 * @return A cloned state
-	 */
-	public GameState clone() {
-		return new GameState(this);
-	}
+    /**
+     * Merges the given groups
+     * 
+     * @param groups
+     */
+    private Group mergeGroups(Group[] groups) {
+        Group mergedGroup = new Group(0);
+        if (groups[0] != null) {
+            mergedGroup.setIndexInList(groups[0].getIndexInList());
+            for (Group group : groups) {
+                if (group != null) {
+                    for (String coordinate : group.getCoordinates()) {
+                        mergedGroup.addCoordinate(coordinate);
+                        this.setPlayerGroupNull(group);
+                    }
+                }
+            }
 
-	/**
-	 * Draws the board with pieces in place.
-	 * 
-	 * @return a visual representation of the board in this state
-	 */
-	public String toString() {
-		return this.board.toString();
-	}
+            playerGroups[mergedGroup.getIndexInList()] = mergedGroup;
+        }
+        return mergedGroup;
+    }
 
-	/**
-	 * Prints the groa
-	 * 
-	 * @return
-	 */
-	public String groupsToString() {
-		String groups = "Groups: \n";
-		for (Group group : playerGroups) {
-			groups += group == null ? "Empty Group\n" : group.toString() + "\n";
-		}
-		return groups;
-	}
+    /**
+     * Merges the given groups and adds the given coordinates to the merged
+     * group.
+     * 
+     * @param groups
+     * @param coordinates
+     */
+    private void mergeGroupsWithCordinates(Group[] groups, List<String> coordinates) {
+        Group mergedGroup = this.mergeGroups(groups);
+        for (String coordinate : coordinates) {
+            mergedGroup.addCoordinate(coordinate);
+        }
 
-	/**
-	 * Checks if the game has resulted in a win.
-	 * 
-	 * @return true if there is a winner
-	 */
-	private boolean hasWinner() {
-		return winner == 1 || winner == 2;
-	}
+    }
 
-	private boolean checkForWin() {
-		return (getAmountOfRemainingGroups() == 1);
-	}
+    /**
+     * Returns the current opponent piece.
+     * 
+     * @return returns the opponent piece
+     */
+    private void setComputerPiece(int computerPiece) {
+        this.opponentPiece = computerPiece;
+    }
 
-	public int getPlayingPiece() {
-		return this.playingPiece;
-	}
+    /**
+     * Sets the board on the state. It also sets the size of the board. And
+     * calculates the minimum moves required to win. After this it checks if
+     * there is a winner.
+     * 
+     * @param board
+     */
+    public void setBoard(Board board) {
+        this.board = board;
+        checkForWin();
+    }
 
-	public int[][] getBoardContents() {
-		return this.board.getBoardContents();
-	}
+    /**
+     * Sets the current player piece.
+     * 
+     * @param playerPiece
+     */
+    private void setPlayerPiece(int playerPiece) {
+        this.playingPiece = playerPiece;
+    }
+
+    public boolean isGameOver() {
+        return false;
+    }
+
+    /**
+     * Checks if the given piece wins.
+     * 
+     * @param piece
+     * @return true if there is a winner and it is the given piece
+     */
+    public boolean hasWon(int piece) {
+        return hasWinner() && winner == piece;
+    }
+
+    /**
+     * Checks if the given piece loses.
+     * 
+     * @param piece
+     * @return true if there is a loser and it is the given piece
+     */
+    public boolean hasLost(int piece) {
+        return hasWinner() && winner != piece;
+    }
+
+    /**
+     * Makes a clone of the state object.
+     * 
+     * @return A cloned state
+     */
+    public GameState clone() {
+        return new GameState(this);
+    }
+
+    /**
+     * Draws the board with pieces in place.
+     * 
+     * @return a visual representation of the board in this state
+     */
+    public String toString() {
+        return this.board.toString();
+    }
+
+    /**
+     * Prints the groa
+     * 
+     * @return
+     */
+    public String groupsToString() {
+        String groups = "Groups: \n";
+        for (Group group : playerGroups) {
+            groups += group == null ? "Empty Group\n" : group.toString() + "\n";
+        }
+        return groups;
+    }
+
+    /**
+     * Checks if the game has resulted in a win.
+     * 
+     * @return true if there is a winner
+     */
+    private boolean hasWinner() {
+        return winner == 1 || winner == 2;
+    }
+
+    private boolean checkForWin() {
+        return (getAmountOfRemainingGroups() == 1);
+    }
+
+    public int getPlayingPiece() {
+        return this.playingPiece;
+    }
+
+    public int[][] getBoardContents() {
+        return this.board.getBoardContents();
+    }
 }

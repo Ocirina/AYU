@@ -16,7 +16,7 @@ public class Group {
     /**
      * The index of this group in the list.
      */
-    private int          indexInList = 0;
+    private int indexInList = 0;
 
     public Group(int index) {
         this.indexInList = index;
@@ -44,6 +44,12 @@ public class Group {
         this.coordinates = coordinates;
     }
 
+    /**
+     * Get the coordinates by cooridinate
+     * 
+     * @param coordinate
+     * @return
+     */
     public int getPositionOfCoordinate(String coordinate) {
         for (int i = 0; i < coordinates.size(); i++) {
             if (coordinates.get(i).equalsIgnoreCase(coordinate)) {
