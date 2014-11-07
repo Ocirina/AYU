@@ -29,7 +29,8 @@ public class Player {
 			return state.makeMove(move);
 		}
 
-		IO.debug("NO VALID MOVE! " + move.toString());
+		//Let program quit, more easy debugging.
+		IO.output("NO VALID MOVE: " + move.toString());
 
 		return null;
 	}
@@ -43,6 +44,7 @@ public class Player {
 	public Move chooseMove() {
 		int[][] content = this.state.getBoardContents();
 		int contentLength = content.length - 1;
+		IO.debug("TRY TO FIND MOVE!");
 
 		// Strategy 1: Make long groups in each column. (Should make a group of
 		// 6 on each row).
