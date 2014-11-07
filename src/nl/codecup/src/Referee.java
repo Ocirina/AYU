@@ -36,7 +36,12 @@ public class Referee {
 	 */
 	public boolean validMove(Move move) {
 		IO.debug("IS VALID?: " + move);
+		if(move == null) {
+			return false;
+		}
+		
 		return this.mayBeMoved(move, this.manager.getGameState().getBoard());
+		
 	}
 
 	// TODO MOVE object as param

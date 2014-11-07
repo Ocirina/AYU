@@ -8,7 +8,7 @@ public class Player {
 
 	public Player(GameState state, int piece, Referee referee) {
 		this.state = state;
-		this.piece = piece;
+		Player.piece = piece;
 		this.referee = referee;
 	}
 
@@ -22,12 +22,10 @@ public class Player {
 		}
 
 		this.state = state.clone();
-		this.piece = state.getPlayingPiece();
+		Player.piece = state.getPlayingPiece();
 		Move move = chooseMove();
 		if (this.getReferee().validMove(move)) {
 			IO.output(move.toString());
-			int gaps = state.getBoard().getPiecesInCol(0, 1).length;
-			IO.debug("GAPS IN Col 1: " + gaps);
 			return state.makeMove(move);
 		}
 
@@ -73,21 +71,21 @@ public class Player {
 		}
 		
 		
-		for (int column = 0; column < contentLength; column++) {
-			for (int row = 0; row < contentLength; row++) {
-				boolean gapScenario = (column < 9 && row < 9
-						&& content[row][column] == Player.piece
-						&& content[row + 1][column] == 0 
-						&& content[row + 2][column] == Player.piece);
-				
-				if (gapScenario) {
-					
-					int rowPieceToMove = findLastPieceInTheColumn(content, row, column, 0);
-					IO.debug("VERTICAL: R:" + new Move(rowPieceToMove, column, row + 1, column));
-//					return new Move(row, columnPieceToMove, row, column + 1);
-				}
-			}
-		}
+//		for (int column = 0; column < contentLength; column++) {
+//			for (int row = 0; row < contentLength; row++) {
+//				boolean gapScenario = (column < 9 && row < 9
+//						&& content[row][column] == Player.piece
+//						&& content[row + 1][column] == 0 
+//						&& content[row + 2][column] == Player.piece);
+//				
+//				if (gapScenario) {
+//					
+//					int rowPieceToMove = findLastPieceInTheColumn(content, row, column, 0);
+//					IO.debug("VERTICAL: R:" + new Move(rowPieceToMove, column, row + 1, column));
+////					return new Move(row, columnPieceToMove, row, column + 1);
+//				}
+//			}
+//		}
 		
 		for (int row = 0; row < contentLength; row++) {
 			for (int column = 0; column < contentLength; column++) {
@@ -159,17 +157,17 @@ public class Player {
 		return columnPieceToMove;
 	}
 	
-	private int findLastPieceInTheColumn(int[][] content, int row, int column, int defaultRow) {
-		int rowPieceToMove = defaultRow;
-		for (int i = row; i > 0; i--) {
-			if (content[i][column] == Player.piece)
-				rowPieceToMove = i;
-			else
-				break;
-		}
-		
-		return rowPieceToMove;
-	}
+//	private int findLastPieceInTheColumn(int[][] content, int row, int column, int defaultRow) {
+//		int rowPieceToMove = defaultRow;
+//		for (int i = row; i > 0; i--) {
+//			if (content[i][column] == Player.piece)
+//				rowPieceToMove = i;
+//			else
+//				break;
+//		}
+//		
+//		return rowPieceToMove;
+//	}
 
 	public void stop() {
 	}
