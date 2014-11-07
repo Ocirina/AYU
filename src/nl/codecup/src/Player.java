@@ -44,7 +44,6 @@ public class Player {
 	 */
 	public Move chooseMove() {
 		int[][] content = this.state.getBoardContents();
-		Move move = null;
 		int contentLength = content.length - 1;
 
 		// Strategy 1: Make long groups in each column. (Should make a group of
@@ -66,14 +65,8 @@ public class Player {
 						&& content[row][column + 1] == 0 
 						&& content[row][column + 2] == Player.piece);
 				
-				int columnPieceToMove = 0;
 				if (gapScenario) {
-					for (int i = column; i > 0; i--) {
-						if (content[row][i] == Player.piece)
-							columnPieceToMove = i;
-						else
-							break;
-					}
+					int columnPieceToMove = findLastPieceInTheRow(content, row,	column, 0);
 					return new Move(row, columnPieceToMove, row, column + 1);
 				}
 			}
@@ -85,14 +78,8 @@ public class Player {
 						&& content[row][column] == Player.piece
 						&& content[row][column + 1] == 0);
 				
-				int columnPieceToMove = 0;
 				if (gapScenario) {
-					for (int i = column; i > 0; i--) {
-						if (content[row][i] == Player.piece)
-							columnPieceToMove = i;
-						else
-							break;
-					}
+					int columnPieceToMove = findLastPieceInTheRow(content, row,	column, 0);
 					return new Move(row, columnPieceToMove, row, column + 1);
 				}
 			}
@@ -120,20 +107,22 @@ public class Player {
 		for (int row = 1; row < (contentLength-1); row++) {
 			if (content[row][10] == 0) {
 				IO.debug("Got it!");
-				int columnPieceToMove = 5;
-				for (int i = 10; i > 0; i--) {
-					if (content[row][i] == Player.piece)
-						columnPieceToMove = i;
-					else
-						break;
-				}
+				int columnPieceToMove = findLastPieceInTheRow(content, row,	10, 5);
 				return new Move((row -1), columnPieceToMove, row, 10);
 			}
 		}
-		
-		IO.debug("NOTHING FOUND!");
-		
-		return move;
+		return null;
+	}
+
+	private int findLastPieceInTheRow(int[][] content, int row, int column, int defaultColumn) {
+		int columnPieceToMove = defaultColumn;
+		for (int i = column; i > 0; i--) {
+			if (content[row][i] == Player.piece)
+				columnPieceToMove = i;
+			else
+				break;
+		}
+		return columnPieceToMove;
 	}
 
 	public void stop() {
