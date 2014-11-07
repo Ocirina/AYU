@@ -72,6 +72,23 @@ public class Player {
 			}
 		}
 		
+		
+		for (int column = 0; column < contentLength; column++) {
+			for (int row = 0; row < contentLength; row++) {
+				boolean gapScenario = (column < 9 && row < 9
+						&& content[row][column] == Player.piece
+						&& content[row + 1][column] == 0 
+						&& content[row + 2][column] == Player.piece);
+				
+				if (gapScenario) {
+					
+					int rowPieceToMove = findLastPieceInTheColumn(content, row, column, 0);
+					IO.debug("VERTICAL: R:" + new Move(rowPieceToMove, column, row, column));
+//					return new Move(row, columnPieceToMove, row, column + 1);
+				}
+			}
+		}
+		
 		for (int row = 0; row < contentLength; row++) {
 			for (int column = 0; column < contentLength; column++) {
 				boolean gapScenario = (column <= 9
@@ -140,6 +157,18 @@ public class Player {
 				break;
 		}
 		return columnPieceToMove;
+	}
+	
+	private int findLastPieceInTheColumn(int[][] content, int row, int column, int defaultRow) {
+		int rowPieceToMove = defaultRow;
+		for (int i = row; i > 0; i--) {
+			if (content[i][column] == Player.piece)
+				rowPieceToMove = i;
+			else
+				break;
+		}
+		
+		return rowPieceToMove;
 	}
 
 	public void stop() {
