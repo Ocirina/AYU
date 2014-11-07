@@ -3,7 +3,9 @@ package nl.codecup.src;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameState {
 	private Board board;
@@ -36,42 +38,116 @@ public class GameState {
 	public Board getBoard() {
 		return board;
 	}
-	
+
 	/**
 	 * Returns a list of coordinates to get the shortest path between groups.
 	 * Tries to find a path of empty cells.
-	 * @param group1 : The first group
-	 * @param group2 : The second group
+	 * 
+	 * @param group1
+	 *            : The first group
+	 * @param group2
+	 *            : The second group
 	 * @return A list of coordinates in a String array with ["x,y"] notation.
 	 */
 	public String[] getShortestPathBetweenGroups(Group group1, Group group2) {
-		
-		return null;
+		String[] coordinateList = null;
+		int minimumDistance = 0;
+		for (String coordinate1 : group1.getCoordinates()) {
+			for (String coordinate2 : group2.getCoordinates()) {
+				Map<String, Integer> distanceValues = new HashMap<String, Integer>();
+				List<String> visitedNodes = new ArrayList<String>();
+				visitedNodes.add(coordinate1);
+				List<String> unvisitedNodes = this.fillListWithUnvistedNodes(
+						coordinate1.split(","), distanceValues);
+				String[] temp = findShortestPath(coordinate1.split(","),
+						coordinate2, visitedNodes, unvisitedNodes,
+						distanceValues, (List<String>) new ArrayList<String>());
+				if (coordinateList == null
+						|| temp.length < coordinateList.length) {
+					String str = "Path: \n";
+					for(int i = 0; i < temp.length; i++) {
+						str += temp[0]+"\n";
+					}
+					IO.debug(str);
+					coordinateList = temp;
+				}
+			}
+		}
+		return coordinateList;
 	}
-	
+
+	private String[] findShortestPath(String[] current, String end,
+			List<String> visited, List<String> unvisited,
+			Map<String, Integer> distanceValues, List<String> path) {
+
+		String[] neighBours = board.getNeighbours(Integer.parseInt(current[0]),
+				Integer.parseInt(current[1]));
+		IO.debug("Neighbours length: "+neighBours.length);
+		IO.debug("Unvisited size: "+unvisited.size());
+
+		for (int i = 0; i < neighBours.length; i++) {
+			String neighBour = neighBours[i];
+			if (neighBour != null && unvisited.contains(neighBour)) {
+				String[] coords = neighBour.split(",");
+				int x = Integer.parseInt(coords[0]);
+				int y = Integer.parseInt(coords[1]);
+
+				if (!neighBour.equals(end) && board.isBlankSpace(x, y)) {
+					unvisited.remove(unvisited.indexOf(neighBour));
+					List<String> newPath = new ArrayList<String>(path);
+					newPath.add(neighBour);
+					findShortestPath(coords, end, visited,
+							unvisited, distanceValues, newPath);
+				} else {
+					return path.toArray(new String[path.size()]);
+				}
+			}
+		}
+		return new String[1];
+	}
+
+	private List<String> fillListWithUnvistedNodes(String[] start,
+			Map<String, Integer> distanceValues) {
+		List<String> coordinates = new ArrayList<String>();
+		int x = Integer.parseInt(start[0]);
+		int y = Integer.parseInt(start[1]);
+		int[][] contents = board.getBoardContents();
+		for (int i = 0; i < contents.length; i++) {
+			for (int j = 0; j < contents[i].length; j++) {
+				if (i != x && j != y) {
+					coordinates.add(i + "," + j);
+					distanceValues.put(i + "," + j,
+							(Math.abs(i - x) + Math.abs(j - y)));
+				}
+			}
+		}
+		return coordinates;
+	}
+
 	private int getAmountOfRemainingGroups() {
 		int count = 0;
-		for(Group group : playerGroups) {
+		for (Group group : playerGroups) {
 			count += (group != null ? 1 : 0);
 		}
 		return count;
 	}
-	
+
 	/**
-	 * Returns the indexes of real ayu groups.
-	 * Real ayu groups have a length of 2 or higher.
+	 * Returns the indexes of real ayu groups. Real ayu groups have a length of
+	 * 2 or higher.
+	 * 
 	 * @return An integer array.
 	 */
 	public Integer[] getIndexesOfAyuGroups() {
 		List<Integer> groups = new ArrayList<Integer>();
-		for(Group group : playerGroups) {
-			if(group.getCoordinates().size() >= 2) {
+		for (Group group : playerGroups) {
+			if (group != null && group.getCoordinates().size() >= 2) {
 				groups.add(group.getIndexInList());
 			}
 		}
 		return groups.toArray(new Integer[groups.size()]);
 	}
-	
+
 	/**
 	 * Creates the groups for the player for a start board.
 	 */
@@ -143,11 +219,20 @@ public class GameState {
 		this.checkGroupsForMove(move.getOriginXConverted(),
 				move.getOriginYConverted(), move.getTargetXConverted(),
 				move.getTargetYConverted());
-		
-		if(getAmountOfRemainingGroups() == 1) {
+
+		IO.debug(groupsToString());
+		if (getAmountOfRemainingGroups() == 1) {
 			// Player has won.
 			IO.debug("Player has won.");
 		}
+		// Test shortest path
+		Integer[] indexes = this.getIndexesOfAyuGroups();
+		if (indexes.length >= 2) {
+			IO.debug(this.getShortestPathBetweenGroups(
+					playerGroups[indexes[0].intValue()],
+					playerGroups[indexes[1].intValue()]).toString());
+		}
+
 		return newState;
 	}
 
