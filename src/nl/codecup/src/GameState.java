@@ -38,6 +38,26 @@ public class GameState {
 	}
 	
 	/**
+	 * Returns a list of coordinates to get the shortest path between groups.
+	 * Tries to find a path of empty cells.
+	 * @param group1 : The first group
+	 * @param group2 : The second group
+	 * @return A list of coordinates in a String array with ["x,y"] notation.
+	 */
+	public String[] getShortestPathBetweenGroups(Group group1, Group group2) {
+		
+		return null;
+	}
+	
+	private int getAmountOfRemainingGroups() {
+		int count = 0;
+		for(Group group : playerGroups) {
+			count += (group != null ? 1 : 0);
+		}
+		return count;
+	}
+	
+	/**
 	 * Returns the indexes of real ayu groups.
 	 * Real ayu groups have a length of 2 or higher.
 	 * @return An integer array.
@@ -123,6 +143,11 @@ public class GameState {
 		this.checkGroupsForMove(move.getOriginXConverted(),
 				move.getOriginYConverted(), move.getTargetXConverted(),
 				move.getTargetYConverted());
+		
+		if(getAmountOfRemainingGroups() == 1) {
+			// Player has won.
+			IO.debug("Player has won.");
+		}
 		return newState;
 	}
 
