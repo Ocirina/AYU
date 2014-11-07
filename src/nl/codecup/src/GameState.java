@@ -144,7 +144,7 @@ public class GameState {
 				move.getOriginYConverted(), move.getTargetXConverted(),
 				move.getTargetYConverted());
 		
-		if(getAmountOfRemainingGroups() == 1) {
+		if(checkForWin()) {
 			// Player has won.
 			IO.debug("Player has won.");
 		}
@@ -342,7 +342,9 @@ public class GameState {
 	}
 
 	private boolean checkForWin() {
-		winner = 0;
+		if (getAmountOfRemainingGroups() == 1) {
+			return true;
+		}
 		return false;
 	}
 
