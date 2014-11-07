@@ -343,10 +343,7 @@ public class GameState {
 	}
 
 	private boolean checkForWin() {
-		if (getAmountOfRemainingGroups() == 1) {
-			return true;
-		}
-		return false;
+		return (getAmountOfRemainingGroups() == 1);
 	}
 
 	public int getPlayingPiece() {
