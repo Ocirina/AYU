@@ -2,7 +2,6 @@ package nl.codecup.src;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class GameState {
@@ -180,7 +179,7 @@ public class GameState {
 				if (neighBours[i] != null
 						&& !neighBours[i].equalsIgnoreCase("")) {
 					Group tempGroup = this.getGroupByCoordinate(neighBours[i]);
-					if (group != tempGroup) {
+					if (tempGroup != null && group != tempGroup) {
 						groups[i + 1] = tempGroup;
 					}
 				}
@@ -198,11 +197,13 @@ public class GameState {
 			tempList.set(0, targetX + "," + targetY);
 			this.playerGroups[group.getIndexInList()] = null;
 			String[] neighBours = board.getNeighbours(targetX, targetY);
+			
 			for (int i = 0; i < neighBours.length; i++) {
-				if (neighBours[i] != null
-						&& !neighBours[i].equalsIgnoreCase("")) {
+				
+				if (neighBours[i] != null && !neighBours[i].equalsIgnoreCase("")) {
 					Group tempGroup = this.getGroupByCoordinate(neighBours[i]);
-					if (group != tempGroup) {
+					
+					if (tempGroup != null && group != tempGroup) {
 						groups[i] = tempGroup;
 					}
 				}

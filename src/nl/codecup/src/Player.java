@@ -103,7 +103,6 @@ public class Player {
 		 * |   |   | W | W | W | W | W | W | 
 		 * 
 		 */
-
 		for (int row = 1; row < (contentLength-1); row++) {
 			if (content[row][10] == 0) {
 				IO.debug("Got it!");
@@ -111,6 +110,24 @@ public class Player {
 				return new Move((row -1), columnPieceToMove, row, 10);
 			}
 		}
+		
+		/**
+		 * Situation:
+		 * |   |   | W | W | W |   | W | W | 
+		 * |   |   |   | W |   | B | B | W |
+		 * |   |   |   | W |   | W | B | W | 
+		 * |   |   |   | W |   | W | B | W | 
+		 * |   |   |   | W |   | W | B | W |
+		 * |   |   |   |   |   | W |   |   |
+		 * Result:
+		 * |   |   | W | W | W | W | W | W | 
+		 * |   |   |   | W |   | B | B | W |
+		 * |   |   |   | W | W | W | B | W | 
+		 * |   |   |   | W |   | W | B | W | 
+		 * |   |   |   | W |   |   | B | W |
+		 * |   |   |   |   |   |   |   |   |  
+		 */
+		
 		return null;
 	}
 
