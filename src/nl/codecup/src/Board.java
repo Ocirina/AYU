@@ -205,6 +205,7 @@ public class Board {
 		this.boardGrid[originX][originY] = this.boardGrid[targetX][targetY];
 		this.boardGrid[targetX][targetY] = tempPiece;
 		IO.debug(this.toString());
+		IO.debug(this.toDebugBoard());
 	}
 
 	/**
@@ -289,6 +290,24 @@ public class Board {
 		return tempBoard;
 	}
 
+	public String toDebugBoard() {
+		String[] pieces = { "NONE", "WHITE", "BLACK" };
+		String output = "private int[][] boardGrid = new int[][] {";
+
+		for (int row = 0; row < SIZE; row++) {
+			output += "{ ";
+			for (int column = 0; column < SIZE; column++) {
+				int piece = boardGrid[row][column];
+				output += " " + pieces[piece] + " ";
+				output += (column < (SIZE - 1) ? "," : "");
+			}
+			output += " }";
+			output += (row < (SIZE - 1) ? ", " : "");
+		}
+		output += " };";
+		return output;
+	}
+
 	public Board placePiece(int piece, int row, int column) {
 		// TODO Switch the pieces. Should receive Move object?
 		return this;
@@ -322,5 +341,5 @@ public class Board {
 		}
 		return gapsInRow;
 	}
-	
+
 }
