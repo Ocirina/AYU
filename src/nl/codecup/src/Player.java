@@ -83,7 +83,7 @@ public class Player {
 				if (gapScenario) {
 					
 					int rowPieceToMove = findLastPieceInTheColumn(content, row, column, 0);
-					IO.debug("VERTICAL: R:" + new Move(rowPieceToMove, column, row, column));
+					IO.debug("VERTICAL: R:" + new Move(rowPieceToMove, column, row + 1, column));
 //					return new Move(row, columnPieceToMove, row, column + 1);
 				}
 			}
