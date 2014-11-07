@@ -44,12 +44,11 @@ public class Player {
 	 */
 	public Move chooseMove() {
 		int[][] content = this.state.getBoardContents();
-		Move move = null;
 		int contentLength = content.length - 1;
-
+		int[] rows = new int[] { 0, 1, 2, 10, 9, 8, 3, 4, 7, 6, 5 };
 		// Strategy 1: Make long groups in each column. (Should make a group of
 		// 6 on each row).
-		for (int row = 0; row < contentLength; row++) {
+		for (int row : rows) {
 			for (int column = 0; column < contentLength; column++) {
 				IO.debug("row: " + row + ", column: " + column + " => "
 						+ content[row][column]);
@@ -68,6 +67,7 @@ public class Player {
 						&& content[row][column] == Player.piece
 						&& content[row][column + 1] == 0 
 						&& content[row][column + 2] == Player.piece);
+<<<<<<< HEAD
 				int columnPieceToMove = 0;
 				if (gapScenario) {
 					for (int i = column; i > 0; i--) {
@@ -83,6 +83,24 @@ public class Player {
 //						}
 					}
 //					IO.debug("column Piece" + columnPieceToMove);
+=======
+				
+				if (gapScenario) {
+					int columnPieceToMove = findLastPieceInTheRow(content, row,	column, 0);
+					return new Move(row, columnPieceToMove, row, column + 1);
+				}
+			}
+		}
+		
+		for (int row : rows) {
+			for (int column = 0; column < contentLength; column++) {
+				boolean gapScenario = (column <= 9
+						&& content[row][column] == Player.piece
+						&& content[row][column + 1] == 0);
+				
+				if (gapScenario) {
+					int columnPieceToMove = findLastPieceInTheRow(content, row,	column, 0);
+>>>>>>> cfd2e23639b644606c66393db6ed07aa8a1cc9f7
 					return new Move(row, columnPieceToMove, row, column + 1);
 				}
 			}
@@ -96,15 +114,46 @@ public class Player {
 		/**
 		 * Situation:
 		 * 
+<<<<<<< HEAD
 		 * Start: | | | W | W | W | W | W | W | | | | | | | | | | | | | W | W |
 		 * W | W | W | W |
+=======
+		 * Start: 
+		 * |   |   | W | W | W | W | W | W | 
+		 * |   |   |   |   |   |   |   |   |
+		 * |   |   | W | W | W | W | W | W | 
+>>>>>>> cfd2e23639b644606c66393db6ed07aa8a1cc9f7
 		 * 
-		 * Result: | | | | W | W | W | W | W | | | | | | | | | W | | | | W | W |
-		 * W | W | W | W |
+		 * Result:
+		 * |   |   |   | W | W | W | W | W | 
+		 * |   |   |   |   |   |   |   | W |
+		 * |   |   | W | W | W | W | W | W | 
 		 * 
 		 */
 
+<<<<<<< HEAD
 		return move;
+=======
+		for (int row = 1; row < (contentLength-1); row++) {
+			if (content[row][10] == 0) {
+				IO.debug("Got it!");
+				int columnPieceToMove = findLastPieceInTheRow(content, row,	10, 5);
+				return new Move((row -1), columnPieceToMove, row, 10);
+			}
+		}
+		return null;
+	}
+
+	private int findLastPieceInTheRow(int[][] content, int row, int column, int defaultColumn) {
+		int columnPieceToMove = defaultColumn;
+		for (int i = column; i > 0; i--) {
+			if (content[row][i] == Player.piece)
+				columnPieceToMove = i;
+			else
+				break;
+		}
+		return columnPieceToMove;
+>>>>>>> cfd2e23639b644606c66393db6ed07aa8a1cc9f7
 	}
 
 	public void stop() {
