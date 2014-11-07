@@ -176,7 +176,10 @@ public class GameState {
 			for (int i = 0; i < neighBours.length; i++) {
 				if (neighBours[i] != null
 						&& !neighBours[i].equalsIgnoreCase("")) {
-					groups[i] = this.getGroupByCoordinate(neighBours[i]);
+					Group tempGroup = this.getGroupByCoordinate(neighBours[i]);
+					if (group != tempGroup) {
+						groups[i] = tempGroup;
+					}
 				}
 			}
 			this.setPlayerGroupNull(group); // Set origin group to null
