@@ -75,7 +75,7 @@ public class Board {
      *            : The Y coordinate
      * @return True if it's a group, else returns false.
      */
-    public boolean hasNeighbour(int x, int y) {
+    public boolean hasNeighbor(int x, int y) {
         if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece) {
             return true;
         }
@@ -180,7 +180,7 @@ public class Board {
      * @param y
      * @return
      */
-    public String[] getNeighbours(int x, int y) {
+    public String[] getNeighbor(int x, int y) {
         String[] neighBours = new String[4];
         if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece) {
             neighBours[0] = x + "," + (y + 1);

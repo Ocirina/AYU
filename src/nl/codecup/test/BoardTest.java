@@ -20,8 +20,8 @@ public class BoardTest {
 	@Test
 	public void testHasNeighbour() {
 		board.movePiece(new Move("B","1","B","2"));
-		assertTrue(board.hasNeighbour(1,1));
-		assertFalse(board.hasNeighbour(3,0));
+		assertTrue(board.hasNeighbor(1,1));
+		assertFalse(board.hasNeighbor(3,0));
 	}
 	
 	@Test

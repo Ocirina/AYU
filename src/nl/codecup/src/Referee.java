@@ -39,7 +39,7 @@ public class Referee {
         int targetY = move.getTargetYConverted();
 
         if (board.isBlankSpace(targetX, targetY)) {
-            if (!inGroup && board.hasNeighbour(targetX, targetY)) {
+            if (!inGroup && board.hasNeighbor(targetX, targetY)) {
                 return true;
             } else if (inGroup && board.isMoveNeighbourOfSameGroup(originX, originY, targetX, targetY)) {
                 return true;
@@ -62,9 +62,9 @@ public class Referee {
             int y = move.getOriginYConverted();
 
             if (board.getBoardContents()[x][y] == Player.piece) {
-                if (board.hasNeighbour(x, y) && board.onEdgesOfGroup(x, y)) {
+                if (board.hasNeighbor(x, y) && board.onEdgesOfGroup(x, y)) {
                     return this.mayBePlaced(move, board, true);
-                } else if (!board.hasNeighbour(x, y)) {
+                } else if (!board.hasNeighbor(x, y)) {
                     return this.mayBePlaced(move, board, false);
                 }
             }
