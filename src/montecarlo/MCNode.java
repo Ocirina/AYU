@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class MCNode {
 	
-	private ArrayList<MCNode> children = new ArrayList<MCNode>();
-	private float winpercentage;
+	private MCNode[] children = new MCNode[0];
+	private int numOfChildren = 0;
+	private float winpercentage = (float) 0.0;
 	private boolean isLeaf = false;
 	private boolean isWin = false;
 	
@@ -19,30 +20,21 @@ public class MCNode {
 	}
 
 	/**
-	 * get the children
+	 * get children
 	 * 
-	 * @return ArrayList of children
+	 * @return children
 	 */
-	public ArrayList<MCNode> getChildren() {
+	public MCNode[] getChildren() {
 		return children;
 	}
 
 	/**
-	 * set the children
+	 * set children
 	 * 
-	 * @param children	- ArrayList of children
+	 * @param children
 	 */
-	public void setChildren(ArrayList<MCNode> children) {
+	public void setChildren(MCNode[] children) {
 		this.children = children;
-	}
-	
-	/**
-	 * adds a child to the children ArrayList
-	 * 
-	 * @param child	- node to add
-	 */
-	public void addChild(MCNode child) {
-		getChildren().add(child);
 	}
 
 	/**
@@ -97,6 +89,24 @@ public class MCNode {
 	 */
 	public void setWin(boolean isWin) {
 		this.isWin = isWin;
+	}
+
+	/**
+	 * get number of children
+	 * 
+	 * @return numOfChildren
+	 */
+	public int getNumOfChildren() {
+		return numOfChildren;
+	}
+
+	/**
+	 * set numOfChildren
+	 * 
+	 * @param numOfChildren
+	 */
+	public void setNumOfChildren(int numOfChildren) {
+		this.numOfChildren = numOfChildren;
 	}
 	
 }

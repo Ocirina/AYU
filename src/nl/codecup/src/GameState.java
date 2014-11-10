@@ -58,6 +58,7 @@ public class GameState {
 				visitedNodes.add(coordinate1);
 				List<String> unvisitedNodes = this.fillListWithUnvistedNodes(
 						coordinate1.split(","), distanceValues);
+				IO.debug(coordinate1 + " - " + coordinate2);
 				String[] temp = findShortestPath(coordinate1.split(","),
 						coordinate2, visitedNodes, unvisitedNodes,
 						distanceValues, (List<String>) new ArrayList<String>());
@@ -65,7 +66,7 @@ public class GameState {
 						|| temp.length < coordinateList.length) {
 					String str = "Path: \n";
 					for (int i = 0; i < temp.length; i++) {
-						str += temp[0] + "\n";
+						str += temp[i] + "\n";
 					}
 					IO.debug(str);
 					coordinateList = temp;
@@ -79,10 +80,8 @@ public class GameState {
 			List<String> visited, List<String> unvisited,
 			Map<String, Integer> distanceValues, List<String> path) {
 
-		String[] neighbors = board.getNeighbor(Integer.parseInt(current[0]),
-				Integer.parseInt(current[1]));
-		IO.debug("neighbors length: " + neighbors.length);
-		IO.debug("Unvisited size: " + unvisited.size());
+		String[] neighbors = board.getNeighborsByPiece(Integer.parseInt(current[0]),
+				Integer.parseInt(current[1]), 0);
 
 		for (int i = 0; i < neighbors.length; i++) {
 			String neighbor = neighbors[i];
@@ -91,14 +90,17 @@ public class GameState {
 				int x = Integer.parseInt(coords[0]);
 				int y = Integer.parseInt(coords[1]);
 
-				if (!neighbor.equals(end) && board.isBlankSpace(x, y)) {
-					unvisited.remove(unvisited.indexOf(neighbor));
-					List<String> newPath = new ArrayList<String>(path);
-					newPath.add(neighbor);
-					findShortestPath(coords, end, visited, unvisited,
-							distanceValues, newPath);
-				} else {
-					return path.toArray(new String[path.size()]);
+				IO.debug("Coords in neighBour loop: "+neighbor);
+
+				if (!neighbor.equals(end)) {
+					if(board.isBlankSpace(x, y)) {
+						IO.debug("Adds to path: "+neighbor);
+						unvisited.remove(unvisited.indexOf(neighbor));
+						List<String> newPath = new ArrayList<String>(path);
+						newPath.add(neighbor);
+						return findShortestPath(coords, end, visited, unvisited,
+								distanceValues, newPath);
+					}
 				}
 			}
 		}
@@ -113,7 +115,7 @@ public class GameState {
 		int[][] contents = board.getBoardContents();
 		for (int i = 0; i < contents.length; i++) {
 			for (int j = 0; j < contents[i].length; j++) {
-				if (i != x && j != y) {
+				if (contents[i][j] == 0) {
 					coordinates.add(i + "," + j);
 					distanceValues.put(i + "," + j,
 							(Math.abs(i - x) + Math.abs(j - y)));
@@ -140,7 +142,7 @@ public class GameState {
 	public Integer[] getIndexesOfAyuGroups() {
 		List<Integer> groups = new ArrayList<Integer>();
 		for (Group group : playerGroups) {
-			if (group.getCoordinates().size() >= 2) {
+			if (group != null && group.getCoordinates().size() >= 2) {
 				groups.add(group.getIndexInList());
 			}
 		}
@@ -223,6 +225,12 @@ public class GameState {
 			// Player has won.
 			IO.debug("Player has won.");
 		}
+		
+		Integer[] indexes = getIndexesOfAyuGroups();
+		if(indexes.length >= 2) {
+			String[] path = getShortestPathBetweenGroups(playerGroups[indexes[0]], playerGroups[indexes[1]]);
+			IO.debug(path.length+"");
+		}
 		return newState;
 	}
 
@@ -250,7 +258,7 @@ public class GameState {
 			if (position != -1) {
 				group.getCoordinates().set(position, targetX + "," + targetY);
 			}
-			String[] neighbors = board.getNeighbor(targetX, targetY);
+			String[] neighbors = board.getNeighbors(targetX, targetY);
 			for (int i = 0; i < neighbors.length && (i + 1) < groups.length; i++) {
 				addGroupNeighbor(groups, group, neighbors, i, 1);
 			}
@@ -276,7 +284,7 @@ public class GameState {
 			List<String> tempList = group.getCoordinates();
 			tempList.set(0, targetX + "," + targetY);
 			this.playerGroups[group.getIndexInList()] = null;
-			String[] neighbors = board.getNeighbor(targetX, targetY);
+			String[] neighbors = board.getNeighbors(targetX, targetY);
 			for (int i = 0; i < neighbors.length; i++) {
 				addGroupNeighbor(groups, group, neighbors, i, 0);
 			}

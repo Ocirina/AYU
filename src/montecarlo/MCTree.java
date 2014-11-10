@@ -5,9 +5,10 @@ import java.util.Random;
 public class MCTree {
 	
 	private MCNode root;
+	private final int NIMIALNUMOFCHILDREN = 1000000;
 	
 	public static void main(String[] args) {
-		MCTree tree = new MCTree(10, 2);
+		MCTree tree = new MCTree(10, 10);
 	}
 	
 	/**
@@ -21,6 +22,8 @@ public class MCTree {
 		setRoot(root);
 		generateTree(getRoot(), treeWidth, searchDepth);
 		printTree(getRoot(), "");
+		MCNode bestMove = getBestMove();
+		System.out.println("Best move " + bestMove.getWinpercentage() + " - " + bestMove.getNumOfChildren());
 	}
 	
 	/**
@@ -32,6 +35,7 @@ public class MCTree {
 	 */
 	private void generateTree(MCNode node, int numChilds, int searchDepth) {
 		if (searchDepth > 0) {
+			MCNode children[] = new MCNode[numChilds];
 			for (int i = 0; i < numChilds; i++) {
 				boolean isLeaf = getRandomBoolean();
 				MCNode child = new MCNode(isLeaf);
@@ -40,12 +44,22 @@ public class MCTree {
 				} else {
 					boolean win = getRandomBoolean();
 					child.setWin(win);
-					child.setWinpercentage((win) ? (float) 1.0 : (float) 0.0);
+					child.setWinpercentage((float) (win ? 1.0 : 0.0));
 				}
-				node.addChild(child);
+				children[i] = child;
 			}
+			node.setChildren(children);
 			updateWinpercentage(node);
+			updateNumOfChildren(node);
 		}
+	}
+	
+	private void updateNumOfChildren(MCNode node) {
+		int numOfChildren = 0;
+		for (int i = 0; i < node.getChildren().length; i++) {
+			numOfChildren += node.getChildren()[i].getNumOfChildren() + 1;
+		}
+		node.setNumOfChildren(numOfChildren);
 	}
 	
 	/**
@@ -55,10 +69,10 @@ public class MCTree {
 	 */
 	private void updateWinpercentage(MCNode node) {
 		float winpercentage = (float) 0.0;
-		for (int i = 0; i < node.getChildren().size(); i++) {
-			winpercentage += node.getChildren().get(i).getWinpercentage();
+		for (int i = 0; i < node.getChildren().length; i++) {
+			winpercentage += node.getChildren()[i].getWinpercentage();
 		}
-		node.setWinpercentage(winpercentage / ((node.getChildren().isEmpty()) ? 1 : node.getChildren().size()));
+		node.setWinpercentage(winpercentage / ((node.getChildren().length == 0) ? 1 : node.getChildren().length));
 	}
 	
 	/**
@@ -68,13 +82,45 @@ public class MCTree {
 	 * @param whitespace	 - the whitespace before the win percentage (for visibility) 
 	 */
 	private void printTree(MCNode node, String whitespace) {
-		System.out.println(whitespace + node.getWinpercentage());
+		System.out.println(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren());
 		if (!node.isLeaf()) {
-			for (int i = 0; i < node.getChildren().size(); i++) {
-				printTree(node.getChildren().get(i), whitespace + "    ");
+			for (int i = 0; i < node.getChildren().length; i++) {
+				printTree(node.getChildren()[i], whitespace + "    ");
 			}
 		}
 	}
+	
+	/**
+	 * get best move based on winpercentage and number of children
+	 * 
+	 * @return best move
+	 */
+	private MCNode getBestMove() {
+		MCNode node = getRoot().getChildren()[0];
+		int childrenSize = getRoot().getChildren().length;
+		for (int i = 1; i < childrenSize; i++) {
+			MCNode childNode = getRoot().getChildren()[i];
+			if (isChildNodeBetterThanNode(node, childNode)) {
+				node = childNode;
+			}
+		}
+		return node;
+	}
+
+	/**
+	 * compares current best node with the new childNode
+	 * 
+	 * @param node		- current best node
+	 * @param childNode	- node to compare to
+	 * @return boolean is better node
+	 */
+	private boolean isChildNodeBetterThanNode(MCNode node, MCNode childNode) {
+		int minNumOfChildren = NIMIALNUMOFCHILDREN;
+		return childNode.getWinpercentage() > node.getWinpercentage()
+				&& minNumOfChildren > childNode.getNumOfChildren();
+	}
+	
+	
 	
 	/**
 	 * get a random number between the min and max parameters
