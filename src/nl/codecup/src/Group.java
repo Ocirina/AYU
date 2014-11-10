@@ -95,19 +95,25 @@ public class Group {
         String[] coords = coordinate.split(",");
         int x = Integer.parseInt(coords[0]);
         int y = Integer.parseInt(coords[1]);
-        int minimumDistance = 0;
+        return calculateMinimumDistance(x, y);
+    }
+    
+    /**
+     * Calculates the minimum distance between the coordinates.
+     * @param x
+     * @param y
+     * @return minimum distance
+     */
+	private int calculateMinimumDistance(int x, int y) {
+		int minimumDistance = 0;
         for (int i = 0; i < this.coordinates.size(); i++) {
-            coords = this.coordinates.get(i).split(",");
+            String[] coords = this.coordinates.get(i).split(",");
             int tempDistance = Math.abs(Integer.parseInt(coords[0]) - x);
             tempDistance += Math.abs(Integer.parseInt(coords[1]) - y);
-
-            if (minimumDistance > tempDistance || minimumDistance == 0) {
-                minimumDistance = tempDistance;
-            }
+            minimumDistance = (minimumDistance > tempDistance || minimumDistance == 0) ? tempDistance : minimumDistance;
         }
-
-        return minimumDistance;
-    }
+		return minimumDistance;
+	}
 
     /**
 	 * 
