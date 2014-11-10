@@ -75,7 +75,7 @@ public class Board {
      *            : The Y coordinate
      * @return True if it's a group, else returns false.
      */
-    public boolean hasNeighbour(int x, int y) {
+    public boolean hasNeighbor(int x, int y) {
         if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece) {
             return true;
         }
@@ -180,8 +180,8 @@ public class Board {
      * @param y
      * @return
      */
-    public String[] getNeighbours(int x, int y) {
-    	return this.getNeighboursByPiece(x, y, Player.piece);
+    public String[] getNeighbors(int x, int y) {
+    	return this.getNeighborsByPiece(x, y, Player.piece);
     }
     
     /**
@@ -192,25 +192,25 @@ public class Board {
      * @param piece
      * @return
      */
-    public String[] getNeighboursByPiece(int x, int y, int piece) {
-        String[] neighBours = new String[4];
+    public String[] getNeighborsByPiece(int x, int y, int piece) {
+        String[] neighbors = new String[4];
         if (y + 1 < SIZE && this.boardGrid[x][y + 1] == piece) {
-            neighBours[0] = x + "," + (y + 1);
+            neighbors[0] = x + "," + (y + 1);
         }
 
         if (x + 1 < SIZE && this.boardGrid[x + 1][y] == piece) {
-            neighBours[1] = (x + 1) + "," + y;
+            neighbors[1] = (x + 1) + "," + y;
         }
 
         if (y - 1 >= 0 && this.boardGrid[x][y - 1] == piece) {
-            neighBours[2] = x + "," + (y - 1);
+            neighbors[2] = x + "," + (y - 1);
         }
 
         if (x - 1 >= 0 && this.boardGrid[x - 1][y] == piece) {
-            neighBours[3] = (x - 1) + "," + y;
+            neighbors[3] = (x - 1) + "," + y;
         }
 
-        return neighBours;
+        return neighbors;
     }
 
     /**
