@@ -1,7 +1,5 @@
 package montecarlo;
 
-import java.util.ArrayList;
-
 public class MCNode {
 	
 	private MCNode[] children = new MCNode[0];
