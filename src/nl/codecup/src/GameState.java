@@ -58,21 +58,20 @@ public class GameState {
 				visitedNodes.add(coordinate1);
 				List<String> unvisitedNodes = this.fillListWithUnvistedNodes(
 						coordinate1.split(","), distanceValues);
-				IO.debug(coordinate1 + " - " + coordinate2);
 				String[] temp = findShortestPath(coordinate1.split(","),
 						coordinate2, visitedNodes, unvisitedNodes,
 						distanceValues, (List<String>) new ArrayList<String>());
 				if (coordinateList == null
 						|| temp.length < coordinateList.length) {
-					String str = "Path: \n";
-					for (int i = 0; i < temp.length; i++) {
-						str += temp[i] + "\n";
-					}
-					IO.debug(str);
 					coordinateList = temp;
 				}
 			}
 		}
+		String str = "Shortest Path:\n";
+		for (int i = 0; i < coordinateList.length; i++) {
+			str += " "+coordinateList[i];
+		}
+		IO.debug(str);
 		return coordinateList;
 	}
 
@@ -97,14 +96,18 @@ public class GameState {
 						IO.debug("Adds to path: "+neighbor);
 						unvisited.remove(unvisited.indexOf(neighbor));
 						List<String> newPath = new ArrayList<String>(path);
-						newPath.add(neighbor);
+						if(!newPath.contains(neighbor)) {
+							newPath.add(neighbor);
+						}
 						return findShortestPath(coords, end, visited, unvisited,
 								distanceValues, newPath);
 					}
+				} else {
+					return path.toArray(new String[path.size()]);
 				}
 			}
 		}
-		return new String[1];
+		return path.toArray(new String[path.size()]);
 	}
 
 	private List<String> fillListWithUnvistedNodes(String[] start,
