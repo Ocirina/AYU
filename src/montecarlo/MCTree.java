@@ -56,8 +56,9 @@ public class MCTree {
 	
 	private void updateNumOfChildren(MCNode node) {
 		int numOfChildren = 0;
-		for (int i = 0; i < node.getChildren().length; i++) {
-			numOfChildren += node.getChildren()[i].getNumOfChildren() + 1;
+		MCNode[] children = node.getChildren();
+		for (int i = 0; i < children.length; i++) {
+			numOfChildren += children[i].getNumOfChildren() + 1;
 		}
 		node.setNumOfChildren(numOfChildren);
 	}
