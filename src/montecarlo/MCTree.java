@@ -35,6 +35,7 @@ public class MCTree {
 	 */
 	private void generateTree(MCNode node, int numChilds, int searchDepth) {
 		if (searchDepth > 0) {
+			MCNode children[] = new MCNode[numChilds];
 			for (int i = 0; i < numChilds; i++) {
 				boolean isLeaf = getRandomBoolean();
 				MCNode child = new MCNode(isLeaf);
@@ -45,8 +46,9 @@ public class MCTree {
 					child.setWin(win);
 					child.setWinpercentage((float) (win ? 1.0 : 0.0));
 				}
-				node.addChild(child);
+				children[i] = child;
 			}
+			node.setChildren(children);
 			updateWinpercentage(node);
 			updateNumOfChildren(node);
 		}
@@ -54,8 +56,9 @@ public class MCTree {
 	
 	private void updateNumOfChildren(MCNode node) {
 		int numOfChildren = 0;
-		for (int i = 0; i < node.getChildren().size(); i++) {
-			numOfChildren += node.getChildren().get(i).getNumOfChildren() + 1;
+		MCNode[] children = node.getChildren();
+		for (int i = 0; i < children.length; i++) {
+			numOfChildren += children[i].getNumOfChildren() + 1;
 		}
 		node.setNumOfChildren(numOfChildren);
 	}
@@ -67,10 +70,10 @@ public class MCTree {
 	 */
 	private void updateWinpercentage(MCNode node) {
 		float winpercentage = (float) 0.0;
-		for (int i = 0; i < node.getChildren().size(); i++) {
-			winpercentage += node.getChildren().get(i).getWinpercentage();
+		for (int i = 0; i < node.getChildren().length; i++) {
+			winpercentage += node.getChildren()[i].getWinpercentage();
 		}
-		node.setWinpercentage(winpercentage / ((node.getChildren().isEmpty()) ? 1 : node.getChildren().size()));
+		node.setWinpercentage(winpercentage / ((node.getChildren().length == 0) ? 1 : node.getChildren().length));
 	}
 	
 	/**
@@ -82,8 +85,8 @@ public class MCTree {
 	private void printTree(MCNode node, String whitespace) {
 		System.out.println(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren());
 		if (!node.isLeaf()) {
-			for (int i = 0; i < node.getChildren().size(); i++) {
-				printTree(node.getChildren().get(i), whitespace + "    ");
+			for (int i = 0; i < node.getChildren().length; i++) {
+				printTree(node.getChildren()[i], whitespace + "    ");
 			}
 		}
 	}
@@ -94,10 +97,10 @@ public class MCTree {
 	 * @return best move
 	 */
 	private MCNode getBestMove() {
-		MCNode node = getRoot().getChildren().get(0);
-		int childrenSize = getRoot().getChildren().size();
+		MCNode node = getRoot().getChildren()[0];
+		int childrenSize = getRoot().getChildren().length;
 		for (int i = 1; i < childrenSize; i++) {
-			MCNode childNode = getRoot().getChildren().get(i);
+			MCNode childNode = getRoot().getChildren()[i];
 			if (isChildNodeBetterThanNode(node, childNode)) {
 				node = childNode;
 			}

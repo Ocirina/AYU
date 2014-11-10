@@ -8,8 +8,6 @@ public class Manager {
     private GameState gameState;
 
     private MoveConverter converter;
-    private static final int PLAYER = 1;
-    private static final int COMPUTER = 2;
 
     /**
      * Main
@@ -24,20 +22,22 @@ public class Manager {
      * Constructor
      */
     public Manager() {
-        this.converter = new MoveConverter();
-        gameState = new GameState(new Board(), PLAYER, COMPUTER);
 
         String input = IO.input(); // leave for debug
-        if (input.equals("Start")) {
-            this.referee = new Referee(this);
-            this.player = new Player(this.gameState, PLAYER, this.referee);
-            this.gameState = this.player.takeTurn(this.gameState);
+        if (input.contains("Start")) {
+            int playerNumber = (Character.isDigit(input.charAt(0)) ? Integer.parseInt(input.substring(0, 1)) : 1);
+            initGame(playerNumber);
             handleInput();
-        } else {
-            // OUR DEBUG
-            IO.debug(gameState.toString());
         }
     }
+
+	private void initGame(int playerNumber) {
+		this.converter = new MoveConverter();
+		this.gameState = new GameState(new Board(), playerNumber, (playerNumber == 1 ? 2 : 1));
+		this.referee = new Referee(this);
+		this.player = new Player(this.gameState, playerNumber, this.referee);
+		this.gameState = this.player.takeTurn(this.gameState);
+	}
 
     public Manager(boolean testing) {
     }
