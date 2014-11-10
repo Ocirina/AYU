@@ -58,7 +58,8 @@ public class GameState {
                 List<String> unvisitedNodes = this.fillListWithUnvistedNodes(coordinate1.split(","), distanceValues);
                 String[] temp = findShortestPath(coordinate1.split(","), coordinate2, visitedNodes, unvisitedNodes,
                         distanceValues, (List<String>) new ArrayList<String>());
-                if (coordinateList == null || (coordinateList != null) && temp != null && temp.length < coordinateList.length) {
+                if (coordinateList == null || (coordinateList != null) && temp != null
+                        && temp.length < coordinateList.length) {
                     coordinateList = temp;
                 }
             }
@@ -83,29 +84,25 @@ public class GameState {
                 int x = Integer.parseInt(coords[0]);
                 int y = Integer.parseInt(coords[1]);
 
-                if (!neighbor.equals(end)) {
-                    if (board.isBlankSpace(x, y)) {
-                        unvisited.remove(unvisited.indexOf(neighbor));
-                        List<String> newPath = new ArrayList<String>(path);
-                        if (!newPath.contains(neighbor)) {
-                            newPath.add(neighbor);
-                        }
-                        if(board.isNeighbour(x, y, Integer.parseInt(end.split(",")[0]), Integer.parseInt(end.split(",")[1]))) {
-                        	i = 5;
-                            return newPath.toArray(new String[newPath.size()]);
-                        }
-                        
-                        String[] returnValue = findShortestPath(coords, end, visited, unvisited, distanceValues,
-                                newPath);
-
-                        if (returnValue != null) {
-                            return returnValue;
-                        }
-                        continue;
+                if (board.isBlankSpace(x, y)) {
+                    unvisited.remove(unvisited.indexOf(neighbor));
+                    List<String> newPath = new ArrayList<String>(path);
+                    if (!newPath.contains(neighbor)) {
+                        newPath.add(neighbor);
                     }
-                } else {
-                	IO.debug("Found it!");
-                    return path.toArray(new String[path.size()]);
+
+                    if (board.isNeighbour(x, y, Integer.parseInt(end.split(",")[0]),
+                            Integer.parseInt(end.split(",")[1]))) {
+                        i = 5;
+                        return newPath.toArray(new String[newPath.size()]);
+                    }
+
+                    String[] returnValue = findShortestPath(coords, end, visited, unvisited, distanceValues, newPath);
+
+                    if (returnValue != null) {
+                        return returnValue;
+                    }
+                    continue;
                 }
             }
         }

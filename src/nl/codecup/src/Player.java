@@ -44,7 +44,7 @@ public class Player {
     public Move chooseMove() {
         int[][] content = this.state.getBoardContents();
         int contentLength = content.length - 1;
-        //IO.debug("TRY TO FIND MOVE!");
+        IO.debug("TRY TO FIND MOVE!");
 
         // Strategy 1: Make long groups in each column. (Should make a group of
         // 6 on each row).
@@ -115,7 +115,7 @@ public class Player {
          */
         for (int row = 1; row < (contentLength - 1); row++) {
             if (content[row][10] == 0) {
-                //IO.debug("Got it!");
+                IO.debug("Got it!");
                 int columnPieceToMove = findLastPieceInTheRow(content, row, 10, 5);
                 return new Move((row - 1), columnPieceToMove, row, 10);
             }
