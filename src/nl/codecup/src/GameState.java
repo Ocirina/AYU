@@ -59,6 +59,7 @@ public class GameState {
 				visitedNodes.add(coordinate1);
 				List<String> unvisitedNodes = this.fillListWithUnvistedNodes(
 						coordinate1.split(","), distanceValues);
+				IO.debug(coordinate1 + " - " + coordinate2);
 				String[] temp = findShortestPath(coordinate1.split(","),
 						coordinate2, visitedNodes, unvisitedNodes,
 						distanceValues, (List<String>) new ArrayList<String>());
@@ -66,7 +67,7 @@ public class GameState {
 						|| temp.length < coordinateList.length) {
 					String str = "Path: \n";
 					for (int i = 0; i < temp.length; i++) {
-						str += temp[0] + "\n";
+						str += temp[i] + "\n";
 					}
 					IO.debug(str);
 					coordinateList = temp;
@@ -80,10 +81,8 @@ public class GameState {
 			List<String> visited, List<String> unvisited,
 			Map<String, Integer> distanceValues, List<String> path) {
 
-		String[] neighBours = board.getNeighbours(Integer.parseInt(current[0]),
-				Integer.parseInt(current[1]));
-		IO.debug("Neighbours length: " + neighBours.length);
-		IO.debug("Unvisited size: " + unvisited.size());
+		String[] neighBours = board.getNeighboursByPiece(Integer.parseInt(current[0]),
+				Integer.parseInt(current[1]), 0);
 
 		for (int i = 0; i < neighBours.length; i++) {
 			String neighBour = neighBours[i];
@@ -92,12 +91,17 @@ public class GameState {
 				int x = Integer.parseInt(coords[0]);
 				int y = Integer.parseInt(coords[1]);
 
-				if (!neighBour.equals(end) && board.isBlankSpace(x, y)) {
-					unvisited.remove(unvisited.indexOf(neighBour));
-					List<String> newPath = new ArrayList<String>(path);
-					newPath.add(neighBour);
-					findShortestPath(coords, end, visited, unvisited,
-							distanceValues, newPath);
+				IO.debug("Coords in neighBour loop: "+neighBour);
+
+				if (!neighBour.equals(end)) {
+					if(board.isBlankSpace(x, y)) {
+						IO.debug("Adds to path: "+neighBour);
+						unvisited.remove(unvisited.indexOf(neighBour));
+						List<String> newPath = new ArrayList<String>(path);
+						newPath.add(neighBour);
+						return findShortestPath(coords, end, visited, unvisited,
+								distanceValues, newPath);
+					}
 				} else {
 					return path.toArray(new String[path.size()]);
 				}
@@ -114,7 +118,7 @@ public class GameState {
 		int[][] contents = board.getBoardContents();
 		for (int i = 0; i < contents.length; i++) {
 			for (int j = 0; j < contents[i].length; j++) {
-				if (i != x && j != y) {
+				if (contents[i][j] == 0) {
 					coordinates.add(i + "," + j);
 					distanceValues.put(i + "," + j,
 							(Math.abs(i - x) + Math.abs(j - y)));
@@ -141,7 +145,7 @@ public class GameState {
 	public Integer[] getIndexesOfAyuGroups() {
 		List<Integer> groups = new ArrayList<Integer>();
 		for (Group group : playerGroups) {
-			if (group.getCoordinates().size() >= 2) {
+			if (group != null && group.getCoordinates().size() >= 2) {
 				groups.add(group.getIndexInList());
 			}
 		}
@@ -223,6 +227,12 @@ public class GameState {
 		if (getAmountOfRemainingGroups() == 1) {
 			// Player has won.
 			IO.debug("Player has won.");
+		}
+		
+		Integer[] indexes = getIndexesOfAyuGroups();
+		if(indexes.length >= 2) {
+			String[] path = getShortestPathBetweenGroups(playerGroups[indexes[0]], playerGroups[indexes[1]]);
+			IO.debug(path.length+"");
 		}
 		return newState;
 	}
