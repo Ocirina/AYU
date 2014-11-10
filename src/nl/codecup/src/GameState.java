@@ -51,7 +51,6 @@ public class GameState {
 	 */
 	public String[] getShortestPathBetweenGroups(Group group1, Group group2) {
 		String[] coordinateList = null;
-		int minimumDistance = 0;
 		for (String coordinate1 : group1.getCoordinates()) {
 			for (String coordinate2 : group2.getCoordinates()) {
 				Map<String, Integer> distanceValues = new HashMap<String, Integer>();
@@ -80,22 +79,22 @@ public class GameState {
 			List<String> visited, List<String> unvisited,
 			Map<String, Integer> distanceValues, List<String> path) {
 
-		String[] neighBours = board.getNeighbours(Integer.parseInt(current[0]),
+		String[] neighbors = board.getNeighbor(Integer.parseInt(current[0]),
 				Integer.parseInt(current[1]));
-		IO.debug("Neighbours length: " + neighBours.length);
+		IO.debug("neighbors length: " + neighbors.length);
 		IO.debug("Unvisited size: " + unvisited.size());
 
-		for (int i = 0; i < neighBours.length; i++) {
-			String neighBour = neighBours[i];
-			if (neighBour != null && unvisited.contains(neighBour)) {
-				String[] coords = neighBour.split(",");
+		for (int i = 0; i < neighbors.length; i++) {
+			String neighbor = neighbors[i];
+			if (neighbor != null && unvisited.contains(neighbor)) {
+				String[] coords = neighbor.split(",");
 				int x = Integer.parseInt(coords[0]);
 				int y = Integer.parseInt(coords[1]);
 
-				if (!neighBour.equals(end) && board.isBlankSpace(x, y)) {
-					unvisited.remove(unvisited.indexOf(neighBour));
+				if (!neighbor.equals(end) && board.isBlankSpace(x, y)) {
+					unvisited.remove(unvisited.indexOf(neighbor));
 					List<String> newPath = new ArrayList<String>(path);
-					newPath.add(neighBour);
+					newPath.add(neighbor);
 					findShortestPath(coords, end, visited, unvisited,
 							distanceValues, newPath);
 				} else {
@@ -230,7 +229,7 @@ public class GameState {
 	private void checkGroupsForMove(int originX, int originY, int targetX,
 			int targetY) {
 		/* If piece is not in group */
-		if (!board.hasNeighbour(originX, originY)) {
+		if (!board.hasNeighbor(originX, originY)) {
 			mergeNonGroupedPiece(originX, originY, targetX, targetY);
 		} else {
 			mergeGroupedPiece(originX, originY, targetX, targetY);
@@ -239,7 +238,7 @@ public class GameState {
 
 	/**
 	 * Merges the group of the piece of the origin to the group(s) of the
-	 * targetX and targetY's neighbours.
+	 * targetX and targetY's neighbors.
 	 */
 	private void mergeGroupedPiece(int originX, int originY, int targetX,
 			int targetY) {
@@ -251,19 +250,18 @@ public class GameState {
 			if (position != -1) {
 				group.getCoordinates().set(position, targetX + "," + targetY);
 			}
-			String[] neighBours = board.getNeighbours(targetX, targetY);
-			for (int i = 0; i < neighBours.length && (i + 1) < groups.length; i++) {
-				addGroupNeighbour(groups, group, neighBours, i, 1);
+			String[] neighbors = board.getNeighbor(targetX, targetY);
+			for (int i = 0; i < neighbors.length && (i + 1) < groups.length; i++) {
+				addGroupNeighbor(groups, group, neighbors, i, 1);
 			}
 			mergeGroups(groups);
 		}
 	}
 
-	private void addGroupNeighbour(Group[] groups, Group group,
-			String[] neighBours, int index, int step) {
-		if (neighBours[index] != null
-				&& !neighBours[index].equalsIgnoreCase("")) {
-			Group tempGroup = this.getGroupByCoordinate(neighBours[index]);
+	private void addGroupNeighbor(Group[] groups, Group group,
+			String[] neighbors, int index, int step) {
+		if (neighbors[index] != null && !neighbors[index].equalsIgnoreCase("")) {
+			Group tempGroup = this.getGroupByCoordinate(neighbors[index]);
 			if (group != tempGroup) {
 				groups[index + step] = tempGroup;
 			}
@@ -278,9 +276,9 @@ public class GameState {
 			List<String> tempList = group.getCoordinates();
 			tempList.set(0, targetX + "," + targetY);
 			this.playerGroups[group.getIndexInList()] = null;
-			String[] neighBours = board.getNeighbours(targetX, targetY);
-			for (int i = 0; i < neighBours.length; i++) {
-				addGroupNeighbour(groups, group, neighBours, i, 0);
+			String[] neighbors = board.getNeighbor(targetX, targetY);
+			for (int i = 0; i < neighbors.length; i++) {
+				addGroupNeighbor(groups, group, neighbors, i, 0);
 			}
 			this.setPlayerGroupNull(group); // Set origin group to null
 			mergeGroups(groups, tempList);
