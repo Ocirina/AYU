@@ -174,31 +174,43 @@ public class Board {
     }
 
     /**
-     * Get the neighbors of the given locations
+     * Get the neighbors of the given locations of the player piece
      * 
      * @param x
      * @param y
      * @return
      */
-    public String[] getNeighbor(int x, int y) {
-        String[] neighBours = new String[4];
-        if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece) {
-            neighBours[0] = x + "," + (y + 1);
+    public String[] getNeighbors(int x, int y) {
+    	return this.getNeighborsByPiece(x, y, Player.piece);
+    }
+    
+    /**
+     * Get the neighbors of the given locations by the given piece
+     * 
+     * @param x
+     * @param y
+     * @param piece
+     * @return
+     */
+    public String[] getNeighborsByPiece(int x, int y, int piece) {
+        String[] neighbors = new String[4];
+        if (y + 1 < SIZE && this.boardGrid[x][y + 1] == piece) {
+            neighbors[0] = x + "," + (y + 1);
         }
 
-        if (x + 1 < SIZE && this.boardGrid[x + 1][y] == Player.piece) {
-            neighBours[1] = (x + 1) + "," + y;
+        if (x + 1 < SIZE && this.boardGrid[x + 1][y] == piece) {
+            neighbors[1] = (x + 1) + "," + y;
         }
 
-        if (y - 1 >= 0 && this.boardGrid[x][y - 1] == Player.piece) {
-            neighBours[2] = x + "," + (y - 1);
+        if (y - 1 >= 0 && this.boardGrid[x][y - 1] == piece) {
+            neighbors[2] = x + "," + (y - 1);
         }
 
-        if (x - 1 >= 0 && this.boardGrid[x - 1][y] == Player.piece) {
-            neighBours[3] = (x - 1) + "," + y;
+        if (x - 1 >= 0 && this.boardGrid[x - 1][y] == piece) {
+            neighbors[3] = (x - 1) + "," + y;
         }
 
-        return neighBours;
+        return neighbors;
     }
 
     /**
@@ -261,8 +273,8 @@ public class Board {
         int tempPiece = this.boardGrid[originX][originY];
         this.boardGrid[originX][originY] = this.boardGrid[targetX][targetY];
         this.boardGrid[targetX][targetY] = tempPiece;
-        IO.debug(this.toString());
-        IO.debug(this.toDebugBoard());
+        //IO.debug(this.toString());
+        //IO.debug(this.toDebugBoard());
     }
 
     /**
