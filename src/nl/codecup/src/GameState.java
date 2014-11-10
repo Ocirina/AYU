@@ -58,7 +58,7 @@ public class GameState {
                 List<String> unvisitedNodes = this.fillListWithUnvistedNodes(coordinate1.split(","), distanceValues);
                 String[] temp = findShortestPath(coordinate1.split(","), coordinate2, visitedNodes, unvisitedNodes,
                         distanceValues, (List<String>) new ArrayList<String>());
-                if (coordinateList == null || (coordinateList != null) && temp.length < coordinateList.length) {
+                if (coordinateList == null || (coordinateList != null) && temp != null && temp.length < coordinateList.length) {
                     coordinateList = temp;
                 }
             }
@@ -83,27 +83,28 @@ public class GameState {
                 int x = Integer.parseInt(coords[0]);
                 int y = Integer.parseInt(coords[1]);
 
-                IO.debug("Coords in neighBour loop: " + neighbor);
-
                 if (!neighbor.equals(end)) {
                     if (board.isBlankSpace(x, y)) {
-                        IO.debug("Adds to path: " + neighbor);
                         unvisited.remove(unvisited.indexOf(neighbor));
                         List<String> newPath = new ArrayList<String>(path);
                         if (!newPath.contains(neighbor)) {
                             newPath.add(neighbor);
                         }
-
+                        if(board.isNeighbour(x, y, Integer.parseInt(end.split(",")[0]), Integer.parseInt(end.split(",")[1]))) {
+                        	i = 5;
+                            return newPath.toArray(new String[newPath.size()]);
+                        }
+                        
                         String[] returnValue = findShortestPath(coords, end, visited, unvisited, distanceValues,
                                 newPath);
 
-                        if (returnValue == null && i == (neighbors.length - 1)) {
+                        if (returnValue != null) {
                             return returnValue;
                         }
-
                         continue;
                     }
                 } else {
+                	IO.debug("Found it!");
                     return path.toArray(new String[path.size()]);
                 }
             }
@@ -226,12 +227,6 @@ public class GameState {
         if (getAmountOfRemainingGroups() == 1) {
             // Player has won.
             IO.debug("Player has won.");
-        }
-
-        Integer[] indexes = getIndexesOfAyuGroups();
-        if (indexes.length >= 2) {
-            String[] path = getShortestPathBetweenGroups(playerGroups[indexes[0]], playerGroups[indexes[1]]);
-            IO.debug(path.length + "");
         }
         return newState;
     }
