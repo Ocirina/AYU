@@ -57,7 +57,7 @@ public class GameState {
                 List<String> visitedNodes = new ArrayList<String>();
                 visitedNodes.add(coordinate1);
                 List<String> unvisitedNodes = this.fillListWithUnvistedNodes(coordinate1.split(","), distanceValues);
-                String[] temp = findShortestPath(coordinate1.split(","), coordinate2, visitedNodes, unvisitedNodes,
+                String[] temp = findShortestPath(coordinate1.split(","), coordinate2.split(","), visitedNodes, unvisitedNodes,
                         distanceValues, (List<String>) new ArrayList<String>());
                 if (coordinateList == null || (coordinateList != null) && temp != null
                         && temp.length < coordinateList.length) {
@@ -73,7 +73,7 @@ public class GameState {
         return coordinateList;
     }
 
-    private String[] findShortestPath(String[] current, String end, List<String> visited, List<String> unvisited,
+    private String[] findShortestPath(String[] current, String[] end, List<String> visited, List<String> unvisited,
             Map<String, Integer> distanceValues, List<String> path) {
 
         String[] neighbors = board.getNeighborsByPiece(Integer.parseInt(current[0]), Integer.parseInt(current[1]), 0);
@@ -88,22 +88,16 @@ public class GameState {
                 if (board.isBlankSpace(x, y)) {
                     unvisited.remove(unvisited.indexOf(neighbor));
                     List<String> newPath = new ArrayList<String>(path);
-                    if (!newPath.contains(neighbor)) {
+                    if (!newPath.contains(neighbor))
                         newPath.add(neighbor);
-                    }
 
-                    if (board.isNeighbour(x, y, Integer.parseInt(end.split(",")[0]),
-                            Integer.parseInt(end.split(",")[1]))) {
-                        i = 5;
+                    if (board.isNeighbour(x, y, Integer.parseInt(end[0]),Integer.parseInt(end[1])))
                         return newPath.toArray(new String[newPath.size()]);
-                    }
 
                     String[] returnValue = findShortestPath(coords, end, visited, unvisited, distanceValues, newPath);
 
-                    if (returnValue != null) {
+                    if (returnValue != null) 
                         return returnValue;
-                    }
-                    continue;
                 }
             }
         }
@@ -127,7 +121,11 @@ public class GameState {
         }
         return coordinates;
     }
-
+    
+    /**
+     * Returns the amount of remaining groups
+     * @return The amount of remaining groups
+     */
     private int getAmountOfRemainingGroups() {
         int count = 0;
         for (Group group : playerGroups) {
@@ -136,6 +134,10 @@ public class GameState {
         return count;
     }
     
+    /**
+     * Gets a random group from the player groups. Returns it if it's not null, else tries to find a random group again.
+     * @return A random group
+     */
     public Group getRandomGroup() {
     	Group randomGroup = this.playerGroups[randInt(0,29)];
     	return (randomGroup == null) ? getRandomGroup() : randomGroup ;
