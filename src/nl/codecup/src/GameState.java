@@ -111,7 +111,7 @@ public class GameState {
      * Returns the remaining groups
      * @return The remaining groups
      */
-    private Group[] getRemainingGroups() {
+    public Group[] getRemainingGroups() {
         List<Group> groups = new ArrayList<Group>();
         for (Group group : playerGroups) {
              if(group != null) {
