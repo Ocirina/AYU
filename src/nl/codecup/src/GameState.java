@@ -111,15 +111,17 @@ public class GameState {
     }
     
     /**
-     * Returns the amount of remaining groups
-     * @return The amount of remaining groups
+     * Returns the remaining groups
+     * @return The remaining groups
      */
-    private int getAmountOfRemainingGroups() {
-        int count = 0;
+    private Group[] getRemainingGroups() {
+        List<Group> groups = new ArrayList<Group>();
         for (Group group : playerGroups) {
-            count += (group != null ? 1 : 0);
+             if(group != null) {
+            	 groups.add(group);
+             }
         }
-        return count;
+        return groups.toArray(new Group[groups.size()]);
     }
     
     /**
@@ -230,7 +232,7 @@ public class GameState {
         this.checkGroupsForMove(move.getOriginXConverted(), move.getOriginYConverted(), move.getTargetXConverted(),
                 move.getTargetYConverted());
 
-        if (getAmountOfRemainingGroups() == 1) {
+        if (getRemainingGroups().length == 1) {
             // Player has won.
             IO.debug("Player has won.");
         }
