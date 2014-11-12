@@ -124,7 +124,7 @@ public class Group {
      * @param y
      * @return
      */
-    private String[] findPointMostFarAway(int x, int y) {
+    public String[] findPointMostFarAway(int x, int y) {
         String[] coordsReturned = null;
         int maximumDistance = 0;
 

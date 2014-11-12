@@ -60,7 +60,7 @@ public class Player {
      * get's a random move
      * @return Move
      */
-    private Move getRandomMove() {
+    public Move getRandomMove() {
     	Group[] remainingGroups = this.state.getRemainingGroups();
     	int groupIndex = randomInt(0, remainingGroups.length - 1);
     	Group startGroup = remainingGroups[groupIndex];
@@ -95,7 +95,9 @@ public class Player {
 		}
 		int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
 		int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
-		return new Move(originX, originY, targetX, targetY);
+		
+		String[] origin = startGroup.findPointMostFarAway(originX, originY);
+		return new Move(Integer.parseInt(origin[0]), Integer.parseInt(origin[1]), targetX, targetY);
     }
     
     /**
@@ -145,8 +147,6 @@ public class Player {
                 }
             }
         }
-        
-        getRandomMoves(10);
 
         // for (int column = 0; column < contentLength; column++) {
         // for (int row = 0; row < contentLength; row++) {
@@ -206,7 +206,7 @@ public class Player {
          * | | | | | W | | | B | W | | | | | | | | | |
          */
 
-        return null;
+        return getRandomMove();
     }
 
     /**
