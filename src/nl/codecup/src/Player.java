@@ -5,6 +5,7 @@ public class Player {
     public static int piece;
     public static int empty = 0;
     private Referee referee;
+    private final int MAXRANDOMMOVES = 10;
 
     public Player(GameState state, int piece, Referee referee) {
         this.state = state;
@@ -33,6 +34,10 @@ public class Player {
         IO.output("NO VALID MOVE: " + move.toString());
 
         return null;
+    }
+    
+    public void randomMove() {
+    	
     }
 
     /**

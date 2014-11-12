@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class GameState {
     private Board board;
@@ -134,6 +135,24 @@ public class GameState {
         }
         return count;
     }
+    
+    public Group getRandomGroup() {
+    	Group randomGroup = this.playerGroups[randInt(0,29)];
+    	return (randomGroup == null) ? getRandomGroup() : randomGroup ;
+    }
+    
+    /**
+	 * get a random number between the min and max parameters
+	 * 
+	 * @param min
+	 * @param max
+	 * @return random number
+	 */
+	private int randInt(int min, int max) {
+	    Random rand = new Random();
+	    int randomNum = rand.nextInt((max - min) + 1) + min;
+	    return randomNum;
+	}
 
     /**
      * Returns the indexes of real ayu groups. Real ayu groups have a length of
