@@ -226,7 +226,6 @@ public class Board {
      * @return
      */
     public boolean isNeighbour(int originX, int originY, int targetX, int targetY) {
-    	IO.debug("Checking"+originX+"-"+originY+ " with "+targetX+"-"+targetY);
         return ((originX == targetX && ((originY - 1) == targetY))
                 || (originX == targetX && ((originY + 1) == targetY))
                 || (originY == targetY && ((originX - 1) == targetX)) || (originY == targetY && ((originX + 1) == targetX)));
