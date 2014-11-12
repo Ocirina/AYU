@@ -8,12 +8,10 @@ public class Board {
     private static final int NONE = 0;
     private static final int WHITE = 1;
     private static final int BLACK = 2;
-    private static final int MAX_WHITESPACES = 61;
 
     /**
      * The actual board
      */
-    private int[][] blankSpaces = new int[MAX_WHITESPACES][2];
     private int[][] boardGrid = new int[][] {
             { NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE },
             { WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE },
@@ -31,7 +29,6 @@ public class Board {
      * Constructor
      */
     public Board() {
-        setBlankSpaces();
     }
 
     /**
@@ -41,34 +38,8 @@ public class Board {
      */
     public Board(int[][] grid) {
         this.boardGrid = cloneBoard(grid);
-        setBlankSpaces();
     }
-
-    /**
-     * Empty spaces
-     */
-    private void setBlankSpaces() {
-        int index = 0;
-        blankSpaces = new int[MAX_WHITESPACES][2];
-        for (int row = 0; row < SIZE; row++) {
-            for (int column = 0; column < SIZE; column++) {
-                if (isBlankSpace(row, column)) {
-                    blankSpaces[index] = new int[] { row, column };
-                    index++;
-                }
-            }
-        }
-    }
-
-    /**
-     * Get the blank spaces of the board
-     * 
-     * @return
-     */
-    public int[][] getBlankSpaces() {
-        return this.blankSpaces;
-    }
-
+    
     /**
      * Checks if a coordinate with the given piece is part of a group.
      * 
@@ -79,23 +50,10 @@ public class Board {
      * @return True if it's a group, else returns false.
      */
     public boolean hasNeighbor(int x, int y) {
-        if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece) {
-            return true;
-        }
-
-        if (x + 1 < SIZE && this.boardGrid[x + 1][y] == Player.piece) {
-            return true;
-        }
-
-        if (y - 1 >= 0 && this.boardGrid[x][y - 1] == Player.piece) {
-            return true;
-        }
-
-        if (x - 1 >= 0 && this.boardGrid[x - 1][y] == Player.piece) {
-            return true;
-        }
-
-        return false;
+    	return ((y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece) ||
+    			(x + 1 < SIZE && this.boardGrid[x + 1][y] == Player.piece) ||
+    			(y - 1 >= 0	  && this.boardGrid[x][y - 1] == Player.piece) ||
+				(x - 1 >= 0   && this.boardGrid[x - 1][y] == Player.piece));
     }
 
     /**
@@ -226,7 +184,6 @@ public class Board {
      * @return
      */
     public boolean isNeighbour(int originX, int originY, int targetX, int targetY) {
-    	IO.debug("Checking"+originX+"-"+originY+ " with "+targetX+"-"+targetY);
         return ((originX == targetX && ((originY - 1) == targetY))
                 || (originX == targetX && ((originY + 1) == targetY))
                 || (originY == targetY && ((originX - 1) == targetX)) || (originY == targetY && ((originX + 1) == targetX)));
@@ -260,9 +217,8 @@ public class Board {
      * @param move
      */
     public void movePiece(Move move) {
-        switchPosition(move.getOriginXConverted(), move.getOriginYConverted(), move.getTargetXConverted(),
-                move.getTargetYConverted());
-        setBlankSpaces();
+        switchPosition(move.getIndexOriginX(), move.getIndexOriginY(), move.getIndexTargetX(),
+                move.getIndexTargetY());
     }
 
     /**

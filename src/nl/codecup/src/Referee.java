@@ -28,11 +28,11 @@ public class Referee {
      * @return
      */
     private boolean mayBePlaced(Move move, Board board, boolean inGroup) {
-        int originX = move.getOriginXConverted();
-        int originY = move.getOriginYConverted();
+        int originX = move.getIndexOriginX();
+        int originY = move.getIndexOriginY();
 
-        int targetX = move.getTargetXConverted();
-        int targetY = move.getTargetYConverted();
+        int targetX = move.getIndexTargetX();
+        int targetY = move.getIndexTargetY();
 
         if (board.isBlankSpace(targetX, targetY)) {
             if (!inGroup && board.hasNeighbor(targetX, targetY)) {
@@ -54,8 +54,8 @@ public class Referee {
      */
     private boolean mayBeMoved(Move move, Board board) {
         if (move != null) {
-            int x = move.getOriginXConverted();
-            int y = move.getOriginYConverted();
+            int x = move.getIndexOriginX();
+            int y = move.getIndexOriginY();
 
             if (board.getBoardContents()[x][y] == Player.piece) {
                 if (board.hasNeighbor(x, y) && board.onEdgesOfGroup(x, y)) {
