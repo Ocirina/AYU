@@ -120,28 +120,6 @@ public class GameState {
         }
         return groups.toArray(new Group[groups.size()]);
     }
-    
-    /**
-     * Gets a random group from the player groups. Returns it if it's not null, else tries to find a random group again.
-     * @return A random group
-     */
-    public Group getRandomGroup() {
-    	Group randomGroup = this.playerGroups[randInt(0,29)];
-    	return (randomGroup == null) ? getRandomGroup() : randomGroup ;
-    }
-    
-    /**
-	 * get a random number between the min and max parameters
-	 * 
-	 * @param min
-	 * @param max
-	 * @return random number
-	 */
-	private int randInt(int min, int max) {
-	    Random rand = new Random();
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
-	    return randomNum;
-	}
 
     /**
      * Returns the indexes of real ayu groups. Real ayu groups have a length of
