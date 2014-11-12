@@ -2,9 +2,7 @@ package nl.codecup.src;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class GameState {
@@ -54,8 +52,7 @@ public class GameState {
         for (String coordinate1 : group1.getCoordinates()) {
             for (String coordinate2 : group2.getCoordinates()) {
                 List<String> unvisitedNodes = this.fillListWithUnvistedNodes();
-                String[] temp = findShortestPath(coordinate1.split(","), coordinate2.split(","), unvisitedNodes,
-                        (List<String>) new ArrayList<String>());
+                String[] temp = findShortestPath(coordinate1.split(","), coordinate2.split(","), unvisitedNodes, new ArrayList<String>());
                 if (coordinateList == null || (coordinateList != null) && temp != null
                         && temp.length < coordinateList.length) {
                     coordinateList = temp;
@@ -111,15 +108,17 @@ public class GameState {
     }
     
     /**
-     * Returns the amount of remaining groups
-     * @return The amount of remaining groups
+     * Returns the remaining groups
+     * @return The remaining groups
      */
-    private int getAmountOfRemainingGroups() {
-        int count = 0;
+    private Group[] getRemainingGroups() {
+        List<Group> groups = new ArrayList<Group>();
         for (Group group : playerGroups) {
-            count += (group != null ? 1 : 0);
+             if(group != null) {
+            	 groups.add(group);
+             }
         }
-        return count;
+        return groups.toArray(new Group[groups.size()]);
     }
     
     /**
@@ -230,7 +229,7 @@ public class GameState {
         this.checkGroupsForMove(move.getOriginXConverted(), move.getOriginYConverted(), move.getTargetXConverted(),
                 move.getTargetYConverted());
 
-        if (getAmountOfRemainingGroups() == 1) {
+        if (getRemainingGroups().length == 1) {
             // Player has won.
             IO.debug("Player has won.");
         }
