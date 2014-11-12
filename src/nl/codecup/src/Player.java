@@ -1,5 +1,7 @@
 package nl.codecup.src;
 
+import java.util.Random;
+
 public class Player {
     private GameState state;
     public static int piece;
@@ -36,9 +38,45 @@ public class Player {
         return null;
     }
     
-    public void randomMove() {
+    public void getRandomMoves(int numberOfMoves) {
     	
+    	for (int i = 0; i < numberOfMoves; i++) {
+    		getRandomMove();
+    	}
     }
+    
+    private Move getRandomMove() {
+    	Group[] remainingGroups = this.state.getRemainingGroups();
+    	int groupIndex = randomInt(0, remainingGroups.length - 1);
+    	Group startGroup = remainingGroups[groupIndex];
+    	for (int i = 0; i < remainingGroups.length; i++) {
+    		if (i == groupIndex) {
+    			continue;
+    		}
+    		String[] shortestPath = this.state.getShortestPathBetweenGroups(startGroup, remainingGroups[i]);
+    		if (shortestPath != null) {
+    			/*int originX;
+    			int originY;
+    			int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
+    			int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
+    			return new Move(originX, originY, targetX, targetY);*/
+    		}
+    	}
+    	return null;
+    }
+    
+    /**
+	 * get a random number between the min and max parameters
+	 * 
+	 * @param min
+	 * @param max
+	 * @return random number
+	 */
+	private int randomInt(int min, int max) {
+	    Random rand = new Random();
+	    int randomNum = rand.nextInt((max - min) + 1) + min;
+	    return randomNum;
+	}
 
     /**
      * Generate random move, in the future this will be a move which is
@@ -74,6 +112,8 @@ public class Player {
                 }
             }
         }
+        
+        getRandomMoves(10);
 
         // for (int column = 0; column < contentLength; column++) {
         // for (int row = 0; row < contentLength; row++) {
