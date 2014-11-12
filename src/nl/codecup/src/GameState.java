@@ -169,7 +169,6 @@ public class GameState {
         newState.setComputerPiece(playingPiece);
         newState.setBoard(newBoard.placePiece(move));
         playerGroups = GroupManager.getInstance().mergeGroupsByMove(playerGroups, board, move);
-
         if (getRemainingGroups().length == 1) {
             // Player has won.
             IO.debug("Player has won.");

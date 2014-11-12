@@ -70,7 +70,7 @@ public class GroupManager {
 			for (int i = 0; i < neighbors.length && (i + 1) < groups.length; i++) {
 				addGroupNeighbor(groups, group, neighbors, i, 1);
 			}
-			mergeGroups(groups);
+			mergeGroups(groups, 0);
 		}
 	}
 
@@ -78,17 +78,19 @@ public class GroupManager {
 			int targetY) {
 		Group group = this.getGroupByCoordinate(originX, originY);
 		Group[] groups = new Group[4];
+		int firstIndex = 0;
 		if (group != null) {
 			String[] neighbors = board.getNeighbors(targetX, targetY);
 			if(neighbors.length > 0) {
 				for (int i = 0; i < neighbors.length; i++) {
 					addGroupNeighbor(groups, group, neighbors, i, 0);
+					firstIndex = groups[i] == null ? firstIndex : i;
 				}
 				List<String> tempList = group.getCoordinates();
 				tempList.set(0, joinCoordinates(targetX, targetY));
 				this.playerGroups[group.getIndexInList()] = null;
 				this.setPlayerGroupNull(group); // Set origin group to null
-				mergeGroups(groups, tempList);
+				mergeGroups(groups, tempList, firstIndex);
 			}
 		}
 	}
@@ -98,9 +100,9 @@ public class GroupManager {
 	 * 
 	 * @param groups
 	 */
-	private Group mergeGroups(Group[] groups) {
+	private Group mergeGroups(Group[] groups, int firstIndex) {
 		Group mergedGroup = new Group(0);
-		mergedGroup.setIndexInList(groups[0].getIndexInList());
+		mergedGroup.setIndexInList(groups[firstIndex].getIndexInList());
 		for (Group group : groups) {
 			if (group != null) {
 				for (String coordinate : group.getCoordinates()) {
@@ -120,8 +122,8 @@ public class GroupManager {
 	 * @param groups
 	 * @param coordinates
 	 */
-	private void mergeGroups(Group[] groups, List<String> coordinates) {
-		Group mergedGroup = this.mergeGroups(groups);
+	private void mergeGroups(Group[] groups, List<String> coordinates, int firstIndex) {
+		Group mergedGroup = this.mergeGroups(groups, firstIndex);
 		for (String coordinate : coordinates) {
 			mergedGroup.addCoordinate(coordinate);
 		}
