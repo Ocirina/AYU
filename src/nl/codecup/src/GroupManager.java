@@ -35,6 +35,21 @@ public class GroupManager {
 			mergeGroupedPiece(originX, originY, targetX, targetY);
 		}
 	}
+	
+
+	private String joinCoordinates(int x, int y) {
+		return x + "," + y;
+	}
+
+	private void addGroupNeighbor(Group[] groups, Group group,
+			String[] neighbors, int index, int step) {
+		if (neighbors[index] != null && !neighbors[index].equalsIgnoreCase("")) {
+			Group tempGroup = this.getGroupByCoordinate(neighbors[index]);
+			if (group != tempGroup) {
+				groups[index + step] = tempGroup;
+			}
+		}
+	}
 
 	/**
 	 * Merges the group of the piece of the origin to the group(s) of the
@@ -59,34 +74,22 @@ public class GroupManager {
 		}
 	}
 
-	private String joinCoordinates(int x, int y) {
-		return x + "," + y;
-	}
-
-	private void addGroupNeighbor(Group[] groups, Group group,
-			String[] neighbors, int index, int step) {
-		if (neighbors[index] != null && !neighbors[index].equalsIgnoreCase("")) {
-			Group tempGroup = this.getGroupByCoordinate(neighbors[index]);
-			if (group != tempGroup) {
-				groups[index + step] = tempGroup;
-			}
-		}
-	}
-
 	private void mergeNonGroupedPiece(int originX, int originY, int targetX,
 			int targetY) {
 		Group group = this.getGroupByCoordinate(originX, originY);
 		Group[] groups = new Group[4];
 		if (group != null) {
-			List<String> tempList = group.getCoordinates();
-			tempList.set(0, joinCoordinates(targetX, targetY));
-			this.playerGroups[group.getIndexInList()] = null;
 			String[] neighbors = board.getNeighbors(targetX, targetY);
-			for (int i = 0; i < neighbors.length; i++) {
-				addGroupNeighbor(groups, group, neighbors, i, 0);
+			if(neighbors.length > 0) {
+				for (int i = 0; i < neighbors.length; i++) {
+					addGroupNeighbor(groups, group, neighbors, i, 0);
+				}
+				List<String> tempList = group.getCoordinates();
+				tempList.set(0, joinCoordinates(targetX, targetY));
+				this.playerGroups[group.getIndexInList()] = null;
+				this.setPlayerGroupNull(group); // Set origin group to null
+				mergeGroups(groups, tempList);
 			}
-			this.setPlayerGroupNull(group); // Set origin group to null
-			mergeGroups(groups, tempList);
 		}
 	}
 

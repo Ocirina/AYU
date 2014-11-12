@@ -1,5 +1,8 @@
 package nl.codecup.src;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     public static final int SIZE = 11;
     private static final int NONE = 0;
@@ -193,24 +196,24 @@ public class Board {
      * @return
      */
     public String[] getNeighborsByPiece(int x, int y, int piece) {
-        String[] neighbors = new String[4];
+        List<String> neighbors = new ArrayList<String>();
         if (y + 1 < SIZE && this.boardGrid[x][y + 1] == piece) {
-            neighbors[0] = x + "," + (y + 1);
+            neighbors.add(x + "," + (y + 1));
         }
 
         if (x + 1 < SIZE && this.boardGrid[x + 1][y] == piece) {
-            neighbors[1] = (x + 1) + "," + y;
+        	neighbors.add((x + 1) + "," + y);
         }
 
         if (y - 1 >= 0 && this.boardGrid[x][y - 1] == piece) {
-            neighbors[2] = x + "," + (y - 1);
+        	neighbors.add(x + "," + (y - 1));
         }
 
         if (x - 1 >= 0 && this.boardGrid[x - 1][y] == piece) {
-            neighbors[3] = (x - 1) + "," + y;
+        	neighbors.add((x - 1) + "," + y);
         }
 
-        return neighbors;
+        return neighbors.toArray(new String[neighbors.size()]);
     }
 
     /**
