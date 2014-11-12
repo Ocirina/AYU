@@ -78,7 +78,7 @@ public class GroupManager {
 			int targetY) {
 		Group group = this.getGroupByCoordinate(originX, originY);
 		Group[] groups = new Group[4];
-		int firstIndex = 0;
+		int firstIndex = -1;
 		if (group != null) {
 			String[] neighbors = board.getNeighbors(targetX, targetY);
 			if(neighbors.length > 0) {
@@ -86,11 +86,13 @@ public class GroupManager {
 					addGroupNeighbor(groups, group, neighbors, i, 0);
 					firstIndex = groups[i] == null ? firstIndex : i;
 				}
-				List<String> tempList = group.getCoordinates();
-				tempList.set(0, joinCoordinates(targetX, targetY));
-				this.playerGroups[group.getIndexInList()] = null;
-				this.setPlayerGroupNull(group); // Set origin group to null
-				mergeGroups(groups, tempList, firstIndex);
+				if(firstIndex >= 0) {
+					List<String> tempList = group.getCoordinates();
+					tempList.set(0, joinCoordinates(targetX, targetY));
+					this.playerGroups[group.getIndexInList()] = null;
+					this.setPlayerGroupNull(group); // Set origin group to null
+					mergeGroups(groups, tempList, firstIndex);
+				}
 			}
 		}
 	}
