@@ -37,7 +37,8 @@ public class Player {
     }
     
     public void randomMove() {
-    	
+    	String[] shortestPathBetweenGroups = this.state.getShortestPathBetweenGroups(this.state.getRandomGroup(), this.state.getRandomGroup());
+    	IO.debug(shortestPathBetweenGroups.toString());
     }
 
     /**
@@ -70,6 +71,7 @@ public class Player {
 
                 if (gapScenario) {
                     int columnPieceToMove = findLastPieceInTheRow(content, row, column, 0);
+                	//randomMove();
                     return new Move(row, columnPieceToMove, row, column + 1);
                 }
             }
