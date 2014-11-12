@@ -1,5 +1,7 @@
 package nl.codecup.src;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Player {
@@ -38,13 +40,26 @@ public class Player {
         return null;
     }
     
+    /**
+     * get's number of random Moves
+     * @param numberOfMoves
+     */
     public void getRandomMoves(int numberOfMoves) {
-    	
+    	List<Move> moves = new ArrayList<Move>();
     	for (int i = 0; i < numberOfMoves; i++) {
-    		getRandomMove();
+    		Move move = getRandomMove();
+    		if (move != null && !moves.contains(move)) {
+    			moves.add(move);
+    		} else {
+    			i--;
+    		}
     	}
     }
     
+    /**
+     * get's a random move
+     * @return Move
+     */
     private Move getRandomMove() {
     	Group[] remainingGroups = this.state.getRemainingGroups();
     	int groupIndex = randomInt(0, remainingGroups.length - 1);
@@ -55,14 +70,32 @@ public class Player {
     		}
     		String[] shortestPath = this.state.getShortestPathBetweenGroups(startGroup, remainingGroups[i]);
     		if (shortestPath != null) {
-    			/*int originX;
-    			int originY;
-    			int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
-    			int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
-    			return new Move(originX, originY, targetX, targetY);*/
+    			return constructMoveFromShortestPath(startGroup, shortestPath);
     		}
     	}
     	return null;
+    }
+    
+    /**
+     * constructs a move based on the shortest path between two groups
+     * @param startGroup
+     * @param shortestPath
+     * @return Move
+     */
+    private Move constructMoveFromShortestPath(Group startGroup, String[] shortestPath) {
+    	List<String> coordinates = startGroup.getCoordinates();
+		int originX = 0;
+		int originY = 0;
+		for (int j = 0; j < coordinates.size(); j++) {
+			originX = Integer.parseInt(coordinates.get(j).split(",")[0]);
+			originY = Integer.parseInt(coordinates.get(j).split(",")[1]);
+			if (this.state.getBoard().onEdgesOfGroup(originX, originY)) {
+				break;
+			}
+		}
+		int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
+		int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
+		return new Move(originX, originY, targetX, targetY);
     }
     
     /**
