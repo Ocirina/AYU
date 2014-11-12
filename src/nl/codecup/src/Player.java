@@ -37,8 +37,7 @@ public class Player {
     }
     
     public void randomMove() {
-    	String[] shortestPathBetweenGroups = this.state.getShortestPathBetweenGroups(this.state.getRandomGroup(), this.state.getRandomGroup());
-    	IO.debug(shortestPathBetweenGroups.toString());
+    	
     }
 
     /**
@@ -71,7 +70,6 @@ public class Player {
 
                 if (gapScenario) {
                     int columnPieceToMove = findLastPieceInTheRow(content, row, column, 0);
-                	//randomMove();
                     return new Move(row, columnPieceToMove, row, column + 1);
                 }
             }
@@ -106,7 +104,6 @@ public class Player {
             }
 
         }
-
         // Strategy 3: If there are no more possibilities of making a group on a
         // column.
         // Connect them.
