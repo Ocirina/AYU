@@ -41,9 +41,9 @@ public class GroupManager {
         Group[] groups = new Group[5];
         Group group = groups[0] = this.getGroupByCoordinate(originX, originY);
         if (group != null) {
-            int position = group.getPositionOfCoordinate(originX + "," + originY);
+            int position = group.getPositionOfCoordinate(joinCoordinates(originX, originY));
             if (position != -1) {
-                group.getCoordinates().set(position, targetX + "," + targetY);
+                group.getCoordinates().set(position, joinCoordinates(targetX, targetY));
             }
             String[] neighbors = board.getNeighbors(targetX, targetY);
             for (int i = 0; i < neighbors.length && (i + 1) < groups.length; i++) {
@@ -52,6 +52,10 @@ public class GroupManager {
             mergeGroups(groups);
         }
     }
+
+	private String joinCoordinates(int x, int y) {
+		return x + "," + y;
+	}
 
     private void addGroupNeighbor(Group[] groups, Group group, String[] neighbors, int index, int step) {
         if (neighbors[index] != null && !neighbors[index].equalsIgnoreCase("")) {
@@ -67,7 +71,7 @@ public class GroupManager {
         Group[] groups = new Group[4];
         if (group != null) {
             List<String> tempList = group.getCoordinates();
-            tempList.set(0, targetX + "," + targetY);
+            tempList.set(0, joinCoordinates(targetX, targetY));
             this.groups[group.getIndexInList()] = null;
             String[] neighbors = board.getNeighbors(targetX, targetY);
             for (int i = 0; i < neighbors.length; i++) {
@@ -136,7 +140,7 @@ public class GroupManager {
      */
     private Group getGroupByCoordinate(int x, int y) {
         for (Group group : groups) {
-            if (group != null && group.getCoordinates().contains(x + "," + y))
+            if (group != null && group.getCoordinates().contains(joinCoordinates(x, y)))
                 return group;
         }
         return null;
