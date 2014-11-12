@@ -54,8 +54,7 @@ public class GameState {
         for (String coordinate1 : group1.getCoordinates()) {
             for (String coordinate2 : group2.getCoordinates()) {
                 List<String> unvisitedNodes = this.fillListWithUnvistedNodes();
-                String[] temp = findShortestPath(coordinate1.split(","), coordinate2.split(","), unvisitedNodes,
-                        (List<String>) new ArrayList<String>());
+                String[] temp = findShortestPath(coordinate1.split(","), coordinate2.split(","), unvisitedNodes, new ArrayList<String>());
                 if (coordinateList == null || (coordinateList != null) && temp != null
                         && temp.length < coordinateList.length) {
                     coordinateList = temp;
