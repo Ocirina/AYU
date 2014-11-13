@@ -41,22 +41,6 @@ public class Player {
     }
     
     /**
-     * get's number of random Moves
-     * @param numberOfMoves
-     */
-    public void getRandomMoves(int numberOfMoves) {
-    	List<Move> moves = new ArrayList<Move>();
-    	for (int i = 0; i < numberOfMoves; i++) {
-    		Move move = getRandomMove();
-    		if (move != null && !moves.contains(move)) {
-    			moves.add(move);
-    		} else {
-    			i--;
-    		}
-    	}
-    }
-    
-    /**
      * get's a random move
      * @return Move
      */
