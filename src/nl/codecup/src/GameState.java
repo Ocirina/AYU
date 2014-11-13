@@ -121,7 +121,9 @@ public class GameState {
             }
         }
         
-        return findShortestPossiblePath(group, sortedList);
+        String[] path =  findShortestPossiblePath(group, sortedList);
+        IO.debug("Path found with length: "+path.length);
+        return path;
     }
     
     private String[] findShortestPossiblePath(Group start, List<Group> sortedList) {
