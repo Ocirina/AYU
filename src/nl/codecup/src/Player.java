@@ -47,17 +47,11 @@ public class Player {
     public Move getRandomMove() {
     	Group[] remainingGroups = this.state.getRemainingGroups();
     	int groupIndex = randomInt(0, remainingGroups.length - 1);
+    	
     	Group startGroup = remainingGroups[groupIndex];
-    	for (int i = 0; i < remainingGroups.length; i++) {
-    		if (i == groupIndex) {
-    			continue;
-    		}
-    		String[] shortestPath = this.state.getShortestPathBetweenGroups(startGroup, remainingGroups[i]);
-    		if (shortestPath != null) {
-    			return constructMoveFromShortestPath(startGroup, shortestPath);
-    		}
-    	}
-    	return null;
+    	String[] shortestPath = this.state.getShortestPathsToGroups(startGroup);
+    	
+    	return constructMoveFromShortestPath(startGroup, shortestPath);
     }
     
     /**
