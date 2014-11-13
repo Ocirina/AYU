@@ -89,19 +89,23 @@ public class GameState {
      * @return
      */
     public String[] getShortestPathsToGroups(Group group) {
-        String[] coordinateList = null;
-        List<String> groupCoordinates = group.getCoordinates();
-        for (int i = 0; i < groupCoordinates.size(); i++) {
-            List<String> unvisitedNodes = this.fillListWithUnvistedNodes();
-            String[] temp = findShortestPath(groupCoordinates.get(i).split(","), null, unvisitedNodes,
-                    new ArrayList<String>(), groupCoordinates.get(i));
-            if (coordinateList == null || (coordinateList != null) && temp != null
-                    && temp.length < coordinateList.length) {
-                coordinateList = temp;
-            }
-        }
-        Arrays.sort(coordinateList);
-        return coordinateList;
+        Group[] remainingGroups = getRemainingGroups();
+        Group closestGroup = null;
+		int minimumDistance = 0;
+    	for(Group g : remainingGroups) {
+    		if(!group.equals(g)) {
+    			int distance = minimumDistance + 1;
+    			for(String c : g.getCoordinates()) {
+    				distance = group.getMinimumDistance(c);
+    				IO.debug("Distance: "+distance);
+    			}
+    			if(closestGroup == null || distance < minimumDistance) {
+    				closestGroup = g;
+    				minimumDistance = distance;
+    			}
+    		}
+    	}
+    	return getShortestPathBetweenGroups(group, closestGroup);
     }
 
     private String[] findShortestPath(String[] current, String[] end, List<String> unvisited, List<String> path,
@@ -123,15 +127,6 @@ public class GameState {
 
                     if (end != null && board.isNeighbour(x, y, Integer.parseInt(end[0]), Integer.parseInt(end[1])))
                         return newPath.toArray(new String[newPath.size()]);
-
-                    if (end == null && board.hasNeighbor(x, y)) {
-                        String[] targetNeighbors = board.getNeighbors(x, y);
-                        for (int n = 0; n < targetNeighbors.length; n++) {
-                            Group g = GroupManager.getInstance().getGroupByCoordinate(targetNeighbors[n]);
-                            if (g != null && !g.equals(GroupManager.getInstance().getGroupByCoordinate(start)))
-                                return newPath.toArray(new String[newPath.size()]);
-                        }
-                    }
 
                     String[] returnValue = findShortestPath(coords, end, unvisited, newPath, start);
 
