@@ -152,7 +152,7 @@ public class GroupManager {
 	 *            : column
 	 * @return The group that contains the coordinate.
 	 */
-	private Group getGroupByCoordinate(int x, int y) {
+	public Group getGroupByCoordinate(int x, int y) {
 		for (Group group : playerGroups) {
 			if (group != null
 					&& group.getCoordinates().contains(joinCoordinates(x, y)))
@@ -161,7 +161,7 @@ public class GroupManager {
 		return null;
 	}
 
-	private Group getGroupByCoordinate(String coordinate) {
+	public Group getGroupByCoordinate(String coordinate) {
 		String[] coords = coordinate.split(",");
 		return this.getGroupByCoordinate(Integer.parseInt(coords[0]),
 				Integer.parseInt(coords[1]));
