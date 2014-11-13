@@ -1,6 +1,5 @@
 package nl.codecup.src;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -29,67 +28,69 @@ public class Player {
         this.state = state.clone();
         Player.piece = state.getPlayingPiece();
         Move move = chooseMove();
-        if (this.getReferee().validMove(move)) {
-            IO.output(move.toString());
-            return state.makeMove(move);
-        }
+        // if (this.getReferee().validMove(move)) {
+        IO.output(move.toString());
+        return state.makeMove(move);
+        // }
 
         // Let program quit, more easy debugging.
-        IO.output("NO VALID MOVE: " + move.toString());
+        // IO.output("NO VALID MOVE: " + move.toString());
 
-        return null;
+        // return null;
     }
-    
+
     /**
      * get's a random move
+     * 
      * @return Move
      */
     public Move getRandomMove() {
-    	Group[] remainingGroups = this.state.getRemainingGroups();
-    	int groupIndex = randomInt(0, remainingGroups.length - 1);
-    	
-    	Group startGroup = remainingGroups[groupIndex];
-    	String[] shortestPath = this.state.getShortestPathsToGroups(startGroup);
-    	
-    	return constructMoveFromShortestPath(startGroup, shortestPath);
+        Group[] remainingGroups = this.state.getRemainingGroups();
+        int groupIndex = randomInt(0, remainingGroups.length - 1);
+
+        Group startGroup = remainingGroups[groupIndex];
+        String[] shortestPath = this.state.getShortestPathsToGroups(startGroup);
+
+        return constructMoveFromShortestPath(startGroup, shortestPath);
     }
-    
+
     /**
      * constructs a move based on the shortest path between two groups
+     * 
      * @param startGroup
      * @param shortestPath
      * @return Move
      */
     private Move constructMoveFromShortestPath(Group startGroup, String[] shortestPath) {
-    	List<String> coordinates = startGroup.getCoordinates();
-		int originX = 0;
-		int originY = 0;
-		for (int j = 0; j < coordinates.size(); j++) {
-			originX = Integer.parseInt(coordinates.get(j).split(",")[0]);
-			originY = Integer.parseInt(coordinates.get(j).split(",")[1]);
-			if (this.state.getBoard().onEdgesOfGroup(originX, originY)) {
-				break;
-			}
-		}
-		int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
-		int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
-		
-		String[] origin = startGroup.findPointMostFarAway(originX, originY);
-		return new Move(Integer.parseInt(origin[0]), Integer.parseInt(origin[1]), targetX, targetY);
+        List<String> coordinates = startGroup.getCoordinates();
+        int originX = 0;
+        int originY = 0;
+        for (int j = 0; j < coordinates.size(); j++) {
+            originX = Integer.parseInt(coordinates.get(j).split(",")[0]);
+            originY = Integer.parseInt(coordinates.get(j).split(",")[1]);
+            if (this.state.getBoard().onEdgesOfGroup(originX, originY)) {
+                break;
+            }
+        }
+        int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
+        int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
+
+        String[] origin = startGroup.findPointMostFarAway(originX, originY);
+        return new Move(Integer.parseInt(origin[0]), Integer.parseInt(origin[1]), targetX, targetY);
     }
-    
+
     /**
-	 * get a random number between the min and max parameters
-	 * 
-	 * @param min
-	 * @param max
-	 * @return random number
-	 */
-	private int randomInt(int min, int max) {
-	    Random rand = new Random();
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
-	    return randomNum;
-	}
+     * get a random number between the min and max parameters
+     * 
+     * @param min
+     * @param max
+     * @return random number
+     */
+    private int randomInt(int min, int max) {
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+        return randomNum;
+    }
 
     /**
      * Generate random move, in the future this will be a move which is
@@ -125,6 +126,9 @@ public class Player {
                 }
             }
         }
+
+        if (true)
+            return getRandomMove();
 
         // for (int column = 0; column < contentLength; column++) {
         // for (int row = 0; row < contentLength; row++) {
