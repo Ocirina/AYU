@@ -65,18 +65,21 @@ public class Player {
         List<String> coordinates = startGroup.getCoordinates();
         int originX = 0;
         int originY = 0;
-        for (int j = 0; j < coordinates.size(); j++) {
-            originX = Integer.parseInt(coordinates.get(j).split(",")[0]);
-            originY = Integer.parseInt(coordinates.get(j).split(",")[1]);
-            if (this.state.getBoard().onEdgesOfGroup(originX, originY)) {
-                break;
-            }
-        }
         int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
         int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
+        for (int j = 0; j < coordinates.size(); j++) {
+            String[] coords = coordinates.get(j).split(",");
+            originX = Integer.parseInt(coords[0]);
+            originY = Integer.parseInt(coords[1]);
+            if (this.state.getBoard().onEdgesOfGroup(originX, originY)) {
+                String[] origin = startGroup.findPointMostFarAway(targetX, targetY);
+                if (origin[0] == coords[0] && origin[1] == coords[1]) {
+                    break;
+                }
+            }
+        }
 
-        String[] origin = startGroup.findPointMostFarAway(originX, originY);
-        return new Move(Integer.parseInt(origin[0]), Integer.parseInt(origin[1]), targetX, targetY);
+        return new Move(originX, originY, targetX, targetY);
     }
 
     /**

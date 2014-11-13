@@ -1,7 +1,6 @@
 package nl.codecup.src;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameState {
@@ -91,21 +90,26 @@ public class GameState {
     public String[] getShortestPathsToGroups(Group group) {
         Group[] remainingGroups = getRemainingGroups();
         Group closestGroup = null;
-		int minimumDistance = 0;
-    	for(Group g : remainingGroups) {
-    		if(!group.equals(g)) {
-    			int distance = minimumDistance + 1;
-    			for(String c : g.getCoordinates()) {
-    				distance = group.getMinimumDistance(c);
-    				IO.debug("Distance: "+distance);
-    			}
-    			if(closestGroup == null || distance < minimumDistance) {
-    				closestGroup = g;
-    				minimumDistance = distance;
-    			}
-    		}
-    	}
-    	return getShortestPathBetweenGroups(group, closestGroup);
+        int minimumDistance = 0;
+        String[] list = null;
+
+        for (Group g : remainingGroups) {
+            if (!group.equals(g)) {
+                int distance = minimumDistance + 1;
+                for (String c : g.getCoordinates()) {
+                    distance = group.getMinimumDistance(c);
+                }
+                if (closestGroup == null || distance < minimumDistance) {
+                    closestGroup = g;
+                    minimumDistance = distance;
+                    String[] tempList = getShortestPathBetweenGroups(group, closestGroup);
+                    if (tempList != null) {
+                        list = tempList;
+                    }
+                }
+            }
+        }
+        return list;
     }
 
     private String[] findShortestPath(String[] current, String[] end, List<String> unvisited, List<String> path,
