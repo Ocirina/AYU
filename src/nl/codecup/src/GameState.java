@@ -1,6 +1,7 @@
 package nl.codecup.src;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameState {
@@ -88,28 +89,50 @@ public class GameState {
      * @return
      */
     public String[] getShortestPathsToGroups(Group group) {
-        Group[] remainingGroups = getRemainingGroups();
-        Group closestGroup = null;
+        List<Group> remainingGroups = Arrays.asList(getRemainingGroups());
+        List<Group> sortedList = new ArrayList<Group>();
+        List<Integer> distances = new ArrayList<Integer>();
         int minimumDistance = 0;
-        String[] list = null;
-
         for (Group g : remainingGroups) {
             if (!group.equals(g)) {
-                int distance = minimumDistance + 1;
-                for (String c : g.getCoordinates()) {
-                    distance = group.getMinimumDistance(c);
+                boolean added = false;
+                int distance = 0;
+                for(int c = 0; c < g.getCoordinates().size(); c++) {
+                	int tempDistance = group.getMinimumDistance(g.getCoordinates().get(c));
+                	if(distance == 0 || tempDistance <= distance) {
+                		distance = tempDistance;
+                	}
                 }
-                if (closestGroup == null || distance < minimumDistance) {
-                    closestGroup = g;
-                    minimumDistance = distance;
-                    String[] tempList = getShortestPathBetweenGroups(group, closestGroup);
-                    if (tempList != null) {
-                        list = tempList;
-                    }
+                if(minimumDistance == 0 || distance <= minimumDistance) {
+                    sortedList.add(0, g);     
+                    distances.add(0, distance);
+                    added = true; 
+                }
+                if(!added) {
+                	for(int i = 0; i < distances.size(); i++) {
+                		if(distance < distances.size()) {
+                			sortedList.add(i, g);
+                			distances.add(i, distance);
+                			added = true;
+                		}
+                	}
+                	if(!added) { sortedList.add(g); }
                 }
             }
         }
-        return list;
+        
+        return findShortestPossiblePath(group, sortedList);
+    }
+    
+    private String[] findShortestPossiblePath(Group start, List<Group> sortedList) {
+    	String[] list = null;
+    	for(Group g : sortedList) {
+    		String[] tempList = getShortestPathBetweenGroups(start, g);
+    		if(tempList != null) {
+    			return tempList;
+    		}
+    	}
+    	return list;
     }
 
     private String[] findShortestPath(String[] current, String[] end, List<String> unvisited, List<String> path,
