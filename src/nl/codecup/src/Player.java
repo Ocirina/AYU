@@ -45,6 +45,7 @@ public class Player {
      * @return Move
      */
     public Move getRandomMove() {
+        IO.debug("TRY TO FIND RANDOM MOVE!");
         Group[] remainingGroups = this.state.getRemainingGroups();
         int groupIndex = randomInt(0, remainingGroups.length - 1);
 
@@ -67,10 +68,12 @@ public class Player {
         int originY = 0;
         int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
         int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
+
         for (int j = 0; j < coordinates.size(); j++) {
             String[] coords = coordinates.get(j).split(",");
             originX = Integer.parseInt(coords[0]);
             originY = Integer.parseInt(coords[1]);
+
             if (this.state.getBoard().onEdgesOfGroup(originX, originY)) {
                 String[] origin = startGroup.findPointMostFarAway(targetX, targetY);
                 if (origin[0] == coords[0] && origin[1] == coords[1]) {
@@ -106,20 +109,8 @@ public class Player {
         int contentLength = content.length - 1;
         IO.debug("TRY TO FIND MOVE!");
 
-        // Strategy 1: Make long groups in each column. (Should make a group of
-        // 6 on each row).
         for (int row = 0; row < contentLength; row++) {
             for (int column = 0; column < contentLength; column++) {
-                /**
-                 * Situation 1 Start: | | W | | W | | | Result: | | | W | W | |
-                 * |
-                 * 
-                 * Situation 2 Start: | | W | W | | W | | Result: | | | W | W |
-                 * W | |
-                 * 
-                 * Start: | | | W | W | W | | W | | Result: | | | | W | W | W |
-                 * W | |
-                 */
                 boolean gapScenario = (column < 9 && row < 9 && content[row][column] == Player.piece
                         && content[row][column + 1] == 0 && content[row][column + 2] == Player.piece);
 
@@ -129,67 +120,6 @@ public class Player {
                 }
             }
         }
-
-        if (true)
-            return getRandomMove();
-
-        // for (int column = 0; column < contentLength; column++) {
-        // for (int row = 0; row < contentLength; row++) {
-        // boolean gapScenario = (column < 9 && row < 9
-        // && content[row][column] == Player.piece
-        // && content[row + 1][column] == 0
-        // && content[row + 2][column] == Player.piece);
-        //
-        // if (gapScenario) {
-        //
-        // int rowPieceToMove = findLastPieceInTheColumn(content, row, column,
-        // 0);
-        // IO.debug("VERTICAL: R:" + new Move(rowPieceToMove, column, row + 1,
-        // column));
-        // // return new Move(row, columnPieceToMove, row, column + 1);
-        // }
-        // }
-        // }
-
-        for (int row = 0; row < contentLength; row++) {
-            for (int column = 0; column < contentLength; column++) {
-                boolean gapScenario = (column <= 9 && content[row][column] == Player.piece && content[row][column + 1] == 0);
-
-                if (gapScenario) {
-                    int columnPieceToMove = findLastPieceInTheRow(content, row, column, 0);
-                    return new Move(row, columnPieceToMove, row, column + 1);
-                }
-            }
-
-        }
-        // Strategy 3: If there are no more possibilities of making a group on a
-        // column.
-        // Connect them.
-        /**
-         * Situation:
-         * 
-         * Start: | | | W | W | W | W | W | W | | | | | | | | | | | | | W | W |
-         * W | W | W | W |
-         * 
-         * Result: | | | | W | W | W | W | W | | | | | | | | | W | | | | W | W |
-         * W | W | W | W |
-         * 
-         */
-        for (int row = 1; row < (contentLength - 1); row++) {
-            if (content[row][10] == 0) {
-                IO.debug("Got it!");
-                int columnPieceToMove = findLastPieceInTheRow(content, row, 10, 5);
-                return new Move((row - 1), columnPieceToMove, row, 10);
-            }
-        }
-
-        /**
-         * Situation: | | | W | W | W | | W | W | | | | | W | | B | B | W | | |
-         * | | W | | W | B | W | | | | | W | | W | B | W | | | | | W | | W | B |
-         * W | | | | | | | W | | | Result: | | | W | W | W | W | W | W | | | | |
-         * W | | B | B | W | | | | | W | W | W | B | W | | | | | W | | W | B | W
-         * | | | | | W | | | B | W | | | | | | | | | |
-         */
 
         return getRandomMove();
     }

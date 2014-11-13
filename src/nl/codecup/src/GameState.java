@@ -68,6 +68,7 @@ public class GameState {
      */
     public String[] getShortestPathBetweenGroups(Group group1, Group group2) {
         String[] coordinateList = null;
+
         for (String coordinate1 : group1.getCoordinates()) {
             for (String coordinate2 : group2.getCoordinates()) {
                 List<String> unvisitedNodes = this.fillListWithUnvistedNodes();
@@ -79,6 +80,7 @@ public class GameState {
                 }
             }
         }
+
         return coordinateList;
     }
 
@@ -89,50 +91,64 @@ public class GameState {
      * @return
      */
     public String[] getShortestPathsToGroups(Group group) {
+        IO.debug("TRY TO FIND SHORTEST PATH TO GROUP MOVE!");
         List<Group> remainingGroups = Arrays.asList(getRemainingGroups());
         List<Group> sortedList = new ArrayList<Group>();
         List<Integer> distances = new ArrayList<Integer>();
         int minimumDistance = 0;
+
         for (Group g : remainingGroups) {
             if (!group.equals(g)) {
                 boolean added = false;
                 int distance = 0;
-                for(int c = 0; c < g.getCoordinates().size(); c++) {
-                	int tempDistance = group.getMinimumDistance(g.getCoordinates().get(c));
-                	if(distance == 0 || tempDistance <= distance) {
-                		distance = tempDistance;
-                	}
+
+                for (int c = 0; c < g.getCoordinates().size(); c++) {
+                    int tempDistance = group.getMinimumDistance(g.getCoordinates().get(c));
+                    if (distance == 0 || tempDistance <= distance) {
+                        distance = tempDistance;
+                    }
                 }
-                if(minimumDistance == 0 || distance <= minimumDistance) {
-                    sortedList.add(0, g);     
+
+                if (minimumDistance == 0 || distance <= minimumDistance) {
+                    sortedList.add(0, g);
                     distances.add(0, distance);
-                    added = true; 
+                    added = true;
                 }
-                if(!added) {
-                	for(int i = 0; i < distances.size(); i++) {
-                		if(distance < distances.size()) {
-                			sortedList.add(i, g);
-                			distances.add(i, distance);
-                			added = true;
-                		}
-                	}
-                	if(!added) { sortedList.add(g); }
+
+                if (!added) {
+                    for (int i = 0; i < distances.size(); i++) {
+                        if (distance < distances.size()) {
+                            sortedList.add(i, g);
+                            distances.add(i, distance);
+                            added = true;
+                        }
+                    }
+
+                    if (!added) {
+                        sortedList.add(g);
+                    }
                 }
             }
         }
-        
-        return findShortestPossiblePath(group, sortedList);
+
+        String[] path = findShortestPossiblePath(group, sortedList);
+        IO.debug("Path found with length: " + path.length);
+        return path;
+
     }
-    
+
     private String[] findShortestPossiblePath(Group start, List<Group> sortedList) {
-    	String[] list = null;
-    	for(Group g : sortedList) {
-    		String[] tempList = getShortestPathBetweenGroups(start, g);
-    		if(tempList != null) {
-    			return tempList;
-    		}
-    	}
-    	return list;
+        String[] list = null;
+
+        IO.debug("TRY TO FIND HERE IF THE GIVEN MOVE IS INCORRECT, MAYBE WE CAN CONNECT THE GROUP THIS SHOULD BE OVERIDDEN BY THE GIVEN MOVE");
+        for (Group g : sortedList) {
+            String[] tempList = getShortestPathBetweenGroups(start, g);
+            if (tempList != null) {
+                return tempList;
+            }
+        }
+
+        return list;
     }
 
     private String[] findShortestPath(String[] current, String[] end, List<String> unvisited, List<String> path,
@@ -316,7 +332,7 @@ public class GameState {
     }
 
     /**
-     * Prints the groa
+     * Prints the group
      * 
      * @return
      */
