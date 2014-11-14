@@ -66,7 +66,6 @@ public class PathFinder {
 
         for (Group g : remainingGroups) {
             if (!group.equals(g)) {
-                boolean added = false;
                 int distance = 0;
 
                 for (int c = 0; c < g.getCoordinates().size(); c++) {
@@ -76,11 +75,7 @@ public class PathFinder {
                     }
                 }
 
-                if (minimumDistance == 0 || distance <= minimumDistance) {
-                    sortedList.add(0, g);
-                    distances.add(0, distance);
-                    added = true;
-                }
+                boolean added = addGroupToSortedList(sortedList, distances, minimumDistance, g, distance);
 
                 if (!added) {
                     for (int i = 0; i < distances.size(); i++) {
@@ -103,6 +98,15 @@ public class PathFinder {
         return path;
 
     }
+
+	private boolean addGroupToSortedList(List<Group> sortedList, List<Integer> distances, int minimumDistance, Group g, int distance) {
+		if (minimumDistance == 0 || distance <= minimumDistance) {
+		    sortedList.add(0, g);
+		    distances.add(0, distance);
+		    return true;
+		}
+		return false;
+	}
 
     private String[] findShortestPossiblePath(Group start, List<Group> sortedList) {
         String[] list = null;
