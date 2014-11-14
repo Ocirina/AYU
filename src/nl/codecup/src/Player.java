@@ -50,7 +50,7 @@ public class Player {
         int groupIndex = randomInt(0, remainingGroups.length - 1);
 
         Group startGroup = remainingGroups[groupIndex];
-        String[] shortestPath = this.state.getShortestPathsToGroups(startGroup);
+        String[] shortestPath = PathFinder.getInstance().findShortestPathForGroups(state.getGroups(), state.getBoard(), startGroup);
 
         return constructMoveFromShortestPath(startGroup, shortestPath);
     }
