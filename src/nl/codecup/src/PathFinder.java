@@ -17,7 +17,7 @@ public class PathFinder {
         return instance;
     }
     
-    public String[] findShortestPathForGroups(Group[] groups, Board board, Group group) {
+    public String[] findShortestPathForGroup(Group[] groups, Board board, Group group) {
     	this.board = board;
     	this.playerGroups = groups;
     	return getShortestPathsToGroups(group);
