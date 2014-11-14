@@ -141,6 +141,14 @@ public class Group {
 
         return coordsReturned;
     }
+    
+    public int findClosestGroup() {
+    	return 0;
+    }
+    
+    public Move findClosestGroupMove() {
+    	return null;
+    }
 
     /**
      * Print the group

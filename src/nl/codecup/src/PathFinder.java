@@ -156,6 +156,23 @@ public class PathFinder {
         return null;
     }
     
+    public Move findShortestGroup() {
+    	int smallestDistance = Integer.MAX_VALUE;
+    	Group closestGroup = null;
+    	
+    	 for (Group group : playerGroups) {
+    		 if(group.findClosestGroup() < smallestDistance) {
+    			 smallestDistance = group.findClosestGroup();
+    			 closestGroup = group;
+    			 
+    			 if(smallestValue == 1) {
+    				return closestGroup.findClosestGroupMove();
+    			 }
+    		 }
+         }   	 
+    	    	 
+    	return findClosestGroupMove();
+    }
 
     private List<String> fillListWithUnvistedNodes() {
         List<String> coordinates = new ArrayList<String>();
