@@ -80,9 +80,7 @@ public class PathFinder {
                 if (!added) {
                     for (int i = 0; i < distances.size(); i++) {
                         if (distance < distances.size()) {
-                            sortedList.add(i, g);
-                            distances.add(i, distance);
-                            added = true;
+                            added = addDistanceAndGroupToLists(sortedList, distances, g, distance, i);
                         }
                     }
 
@@ -99,11 +97,15 @@ public class PathFinder {
 
     }
 
+	private boolean addDistanceAndGroupToLists(List<Group> sortedList, List<Integer> distances, Group g, int distance, int i) {
+		sortedList.add(i, g);
+		distances.add(i, distance);
+		return true;
+	}
+
 	private boolean addGroupToSortedList(List<Group> sortedList, List<Integer> distances, int minimumDistance, Group g, int distance) {
 		if (minimumDistance == 0 || distance <= minimumDistance) {
-		    sortedList.add(0, g);
-		    distances.add(0, distance);
-		    return true;
+		    return addDistanceAndGroupToLists(sortedList, distances, g, distance, 0);
 		}
 		return false;
 	}
