@@ -129,6 +129,11 @@ public class PathFinder {
         IO.debug("TRY TO FIND HERE IF THE GIVEN MOVE IS INCORRECT, MAYBE WE CAN CONNECT THE GROUP THIS SHOULD BE OVERIDDEN BY THE GIVEN MOVE");
         for (Group g : sortedList) {
             String[] tempList = getShortestPathBetweenGroups(start, g);
+            String sPath = "";
+            for(String s : tempList) {
+            	sPath += s + " ";
+            }
+            IO.debug("Possible path: "+sPath);
             if (tempList != null && (list == null || list.length > tempList.length) ) {
                 list = tempList;
             }
