@@ -22,7 +22,6 @@ public class PathFinder {
 			Group group) {
 		this.board = board;
 		this.playerGroups = groups;
-		IO.debug("Test");
 		return getShortestPathsToGroups(group);
 	}
 
@@ -108,7 +107,6 @@ public class PathFinder {
 		}
 
 		String[] path = findShortestPossiblePath(group, sortedList);
-		IO.debug("Path found with length: " + path.length);
 		return path;
 
 	}

@@ -51,13 +51,15 @@ public class Player {
 
         Group startGroup = remainingGroups[groupIndex];
         String[] shortestPath = PathFinder.getInstance().findShortestPathForGroup(state.getGroups(), state.getBoard(), startGroup);
-        String sPath = "";
-        for(String s : shortestPath) {
-        	sPath += s + " ";
+        if(shortestPath != null) {
+	        String sPath = "";
+	        for(String s : shortestPath) {
+	        	sPath += s + " ";
+	        }
+	        IO.debug("Found path: "+sPath);
+            return constructMoveFromShortestPath(startGroup, shortestPath);
         }
-        IO.debug("Found path: "+sPath);
-        
-        return constructMoveFromShortestPath(startGroup, shortestPath);
+        return getRandomMove();   
     }
 
     /**
