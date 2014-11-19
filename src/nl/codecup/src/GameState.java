@@ -55,6 +55,10 @@ public class GameState {
 
         GroupManager.getInstance().setPlayerGroups(playerGroups);
     }
+    
+    public void recheckGroups() {
+    	this.playerGroups = GroupManager.getInstance().recheckGroups(this.getBoard());
+    }
 
     /**
      * Returns the remaining groups
