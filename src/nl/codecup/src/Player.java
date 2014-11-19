@@ -76,7 +76,9 @@ public class Player {
         String[] origin = startGroup.findPointMostFarAway(targetX, targetY, this.state.getBoard());
         int originX = Integer.parseInt(origin[0]);
         int originY = Integer.parseInt(origin[1]);
-
+        
+        if(this.state.getBoardContents()[originX][originY] != Player.piece) {
+        }
         return new Move(originX, originY, targetX, targetY);
     }
 
