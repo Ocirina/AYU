@@ -114,7 +114,7 @@ public class Player {
         int contentLength = content.length - 1;
         IO.debug("TRY TO FIND MOVE!");
 
-        for (int row = 0; row < contentLength; row++) {
+        /*for (int row = 0; row < contentLength; row++) {
             for (int column = 0; column < contentLength; column++) {
                 boolean gapScenario = (column < 9 && row < 9 && content[row][column] == Player.piece
                         && content[row][column + 1] == 0 && content[row][column + 2] == Player.piece);
@@ -124,7 +124,7 @@ public class Player {
                     return new Move(row, columnPieceToMove, row, column + 1);
                 }
             }
-        }
+        }*/
 
         return getRandomMove();
     }
