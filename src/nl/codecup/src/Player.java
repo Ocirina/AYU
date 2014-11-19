@@ -51,7 +51,12 @@ public class Player {
 
         Group startGroup = remainingGroups[groupIndex];
         String[] shortestPath = PathFinder.getInstance().findShortestPathForGroup(state.getGroups(), state.getBoard(), startGroup);
-
+        String sPath = "";
+        for(String s : shortestPath) {
+        	sPath += s + " ";
+        }
+        IO.debug("Found path: "+sPath);
+        
         return constructMoveFromShortestPath(startGroup, shortestPath);
     }
 
@@ -68,7 +73,7 @@ public class Player {
         int originY = 0;
         int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
         int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
-
+        
         for (int j = 0; j < coordinates.size(); j++) {
             String[] coords = coordinates.get(j).split(",");
             originX = Integer.parseInt(coords[0]);
