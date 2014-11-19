@@ -130,6 +130,7 @@ public class PathFinder {
         for (Group g : sortedList) {
             String[] tempList = getShortestPathBetweenGroups(start, g);
             if (tempList != null) {
+            	IO.debug("Going to: "+tempList[0]);
                 return tempList;
             }
         }
