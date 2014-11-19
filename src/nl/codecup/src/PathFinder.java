@@ -149,8 +149,9 @@ public class PathFinder {
 				for (String c : tempList) {
 					sPath += c + " ";
 
-					IO.debug("Possible path: " + sPath);
 				}
+				IO.debug("Possible path: " + sPath);
+
 			}
 			if (tempList != null
 					&& (list == null || list.length > tempList.length)) {
