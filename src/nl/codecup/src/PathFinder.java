@@ -9,20 +9,21 @@ public class PathFinder {
     private Group[] playerGroups;
     private Board board;
 
-    private PathFinder() {}
+    private PathFinder() {
+    }
 
     public static synchronized PathFinder getInstance() {
         if (instance == null)
             instance = new PathFinder();
         return instance;
     }
-    
+
     public String[] findShortestPathForGroup(Group[] groups, Board board, Group group) {
-    	this.board = board;
-    	this.playerGroups = groups;
-    	return getShortestPathsToGroups(group);
+        this.board = board;
+        this.playerGroups = groups;
+        return getShortestPathsToGroups(group);
     }
-    
+
     /**
      * Returns a list of coordinates to get the shortest path between groups.
      * Tries to find a path of empty cells.
@@ -50,7 +51,7 @@ public class PathFinder {
 
         return coordinateList;
     }
-    
+
     /**
      * Finds the shortest paths to groups by the given group.
      * 
@@ -97,18 +98,20 @@ public class PathFinder {
 
     }
 
-	private boolean addDistanceAndGroupToLists(List<Group> sortedList, List<Integer> distances, Group g, int distance, int i) {
-		sortedList.add(i, g);
-		distances.add(i, distance);
-		return true;
-	}
+    private boolean addDistanceAndGroupToLists(List<Group> sortedList, List<Integer> distances, Group g, int distance,
+            int i) {
+        sortedList.add(i, g);
+        distances.add(i, distance);
+        return true;
+    }
 
-	private boolean addGroupToSortedList(List<Group> sortedList, List<Integer> distances, int minimumDistance, Group g, int distance) {
-		if (minimumDistance == 0 || distance <= minimumDistance) {
-		    return addDistanceAndGroupToLists(sortedList, distances, g, distance, 0);
-		}
-		return false;
-	}
+    private boolean addGroupToSortedList(List<Group> sortedList, List<Integer> distances, int minimumDistance, Group g,
+            int distance) {
+        if (minimumDistance == 0 || distance <= minimumDistance) {
+            return addDistanceAndGroupToLists(sortedList, distances, g, distance, 0);
+        }
+        return false;
+    }
 
     private String[] findShortestPossiblePath(Group start, List<Group> sortedList) {
         String[] list = null;
@@ -155,23 +158,23 @@ public class PathFinder {
         // If null there are no neighbors so this is a dead-end.
         return null;
     }
-    
+
     public Move findShortestGroup() {
-    	int smallestDistance = Integer.MAX_VALUE;
-    	Group closestGroup = null;
-    	
-    	 for (Group group : playerGroups) {
-    		 if(group.findClosestGroup() < smallestDistance) {
-    			 smallestDistance = group.findClosestGroup();
-    			 closestGroup = group;
-    			 
-    			 if(smallestValue == 1) {
-    				return closestGroup.findClosestGroupMove();
-    			 }
-    		 }
-         }   	 
-    	    	 
-    	return findClosestGroupMove();
+        int smallestDistance = Integer.MAX_VALUE;
+        Group closestGroup = null;
+
+        for (Group group : playerGroups) {
+            if (group.findClosestGroup() < smallestDistance) {
+                smallestDistance = group.findClosestGroup();
+                closestGroup = group;
+
+                if (smallestDistance == 1) {
+                    return closestGroup.findClosestGroupMove();
+                }
+            }
+        }
+
+        return closestGroup.findClosestGroupMove();
     }
 
     private List<String> fillListWithUnvistedNodes() {
@@ -186,7 +189,6 @@ public class PathFinder {
         }
         return coordinates;
     }
-    
 
     /**
      * Returns the remaining groups
