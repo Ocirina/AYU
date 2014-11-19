@@ -8,6 +8,7 @@ public class PathFinder {
 	private static PathFinder instance;
 	private Group[] playerGroups;
 	private Board board;
+	private final String SEPERATOR = ",";
 
 	private PathFinder() {
 	}
@@ -41,8 +42,7 @@ public class PathFinder {
 		for (String coordinate1 : group1.getCoordinates()) {
 			for (String coordinate2 : group2.getCoordinates()) {
 				List<String> unvisitedNodes = this.fillListWithUnvistedNodes();
-				String[] temp = findShortestPath(coordinate1.split(","),
-						coordinate2.split(","), unvisitedNodes,
+				String[] temp = findShortestPath(split(coordinate1), split(coordinate2), unvisitedNodes,
 						new ArrayList<String>());
 				if (coordinateList == null || (coordinateList != null)
 						&& temp != null && temp.length < coordinateList.length) {
@@ -161,7 +161,7 @@ public class PathFinder {
 		for (int i = 0; i < neighbors.length; i++) {
 			String neighbor = neighbors[i];
 			if (neighbor != null && unvisitedLocal.contains(neighbor)) {
-				String[] coords = neighbor.split(",");
+				String[] coords = split(neighbor);
 				int x = Integer.parseInt(coords[0]);
 				int y = Integer.parseInt(coords[1]);
 
@@ -228,13 +228,21 @@ public class PathFinder {
 		for (int i = 0; i < contents.length; i++) {
 			for (int j = 0; j < contents[i].length; j++) {
 				if (contents[i][j] == 0) {
-					coordinates.add(i + "," + j);
+					coordinates.add( join(i, j) );
 				}
 			}
 		}
 		return coordinates;
 	}
-
+	
+	private String[] split(String coordinates) {
+		return coordinates.split(SEPERATOR);
+	}
+	
+	private String join(Object x, Object y) {
+		return x + SEPERATOR + y;
+	}
+	
 	/**
 	 * Returns the remaining groups
 	 * 
