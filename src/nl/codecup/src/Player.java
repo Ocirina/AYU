@@ -79,7 +79,7 @@ public class Player {
             int tempX = Integer.parseInt(coords[0]);
             int tempY = Integer.parseInt(coords[1]);
 
-            if (this.state.getBoard().onEdgesOfGroup(originX, originY)) {
+            if (this.state.getBoard().onEdgesOfGroup(tempX, tempY)) {
                 String[] origin = startGroup.findPointMostFarAway(targetX, targetY);
                 if (origin[0].equals(coords[0]) && origin[1].equals(coords[1])) {
                     originX = tempX;
