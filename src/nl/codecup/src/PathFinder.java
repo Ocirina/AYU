@@ -184,6 +184,7 @@ public class PathFinder {
 					String[] tempReturn = findShortestPath(coords, end,
 							unvisited, newPath, start);
 					returnValue = assignPath(returnValue, tempReturn);
+					unvisited = unvisitedLocal;
 				}
 			}
 		}
