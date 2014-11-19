@@ -140,8 +140,9 @@ public class PathFinder {
 			for (String c : g.getCoordinates()) {
 				sPath += c + " ";
 
-				IO.debug("Group coordinates: " + sPath);
 			}
+			IO.debug("Group coordinates: " + sPath);
+
 			String[] tempList = getShortestPathBetweenGroups(start, g);
 			if(tempList != null) {
 				sPath = "";
