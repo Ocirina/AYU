@@ -68,11 +68,11 @@ public class PathFinder {
 
         for (Group g : remainingGroups) {
             if (!group.equals(g)) {
-                int distance = 0;
+                int distance = Integer.MAX_VALUE;
 
                 for (int c = 0; c < g.getCoordinates().size(); c++) {
                     int tempDistance = group.getMinimumDistance(g.getCoordinates().get(c));
-                    if (distance == 0 || tempDistance <= distance) {
+                    if (tempDistance <= distance) {
                         distance = tempDistance;
                     }
                 }
@@ -160,7 +160,6 @@ public class PathFinder {
                     }
 
                     String[] tempReturn = findShortestPath(coords, end, unvisited, newPath, start);
-
                     returnValue = assignPath(returnValue, tempReturn);
                 }
             }
