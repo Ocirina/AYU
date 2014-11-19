@@ -22,7 +22,6 @@ public class Manager {
 	 * Constructor
 	 */
 	public Manager() {
-
 		String input = IO.input(); // leave for debug
 		if (input.contains("Start")) {
 			int playerNumber = (Character.isDigit(input.charAt(0)) ? Integer
