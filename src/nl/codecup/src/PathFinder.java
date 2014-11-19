@@ -156,12 +156,11 @@ public class PathFinder {
                         newPath.add(neighbor);
 
                     if (end != null && board.isNeighbour(x, y, Integer.parseInt(end[0]), Integer.parseInt(end[1])))
-                        return newPath.toArray(new String[newPath.size()]);
+                        returnValue = assignPath(returnValue, newPath.toArray(new String[newPath.size()]));
 
                     String[] tempReturn = findShortestPath(coords, end, unvisited, newPath, start);
 
-                    if (returnValue == null || (tempReturn != null &&  returnValue.length > tempReturn.length))
-                        returnValue = tempReturn;
+                    returnValue = assignPath(returnValue, tempReturn);
                 }
             }
         }
@@ -169,6 +168,17 @@ public class PathFinder {
         // If null there are no neighbors so this is a dead-end.
         return returnValue;
     }
+
+	/**
+	 * @param returnValue
+	 * @param tempReturn
+	 * @return
+	 */
+	private String[] assignPath(String[] returnValue, String[] tempReturn) {
+		if (returnValue == null || (tempReturn != null &&  returnValue.length > tempReturn.length))
+		    returnValue = tempReturn;
+		return returnValue;
+	}
 
     public Move findShortestGroup() {
         int smallestDistance = Integer.MAX_VALUE;
