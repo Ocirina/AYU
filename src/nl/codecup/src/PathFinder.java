@@ -160,7 +160,7 @@ public class PathFinder {
 
                     String[] tempReturn = findShortestPath(coords, end, unvisited, newPath, start);
 
-                    if (returnValue == null || returnValue.length > tempReturn.length)
+                    if (returnValue == null || (tempReturn != null &&  returnValue.length > tempReturn.length))
                         returnValue = tempReturn;
                 }
             }
