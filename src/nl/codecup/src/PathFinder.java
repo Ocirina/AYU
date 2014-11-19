@@ -80,7 +80,7 @@ public class PathFinder {
 
                 if (!added) {
                     for (int i = 0; i < distances.size(); i++) {
-                        if (distance < distances.size()) {
+                        if (distance < distances.get(i)) {
                             added = addDistanceAndGroupToLists(sortedList, distances, g, distance, i);
                         }
                     }
