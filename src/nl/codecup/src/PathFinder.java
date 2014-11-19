@@ -107,6 +107,7 @@ public class PathFinder {
 		}
 		
 		IO.debug("Expected "+(remainingGroups.size()-1) + " groups, got "+sortedList.size());
+		
 		String[] path = findShortestPossiblePath(group, sortedList);
 		return path;
 
@@ -135,17 +136,24 @@ public class PathFinder {
 		
 		IO.debug("TRY TO FIND HERE IF THE GIVEN MOVE IS INCORRECT, MAYBE WE CAN CONNECT THE GROUP THIS SHOULD BE OVERIDDEN BY THE GIVEN MOVE");
 		for (Group g : sortedList) {
-			String[] tempList = getShortestPathBetweenGroups(start, g);
-			if (tempList != null) {
-				String sPath = "";
-				for (String s : tempList) {
-					sPath += s + " ";
-				}
+			String sPath = "";
+			for (String c : g.getCoordinates()) {
+				sPath += c + " ";
 
-				IO.debug("Possible path: " + sPath);
+				IO.debug("Group coordinates: " + sPath);
+			}
+			String[] tempList = getShortestPathBetweenGroups(start, g);
+			if(tempList != null) {
+				sPath = "";
+				for (String c : tempList) {
+					sPath += c + " ";
+
+					IO.debug("Possible path: " + sPath);
+				}
 			}
 			if (tempList != null
 					&& (list == null || list.length > tempList.length)) {
+				
 				list = tempList;
 			}
 		}
