@@ -132,7 +132,7 @@ public class Group {
             String[] coords = this.coordinates.get(i).split(",");
             int coordX = Integer.parseInt(coords[0]);
             int coordY = Integer.parseInt(coords[1]);
-            if(board.onEdgesOfGroup(maximumDistance, y)) {
+            if(board.onEdgesOfGroup(coordX, coordY)) {
 	            int tempDistance = Math.abs(coordX - x);
 	            tempDistance += Math.abs(coordY - y);
 	
