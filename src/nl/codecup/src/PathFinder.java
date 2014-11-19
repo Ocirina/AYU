@@ -76,12 +76,18 @@ public class PathFinder {
                     }
                 }
 
-                boolean added = addGroupToSortedList(sortedList, distances, minimumDistance, g, distance);
-
+                boolean added = addGroupToSortedList(sortedList, distances, minimumDistance, g, distance);            
+                if(added) {
+                	minimumDistance = distance;
+                }
+                
                 if (!added) {
                     for (int i = 0; i < distances.size(); i++) {
-                        if (distance < distances.get(i)) {
+                        if (distance <= distances.get(i).intValue()) {
                             added = addDistanceAndGroupToLists(sortedList, distances, g, distance, i);
+                        }
+                        if(added) {
+                        	break;
                         }
                     }
 
