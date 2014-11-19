@@ -45,7 +45,6 @@ public class Player {
      * @return Move
      */
     public Move getRandomMove() {
-    	this.state.recheckGroups();
         IO.debug("TRY TO FIND RANDOM MOVE!");
         Group[] remainingGroups = this.state.getRemainingGroups();
         int groupIndex = randomInt(0, remainingGroups.length - 1);
@@ -106,6 +105,7 @@ public class Player {
     public Move chooseMove() {
         int[][] content = this.state.getBoardContents();
         int contentLength = content.length - 1;
+    	this.state.recheckGroups();
         IO.debug("TRY TO FIND MOVE!");
         
         if(this.state.getRemainingGroups().length > 12) {
