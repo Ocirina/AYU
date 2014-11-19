@@ -141,7 +141,7 @@ public class PathFinder {
     private String[] findShortestPath(String[] current, String[] end, List<String> unvisited, List<String> path,
             String start) {
         String[] neighbors = board.getNeighborsByPiece(Integer.parseInt(current[0]), Integer.parseInt(current[1]), 0);
-
+        String[] returnValue = null;
         for (int i = 0; i < neighbors.length; i++) {
             String neighbor = neighbors[i];
             if (neighbor != null && unvisited.contains(neighbor)) {
@@ -158,16 +158,16 @@ public class PathFinder {
                     if (end != null && board.isNeighbour(x, y, Integer.parseInt(end[0]), Integer.parseInt(end[1])))
                         return newPath.toArray(new String[newPath.size()]);
 
-                    String[] returnValue = findShortestPath(coords, end, unvisited, newPath, start);
+                    String[] tempReturn = findShortestPath(coords, end, unvisited, newPath, start);
 
-                    if (returnValue != null)
-                        return returnValue;
+                    if (returnValue == null || returnValue.length > tempReturn.length)
+                        returnValue = tempReturn;
                 }
             }
         }
 
         // If null there are no neighbors so this is a dead-end.
-        return null;
+        return returnValue;
     }
 
     public Move findShortestGroup() {
