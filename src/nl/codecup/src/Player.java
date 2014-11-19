@@ -70,16 +70,12 @@ public class Player {
      * @return Move
      */
     private Move constructMoveFromShortestPath(Group startGroup, String[] shortestPath) {
-        List<String> coordinates = startGroup.getCoordinates();
-        int originX = 0;
-        int originY = 0;
         int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
         int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
-        
 
         String[] origin = startGroup.findPointMostFarAway(targetX, targetY, this.state.getBoard());
-        originX = Integer.parseInt(origin[0]);
-        originY = Integer.parseInt(origin[1]);
+        int originX = Integer.parseInt(origin[0]);
+        int originY = Integer.parseInt(origin[1]);
 
         return new Move(originX, originY, targetX, targetY);
     }
