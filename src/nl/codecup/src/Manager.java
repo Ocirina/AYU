@@ -37,7 +37,9 @@ public class Manager {
 				(playerNumber == 1 ? 2 : 1));
 		this.referee = new Referee(this);
 		this.player = new Player(this.gameState, playerNumber, this.referee);
-		this.gameState = this.player.takeTurn(this.gameState);
+		if (playerNumber == 1) {
+			this.gameState = this.player.takeTurn(this.gameState);	
+		}
 	}
 
 	public Manager(boolean testing) {
