@@ -177,7 +177,6 @@ public class PathFinder {
 									Integer.parseInt(end[1]))) {
 						returnValue = assignPath(returnValue,
 								newPath.toArray(new String[newPath.size()]));
-						IO.debug("Current path size: "+newPath.size());
 						continue;
 					}
 
