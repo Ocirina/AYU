@@ -62,8 +62,8 @@ public class GroupManager {
                 }
             }
         }
-
-        return groupsArray.toArray(new Group[groupsArray.size()]);
+        this.playerGroups = groupsArray.toArray(new Group[groupsArray.size()]);
+        return playerGroups;
     }
 
     private void checkGroupsForMove(int originX, int originY, int targetX, int targetY) {

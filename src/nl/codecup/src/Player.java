@@ -78,6 +78,8 @@ public class Player {
         int originY = Integer.parseInt(origin[1]);
         
         if(this.state.getBoardContents()[originX][originY] != Player.piece) {
+        	this.state.recheckGroups();
+        	return getRandomMove();
         }
         return new Move(originX, originY, targetX, targetY);
     }
