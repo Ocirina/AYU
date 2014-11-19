@@ -158,14 +158,16 @@ public class PathFinder {
 		String[] neighbors = board.getNeighborsByPiece(
 				Integer.parseInt(current[0]), Integer.parseInt(current[1]), 0);
 		String[] returnValue = null;
+		List<String> unvisitedLocal = new ArrayList<String>(unvisited);
 		for (int i = 0; i < neighbors.length; i++) {
 			String neighbor = neighbors[i];
-			if (neighbor != null && unvisited.contains(neighbor)) {
+			if (neighbor != null && unvisitedLocal.contains(neighbor)) {
 				String[] coords = neighbor.split(",");
 				int x = Integer.parseInt(coords[0]);
 				int y = Integer.parseInt(coords[1]);
 
 				if (board.isBlankSpace(x, y)) {
+					unvisited.remove(unvisited.indexOf(neighbor));
 					List<String> newPath = new ArrayList<String>(path);
 					if (!newPath.contains(neighbor))
 						newPath.add(neighbor);
@@ -178,7 +180,6 @@ public class PathFinder {
 								newPath.toArray(new String[newPath.size()]));
 						continue;
 					}
-					unvisited.remove(unvisited.indexOf(neighbor));
 
 					String[] tempReturn = findShortestPath(coords, end,
 							unvisited, newPath, start);
