@@ -43,7 +43,7 @@ public class PathFinder {
 				List<String> unvisitedNodes = this.fillListWithUnvistedNodes();
 				String[] temp = findShortestPath(coordinate1.split(","),
 						coordinate2.split(","), unvisitedNodes,
-						new ArrayList<String>(), null);
+						new ArrayList<String>());
 				if (coordinateList == null || (coordinateList != null)
 						&& temp != null && temp.length < coordinateList.length) {
 					coordinateList = temp;
@@ -153,7 +153,7 @@ public class PathFinder {
 	}
 
 	private String[] findShortestPath(String[] current, String[] end,
-			List<String> unvisited, List<String> path, String start) {
+			List<String> unvisited, List<String> path) {
 		String[] neighbors = board.getNeighborsByPiece(
 				Integer.parseInt(current[0]), Integer.parseInt(current[1]), 0);
 		String[] returnValue = null;
@@ -177,11 +177,12 @@ public class PathFinder {
 									Integer.parseInt(end[1]))) {
 						returnValue = assignPath(returnValue,
 								newPath.toArray(new String[newPath.size()]));
+						IO.debug("Current path size: "+newPath.size());
 						continue;
 					}
 
 					String[] tempReturn = findShortestPath(coords, end,
-							unvisited, newPath, start);
+							unvisited, newPath);
 					returnValue = assignPath(returnValue, tempReturn);
 					unvisited = unvisitedLocal;
 				}
