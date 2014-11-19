@@ -81,7 +81,7 @@ public class Player {
 
             if (this.state.getBoard().onEdgesOfGroup(originX, originY)) {
                 String[] origin = startGroup.findPointMostFarAway(targetX, targetY);
-                if (origin[0] == coords[0] && origin[1] == coords[1]) {
+                if (origin[0].equals(coords[0]) && origin[1].equals(coords[1])) {
                     break;
                 }
             }

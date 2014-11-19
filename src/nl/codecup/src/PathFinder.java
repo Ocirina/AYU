@@ -21,6 +21,7 @@ public class PathFinder {
     public String[] findShortestPathForGroup(Group[] groups, Board board, Group group) {
         this.board = board;
         this.playerGroups = groups;
+        IO.debug("Test");
         return getShortestPathsToGroups(group);
     }
 
@@ -93,8 +94,11 @@ public class PathFinder {
 
                     if (!added) {
                         sortedList.add(g);
+                        distances.add(distance);
                     }
                 }
+            } else {
+            	IO.debug("Same group skipped");
             }
         }
 

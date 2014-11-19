@@ -133,9 +133,11 @@ public class Group {
             int tempDistance = Math.abs(Integer.parseInt(coords[0]) - x);
             tempDistance += Math.abs(Integer.parseInt(coords[1]) - y);
 
+            IO.debug("tempDistance: " + tempDistance);
             if (tempDistance > maximumDistance || maximumDistance == 0) {
                 maximumDistance = tempDistance;
                 coordsReturned = coords;
+                IO.debug("Distance: " + maximumDistance + " for coordinates: " + coords[0] + "-" + coords[1]);
             }
         }
 
