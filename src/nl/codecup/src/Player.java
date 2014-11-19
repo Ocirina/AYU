@@ -45,6 +45,7 @@ public class Player {
      * @return Move
      */
     public Move getRandomMove() {
+    	this.state.recheckGroups();
         IO.debug("TRY TO FIND RANDOM MOVE!");
         Group[] remainingGroups = this.state.getRemainingGroups();
         int groupIndex = randomInt(0, remainingGroups.length - 1);
@@ -78,7 +79,6 @@ public class Player {
         int originY = Integer.parseInt(origin[1]);
         
         if(this.state.getBoardContents()[originX][originY] != Player.piece) {
-        	this.state.recheckGroups();
         	return getRandomMove();
         }
         return new Move(originX, originY, targetX, targetY);
