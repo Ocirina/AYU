@@ -155,8 +155,10 @@ public class PathFinder {
                     if (!newPath.contains(neighbor))
                         newPath.add(neighbor);
 
-                    if (end != null && board.isNeighbour(x, y, Integer.parseInt(end[0]), Integer.parseInt(end[1])))
+                    if (end != null && board.isNeighbour(x, y, Integer.parseInt(end[0]), Integer.parseInt(end[1]))) {
                         returnValue = assignPath(returnValue, newPath.toArray(new String[newPath.size()]));
+                        continue;
+                    }
 
                     String[] tempReturn = findShortestPath(coords, end, unvisited, newPath, start);
 
