@@ -25,7 +25,7 @@ public class GroupManager {
     public Group[] mergeGroupsByMove(Group[] groups, Board board, Move move) {
         this.playerGroups = groups;
         this.board = board;
-        checkGroupsForMove(move.getIndexOriginX(), move.getIndexOriginY(), move.getIndexTargetX(), move.getIndexTargetY());
+        //checkGroupsForMove(move.getIndexOriginX(), move.getIndexOriginY(), move.getIndexTargetX(), move.getIndexTargetY());
         return this.playerGroups;
     }
 
