@@ -166,7 +166,6 @@ public class PathFinder {
 				int y = Integer.parseInt(coords[1]);
 
 				if (board.isBlankSpace(x, y)) {
-//					unvisited.remove(unvisited.indexOf(neighbor));
 					List<String> newPath = new ArrayList<String>(path);
 					if (!newPath.contains(neighbor))
 						newPath.add(neighbor);
@@ -179,6 +178,7 @@ public class PathFinder {
 								newPath.toArray(new String[newPath.size()]));
 						continue;
 					}
+					unvisited.remove(unvisited.indexOf(neighbor));
 
 					String[] tempReturn = findShortestPath(coords, end,
 							unvisited, newPath, start);
