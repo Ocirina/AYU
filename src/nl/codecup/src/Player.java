@@ -113,17 +113,19 @@ public class Player {
         int[][] content = this.state.getBoardContents();
         int contentLength = content.length - 1;
         IO.debug("TRY TO FIND MOVE!");
-
-        for (int row = 0; row < contentLength; row++) {
-            for (int column = 0; column < contentLength; column++) {
-                boolean gapScenario = (column < 9 && row < 9 && content[row][column] == Player.piece
-                        && content[row][column + 1] == 0 && content[row][column + 2] == Player.piece);
-
-                if (gapScenario) {
-                    int columnPieceToMove = findLastPieceInTheRow(content, row, column, 0);
-                    return new Move(row, columnPieceToMove, row, column + 1);
-                }
-            }
+        
+        if(this.state.getRemainingGroups().length > 12) {
+	        for (int row = 0; row < contentLength; row++) {
+	            for (int column = 0; column < contentLength; column++) {
+	                boolean gapScenario = (column < 9 && row < 9 && content[row][column] == Player.piece
+	                        && content[row][column + 1] == 0 && content[row][column + 2] == Player.piece);
+	
+	                if (gapScenario) {
+	                    int columnPieceToMove = findLastPieceInTheRow(content, row, column, 0);
+	                    return new Move(row, columnPieceToMove, row, column + 1);
+	                }
+	            }
+	        }
         }
 
         return getRandomMove();
