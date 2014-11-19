@@ -124,18 +124,22 @@ public class Group {
      * @param y
      * @return
      */
-    public String[] findPointMostFarAway(int x, int y) {
+    public String[] findPointMostFarAway(int x, int y, Board board) {
         String[] coordsReturned = null;
         int maximumDistance = 0;
 
         for (int i = 0; i < this.coordinates.size(); i++) {
             String[] coords = this.coordinates.get(i).split(",");
-            int tempDistance = Math.abs(Integer.parseInt(coords[0]) - x);
-            tempDistance += Math.abs(Integer.parseInt(coords[1]) - y);
-
-            if (tempDistance > maximumDistance || maximumDistance == 0) {
-                maximumDistance = tempDistance;
-                coordsReturned = coords;
+            int coordX = Integer.parseInt(coords[0]);
+            int coordY = Integer.parseInt(coords[1]);
+            if(board.onEdgesOfGroup(maximumDistance, y)) {
+	            int tempDistance = Math.abs(coordX - x);
+	            tempDistance += Math.abs(coordY - y);
+	
+	            if (tempDistance > maximumDistance || maximumDistance == 0) {
+	                maximumDistance = tempDistance;
+	                coordsReturned = coords;
+	            }
             }
         }
 
