@@ -132,7 +132,8 @@ public class PathFinder {
 	private String[] findShortestPossiblePath(Group start,
 			List<Group> sortedList) {
 		String[] list = null;
-
+		IO.debug(start.toString());
+		
 		IO.debug("TRY TO FIND HERE IF THE GIVEN MOVE IS INCORRECT, MAYBE WE CAN CONNECT THE GROUP THIS SHOULD BE OVERIDDEN BY THE GIVEN MOVE");
 		for (Group g : sortedList) {
 			String[] tempList = getShortestPathBetweenGroups(start, g);
