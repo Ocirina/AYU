@@ -6,6 +6,7 @@ public class Manager {
 	private Player player;
 	private Referee referee;
 	private GameState gameState;
+	private final int STARTPLAYER = 1;
 
 	private MoveConverter converter;
 
@@ -37,7 +38,7 @@ public class Manager {
 				(playerNumber == 1 ? 2 : 1));
 		this.referee = new Referee(this);
 		this.player = new Player(this.gameState, playerNumber, this.referee);
-		if (playerNumber == 1) {
+		if (playerNumber == STARTPLAYER) {
 			this.gameState = this.player.takeTurn(this.gameState);	
 		}
 	}
