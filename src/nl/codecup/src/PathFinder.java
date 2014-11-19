@@ -105,7 +105,8 @@ public class PathFinder {
 				IO.debug("Same group skipped");
 			}
 		}
-
+		
+		IO.debug("Expected "+(remainingGroups.size()-1) + " groups, got "+sortedList.size());
 		String[] path = findShortestPossiblePath(group, sortedList);
 		return path;
 
