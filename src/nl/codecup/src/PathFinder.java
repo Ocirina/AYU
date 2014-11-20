@@ -39,6 +39,18 @@ public class PathFinder {
 	private String[] getShortestPathBetweenGroups(Group group1, Group group2) {
 		String[] coordinateList = null;
 
+		/*
+		 * This loop checks all coordinates of the group with each coordinate of the current group in the loop to retrieve the shortest path.
+		 * It checks it in a many to many way.
+		 * Example with numbers
+		 * List 1: [1,2,3]
+		 * List 2: [4,5,6]
+		 * It checks for number 1 : 1 -> 4 5 6
+		 * It checks for number 2 : 2 -> 4 5 6
+		 * Same for number 3
+		 * So all possibilities are checked. In our case, the numbers are coordinates and for each coordinate it returns the shortest path.
+		 * If it's the shortest set it and return it at the end
+		 */
 		for (String coordinate1 : group1.getCoordinates()) {
 			for (String coordinate2 : group2.getCoordinates()) {
 				List<String> unvisitedNodes = this.fillListWithUnvistedNodes();
@@ -62,15 +74,37 @@ public class PathFinder {
 	 */
 	private String[] getShortestPathsToGroups(Group group) {
 		IO.debug("TRY TO FIND SHORTEST PATH TO GROUP MOVE!");
+		/*
+		 *  TODO: Recheck groups, they were not correct the last test (20-11-2014). Before changing algorithm, make sure that works completely.
+		 *  Wrong groups means wrong paths. If coordinates are not present in the groups while our pieces are on it, we're fucked :)
+		 *  
+		 */
 		List<Group> remainingGroups = Arrays.asList(getRemainingGroups());
 		List<Group> sortedList = new ArrayList<Group>();
 		List<Integer> distances = new ArrayList<Integer>();
 		int minimumDistance = 0;
 
+		/*
+		 * Loop through each group to get it's minimum distance to the current group as start group and add them sorted to the list.
+		 */
 		for (Group g : remainingGroups) {
+			/*
+			 * Should skip itself
+			 */
 			if (!group.equals(g)) {
 				int distance = Integer.MAX_VALUE;
 
+				/*
+				 * This loop checks all coordinates of the group with each coordinate of the current group in the loop to retrieve the minimum distance.
+				 * It checks it in a many to many way.
+				 * Example with numbers
+				 * List 1: [1,2,3]
+				 * List 2: [4,5,6]
+				 * It checks for number 1 : 1 -> 4 5 6
+				 * It checks for number 2 : 2 -> 4 5 6
+				 * Same for number 3
+				 * So all possibilities are checked. In our case, the numbers are coordinates and for each coordinate it returns the minimum distance.
+				 */
 				for (int c = 0; c < g.getCoordinates().size(); c++) {
 					int tempDistance = group.getMinimumDistance(g
 							.getCoordinates().get(c));
@@ -79,6 +113,10 @@ public class PathFinder {
 					}
 				}
 
+				/*
+				 * If it's the current minimum distance of all groups, it will be added in addGroupToSortedList and it will return true.
+				 * Else it returns false.
+				 */
 				boolean added = addGroupToSortedList(sortedList, distances,
 						minimumDistance, g, distance);
 				if (added) {
@@ -86,16 +124,27 @@ public class PathFinder {
 				}
 
 				if (!added) {
+					/*
+					 * Insertion sort
+					 * Insert the group where the distance is lower than the current distance in the loop. 
+					 * Indexes of 'distances' and 'sortedList' always match 
+					 */
 					for (int i = 0; i < distances.size(); i++) {
 						if (distance <= distances.get(i).intValue()) {
 							added = addDistanceAndGroupToLists(sortedList,
 									distances, g, distance, i);
 						}
+						/*
+						 * Cancel loop if its inserted
+						 */
 						if (added) {
 							break;
 						}
 					}
 
+					/*
+					 * If the group is not yet added, add it to the end of the list. 
+					 */
 					if (!added) {
 						sortedList.add(g);
 						distances.add(distance);
@@ -135,6 +184,11 @@ public class PathFinder {
 		IO.debug(start.toString());
 		
 		IO.debug("TRY TO FIND HERE IF THE GIVEN MOVE IS INCORRECT, MAYBE WE CAN CONNECT THE GROUP THIS SHOULD BE OVERIDDEN BY THE GIVEN MOVE");
+		/*
+		 * For each group, check the shortest path.
+		 * If it's the shortest path, take that path.
+		 * Return the shortest path at the end.
+		 */
 		for (Group g : sortedList) {
 			String sPath = "";
 			for (String c : g.getCoordinates()) {
@@ -153,9 +207,12 @@ public class PathFinder {
 				IO.debug("Possible path: " + sPath);
 
 			}
+			
 			if (tempList != null
 					&& (list == null || list.length > tempList.length)) {
-				
+				/*
+				 * New shortest path, set it.
+				 */
 				list = tempList;
 			}
 		}
@@ -169,6 +226,10 @@ public class PathFinder {
 				Integer.parseInt(current[0]), Integer.parseInt(current[1]), 0);
 		String[] returnValue = null;
 		List<String> unvisitedLocal = new ArrayList<String>(unvisited);
+		
+		/*
+		 * Visit each neighbour to check a path. Neighbours are places that contain no piece, so a value of 0.
+		 */
 		for (int i = 0; i < neighbors.length; i++) {
 			String neighbor = neighbors[i];
 			if (neighbor != null && unvisitedLocal.contains(neighbor)) {
@@ -176,14 +237,20 @@ public class PathFinder {
 				int x = Integer.parseInt(coords[0]);
 				int y = Integer.parseInt(coords[1]);
 
+				/*
+				 * Neighbour must be a blank space (0)
+				 */
 				if (board.isBlankSpace(x, y)) {
 					unvisited.remove(unvisited.indexOf(neighbor));
 					List<String> newPath = new ArrayList<String>(path);
 					if (!newPath.contains(neighbor))
 						newPath.add(neighbor);
 
-					if (end != null
-							&& board.isNeighbour(x, y,
+					/*
+					 * If the current neighbor of the 'current' coordinate that is checked is a neighbor of the end coordinate, a path is found and set if it is shorter.
+					 * Move on to the next neighbor of the 'current' coordinate to check whether there is another path possible.
+					 */
+					if (board.isNeighbour(x, y,
 									Integer.parseInt(end[0]),
 									Integer.parseInt(end[1]))) {
 						returnValue = assignPath(returnValue,
@@ -191,6 +258,11 @@ public class PathFinder {
 						continue;
 					}
 
+					/**
+					 * The path is not yet found, take the coordinates of the neighbor and try to check it's neighbors if it is a neighbor of the end coordinate.
+					 * Set the path if it's shorter.
+					 * Reset the unvisited nodes for the next neighbor, else it cannot go over the nodes the previous neighbor has visited, which should not happen.
+					 */
 					String[] tempReturn = findShortestPath(coords, end,
 							unvisited, newPath);
 					returnValue = assignPath(returnValue, tempReturn);
@@ -199,7 +271,9 @@ public class PathFinder {
 			}
 		}
 
-		// If null there are no neighbors so this is a dead-end.
+		/*
+		 * Return the shortest path of all neighbors.
+		 */
 		return returnValue;
 	}
 
