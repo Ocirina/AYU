@@ -75,7 +75,7 @@ public class PathFinder {
 	private String[] getShortestPathsToGroups(Group group) {
 		IO.debug("TRY TO FIND SHORTEST PATH TO GROUP MOVE!");
 		/*
-		 *  TODO: Recheck groups, they were not correct the last test (20-11-2014). Before changing algorithm, make sure that works completely.
+		 *  TODO: Recheck groups, they were not correct the last test (19-11-2014). Before changing algorithm, make sure that works completely.
 		 *  Wrong groups means wrong paths. If coordinates are not present in the groups while our pieces are on it, we're fucked :)
 		 *  
 		 */
