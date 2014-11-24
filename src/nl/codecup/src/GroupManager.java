@@ -30,6 +30,7 @@ public class GroupManager {
     }
 
     public Group[] recheckGroups(Board board) {
+        this.board = board;
         List<Group> groupsArray = new ArrayList<Group>();
         int[][] boardArray = this.board.getBoardContents();
 
@@ -51,20 +52,19 @@ public class GroupManager {
         return playerGroups;
     }
 
-	private boolean addCoordinatesForGroup(List<Group> groupsArray, int row, int column) {
-		for (Group group : groupsArray) {
-			for (String coordinate : group.getCoordinates()) {
-				String[] coords = coordinate.split(",");
+    private boolean addCoordinatesForGroup(List<Group> groupsArray, int row, int column) {
+        for (Group group : groupsArray) {
+            for (String coordinate : group.getCoordinates()) {
+                String[] coords = coordinate.split(",");
 
-				if (this.board.isNeighbour(Integer.parseInt(coords[0]),
-						Integer.parseInt(coords[1]), row, column)) {
-					group.addCoordinate(row + "," + column);
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+                if (this.board.isNeighbour(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), row, column)) {
+                    group.addCoordinate(row + "," + column);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private void checkGroupsForMove(int originX, int originY, int targetX, int targetY) {
         /* If piece is not in group */
