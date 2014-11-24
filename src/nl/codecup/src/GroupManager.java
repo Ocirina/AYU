@@ -36,16 +36,11 @@ public class GroupManager {
 
         for (int row = 0; row < 11; row++) {
             for (int column = 0; column < 11; column++) {
-                if (boardArray[row][column] == Player.piece) {
-                	if(this.getGroupByCoordinate(row, column, groupsArray) == null) {
-                		Group group = new Group(groupsArray.size());
-                		group.addCoordinate(row + "," + column);
-                		String[] neighBors = this.board.getNeighbors(row, column);
-                        if(neighBors.length > 0) {
-                        	group = checkNeighBorsForGroup(neighBors, group);
-                        }
-                        groupsArray.add(group);
-                	}
+                if (boardArray[row][column] == Player.piece && this.getGroupByCoordinate(row, column, groupsArray) == null) {
+            		Group group = new Group(groupsArray.size());
+            		group.addCoordinate(row + "," + column);
+            		String[] neighBors = this.board.getNeighbors(row, column);
+                    groupsArray.add(checkNeighBorsForGroup(neighBors, group));
                 }
             }
         }
@@ -59,9 +54,7 @@ public class GroupManager {
     			String[] coords = neighBor.split(",");
     			group.addCoordinate(neighBor);
     			String[] neighBors = this.board.getNeighbors(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
-                if(neighBors.length > 0) {
-                	group = checkNeighBorsForGroup(neighBors, group);
-                }
+                group = checkNeighBorsForGroup(neighBors, group);
     		}
     	}
     	return group;
