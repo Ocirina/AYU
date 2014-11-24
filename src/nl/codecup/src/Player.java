@@ -8,16 +8,11 @@ public class Player {
     public static int piece;
     public static int empty = 0;
     private Referee referee;
-    private final int MAXRANDOMMOVES = 10;
 
     public Player(GameState state, int piece, Referee referee) {
         this.state = state;
         Player.piece = piece;
         this.referee = referee;
-    }
-
-    private Referee getReferee() {
-        return this.referee;
     }
 
     public GameState takeTurn(GameState state) {
@@ -113,8 +108,10 @@ public class Player {
 
 	        	// bottom -> up until the half of the column
 	            for (int column = 0; column < contentLength/2; column++) {
-	                boolean gapScenario = (column < 9 && row < 9 && content[row][column] == Player.piece
-	                        && content[row][column + 1] == 0 && content[row][column + 2] == Player.piece);
+	                boolean gapScenario = (column < 9 && row < 9 
+	                		&& content[row][column] == Player.piece
+	                        && content[row][column + 1] == 0 
+	                        && content[row][column + 2] == Player.piece);
 	
 	                if (gapScenario) {
 	                    int columnPieceToMove = findLastPieceInTheRow(content, row, column, 0);
@@ -123,15 +120,14 @@ public class Player {
 	            }
 	            
 	            // top -> down until the half of the column
-	            for (int column = contentLength; column > contentLength/2; column--) {
-	            	boolean gapScenario = (column <= 9 && row <= 9 
-	            			&& content[row][column] == Player.piece
-	                        && content[row][column - 1] == 0 
-	                        && content[row][column - 2] == Player.piece);
-	            	if (gapScenario) {
-	                    int columnPieceToMove = findLastPieceInTheRowReverse(content, row, column, contentLength);
-	                    return new Move(row, columnPieceToMove, row, column - 1);
-	                }
+	            // | W |   | W |
+	            if (content[row][10] == Player.piece && content[row][9] == 0 && content[row][8] == Player.piece) {
+	            	return new Move(row, 10, row, 9);
+	            }
+	            
+	            // | W | W |   | W |
+	            if (content[row][9] == Player.piece && content[row][8] == Player.piece && content[row][7] == 0 && content[row][6] == Player.piece) {
+	            	return new Move(row, 9, row, 7);
 	            }
 	        }
         }
@@ -150,17 +146,6 @@ public class Player {
     private int findLastPieceInTheRow(int[][] content, int row, int column, int defaultColumn) {
         int columnPieceToMove = defaultColumn;
         for (int i = column; i > 0; i--) {
-            if (content[row][i] == Player.piece)
-                columnPieceToMove = i;
-            else
-                break;
-        }
-        return columnPieceToMove;
-    }
-    
-    private int findLastPieceInTheRowReverse(int[][] content, int row, int column, int defaultColumn) {
-        int columnPieceToMove = defaultColumn;
-        for (int i = 0; i < column; i++) {
             if (content[row][i] == Player.piece)
                 columnPieceToMove = i;
             else
