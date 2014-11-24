@@ -2,9 +2,13 @@ package montecarlo;
 
 import java.util.Random;
 
+import nl.codecup.src.GameState;
+
 public class MCTree {
 	
 	private MCNode root;
+	private int treeWidth, treeDepth;
+	
 	private final int NIMIALNUMOFCHILDREN = 1000000;
 	
 	/**
@@ -13,13 +17,17 @@ public class MCTree {
 	 * @param treeWidth		- number of children for the root
 	 * @param searchTime	- search time in milliseconds
 	 */
-	public MCTree(int treeWidth, int searchDepth) {
-		MCNode root = new MCNode(false);
-		setRoot(root);
-		generateTree(getRoot(), treeWidth, searchDepth);
-		printTree(getRoot(), "");
-		MCNode bestMove = getBestMove();
-		System.out.println("Best move " + bestMove.getWinpercentage() + " - " + bestMove.getNumOfChildren());
+	public MCTree(int treeWidth, int treeDepth, GameState state) {
+		this.treeWidth = treeWidth;
+		this.treeDepth = treeDepth;
+		
+		MCNode root = new MCNode(state);
+		this.root = root;
+		
+		//generateTree(getRoot(), treeWidth, treeDepth);
+		//printTree(getRoot(), "");
+		//MCNode bestMove = getBestMove();
+		//System.out.println("Best move " + bestMove.getWinpercentage() + " - " + bestMove.getNumOfChildren());
 	}
 	
 	/**
@@ -32,7 +40,7 @@ public class MCTree {
 	private void generateTree(MCNode node, int numChilds, int searchDepth) {
 		if (searchDepth > 0) {
 			MCNode children[] = new MCNode[numChilds];
-			for (int i = 0; i < numChilds; i++) {
+			/*for (int i = 0; i < numChilds; i++) {
 				boolean isLeaf = getRandomBoolean();
 				MCNode child = new MCNode(isLeaf);
 				if (!isLeaf) {
@@ -43,7 +51,7 @@ public class MCTree {
 					child.setWinpercentage((float) (win ? 1.0 : 0.0));
 				}
 				children[i] = child;
-			}
+			}*/
 			node.setChildren(children);
 			updateWinpercentage(node);
 			updateNumOfChildren(node);

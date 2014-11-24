@@ -1,5 +1,7 @@
 package montecarlo;
 
+import nl.codecup.src.GameState;
+
 public class MCNode {
 	
 	private MCNode[] children = new MCNode[0];
@@ -7,14 +9,15 @@ public class MCNode {
 	private float winpercentage = (float) 0.0;
 	private boolean isLeaf = false;
 	private boolean isWin = false;
+	private GameState state;
 	
 	/**
 	 * creates a new Node
 	 * 
 	 * @param isLeaf	- is a leaf of the tree
 	 */
-	public MCNode(boolean isLeaf) {
-		setLeaf(isLeaf);
+	public MCNode(GameState state) {
+		this.state = state;
 	}
 
 	/**
