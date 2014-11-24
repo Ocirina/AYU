@@ -194,7 +194,11 @@ public class PathFinder {
 		for (Group g : sortedList) {
 			String sPath = "";
 			for (String c : g.getCoordinates()) {
-				sPath += c + " ";
+				String[] coords = c.split(",");
+				sPath += MoveConverter.convertPointToString(Integer.parseInt(coords[0]))
+						+ ", "
+						+ (Integer.parseInt(coords[1]) + 1)
+						+ " ";
 
 			}
 			IO.debug("Group coordinates: " + sPath);
@@ -203,7 +207,11 @@ public class PathFinder {
 			if (tempList != null) {
 				sPath = "";
 				for (String c : tempList) {
-					sPath += c + " ";
+					String[] coords = c.split(",");
+					sPath += MoveConverter.convertPointToString(Integer.parseInt(coords[0]))
+							+ ", "
+							+ (Integer.parseInt(coords[1]) + 1)
+							+ " ";
 
 				}
 				IO.debug("Possible path: " + sPath);
