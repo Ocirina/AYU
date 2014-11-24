@@ -37,33 +37,34 @@ public class GroupManager {
         for (int row = 0; row < 11; row++) {
             for (int column = 0; column < 11; column++) {
                 if (boardArray[row][column] == Player.piece) {
-                    boolean added = addCoordinatesForGroup(groupsArray, row, column);
-
-                    if (!added) {
-                        int index = groupsArray.size();
-
-                        groupsArray.add(new Group(index));
-                        groupsArray.get(index).addCoordinate(row + "," + column);
-                    }
+                	if(this.getGroupByCoordinate(row, column, groupsArray) == null) {
+                		Group group = new Group(groupsArray.size());
+                		group.addCoordinate(row + "," + column);
+                		String[] neighBors = this.board.getNeighbors(row, column);
+                        if(neighBors.length > 0) {
+                        	group = checkNeighBorsForGroup(neighBors, group);
+                        }
+                        groupsArray.add(group);
+                	}
                 }
             }
         }
         this.playerGroups = groupsArray.toArray(new Group[groupsArray.size()]);
         return playerGroups;
     }
-
-    private boolean addCoordinatesForGroup(List<Group> groupsArray, int row, int column) {
-        for (Group group : groupsArray) {
-            for (String coordinate : group.getCoordinates()) {
-                String[] coords = coordinate.split(",");
-
-                if (this.board.isNeighbour(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), row, column)) {
-                    group.addCoordinate(row + "," + column);
-                    return true;
+    
+    private Group checkNeighBorsForGroup(String[] currentNeighbors, Group group) {
+    	for(String neighBor : currentNeighbors) {
+    		if(!group.getCoordinates().contains(neighBor)) {
+    			String[] coords = neighBor.split(",");
+    			group.addCoordinate(neighBor);
+    			String[] neighBors = this.board.getNeighbors(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
+                if(neighBors.length > 0) {
+                	group = checkNeighBorsForGroup(neighBors, group);
                 }
-            }
-        }
-        return false;
+    		}
+    	}
+    	return group;
     }
 
     private void checkGroupsForMove(int originX, int originY, int targetX, int targetY) {
@@ -187,6 +188,21 @@ public class GroupManager {
      */
     public Group getGroupByCoordinate(int x, int y) {
         for (Group group : playerGroups) {
+            if (group != null && group.getCoordinates().contains(joinCoordinates(x, y)))
+                return group;
+        }
+        return null;
+    }
+    
+    /**
+     * Returns a group for the coordinate 
+     * @param x
+     * @param y
+     * @param groups
+     * @return
+     */
+    public Group getGroupByCoordinate(int x, int y, List<Group> groups) {
+        for (Group group : groups) {
             if (group != null && group.getCoordinates().contains(joinCoordinates(x, y)))
                 return group;
         }
