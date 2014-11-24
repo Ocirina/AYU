@@ -196,7 +196,7 @@ public class PathFinder {
 			for (String c : g.getCoordinates()) {
 				String[] coords = c.split(",");
 				sPath += MoveConverter.convertPointToString(Integer.parseInt(coords[0]))
-						+ ", "
+						+ ","
 						+ (Integer.parseInt(coords[1]) + 1)
 						+ " ";
 
