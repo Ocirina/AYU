@@ -108,9 +108,11 @@ public class Player {
     	this.state.recheckGroups();
         IO.debug("TRY TO FIND MOVE!");
         
-        if(this.state.getRemainingGroups().length > 12) {
+        if (state.getGroupsLength() > 12) {
 	        for (int row = 0; row < contentLength; row++) {
-	            for (int column = 0; column < contentLength; column++) {
+
+	        	// bottom -> up until the half of the column
+	            for (int column = 0; column < contentLength/2; column++) {
 	                boolean gapScenario = (column < 9 && row < 9 && content[row][column] == Player.piece
 	                        && content[row][column + 1] == 0 && content[row][column + 2] == Player.piece);
 	
@@ -119,9 +121,20 @@ public class Player {
 	                    return new Move(row, columnPieceToMove, row, column + 1);
 	                }
 	            }
+	            
+	            // top -> down until the half of the column
+	            for (int column = contentLength; column > contentLength/2; column--) {
+	            	boolean gapScenario = (column <= 9 && row <= 9 
+	            			&& content[row][column] == Player.piece
+	                        && content[row][column - 1] == 0 
+	                        && content[row][column - 2] == Player.piece);
+	            	if (gapScenario) {
+	                    int columnPieceToMove = findLastPieceInTheRowReverse(content, row, column, contentLength);
+	                    return new Move(row, columnPieceToMove, row, column - 1);
+	                }
+	            }
 	        }
         }
-
         return getRandomMove();
     }
 
@@ -137,6 +150,17 @@ public class Player {
     private int findLastPieceInTheRow(int[][] content, int row, int column, int defaultColumn) {
         int columnPieceToMove = defaultColumn;
         for (int i = column; i > 0; i--) {
+            if (content[row][i] == Player.piece)
+                columnPieceToMove = i;
+            else
+                break;
+        }
+        return columnPieceToMove;
+    }
+    
+    private int findLastPieceInTheRowReverse(int[][] content, int row, int column, int defaultColumn) {
+        int columnPieceToMove = defaultColumn;
+        for (int i = 0; i < column; i++) {
             if (content[row][i] == Player.piece)
                 columnPieceToMove = i;
             else

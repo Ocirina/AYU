@@ -74,6 +74,10 @@ public class GameState {
         }
         return groups.toArray(new Group[groups.size()]);
     }
+    
+    public int getGroupsLength() {
+    	return playerGroups.length;
+    }
 
     /**
      * Returns the indexes of real ayu groups. Real ayu groups have a length of
