@@ -7,10 +7,6 @@ public class MCTree {
 	private MCNode root;
 	private final int NIMIALNUMOFCHILDREN = 1000000;
 	
-	public static void main(String[] args) {
-		MCTree tree = new MCTree(10, 10);
-	}
-	
 	/**
 	 * creates a new tree 
 	 * 
