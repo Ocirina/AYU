@@ -18,6 +18,14 @@ public class MCNode {
 	 */
 	public MCNode(GameState state) {
 		this.state = state;
+		
+		boolean leaf = state.isGameOver();
+		this.isLeaf = leaf;
+		if (isLeaf) {
+			boolean win = state.hasWon(state.getPlayingPiece()); 
+			this.isWin = win;
+			this.winpercentage = (float) (win ? 1.0 : 0.0);
+		}
 	}
 
 	/**
