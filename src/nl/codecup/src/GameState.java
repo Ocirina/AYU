@@ -59,21 +59,6 @@ public class GameState {
     public void recheckGroups() {
     	this.playerGroups = GroupManager.getInstance().recheckGroups(this.getBoard());
     }
-
-    /**
-     * Returns the remaining groups
-     * 
-     * @return The remaining groups
-     */
-    public Group[] getRemainingGroups() {
-        List<Group> groups = new ArrayList<Group>();
-        for (Group group : playerGroups) {
-            if (group != null) {
-                groups.add(group);
-            }
-        }
-        return groups.toArray(new Group[groups.size()]);
-    }
     
     public int getGroupsLength() {
     	return playerGroups.length;
@@ -110,20 +95,10 @@ public class GameState {
         newState.setPlayerPiece(opponentPiece);
         newState.setComputerPiece(playingPiece);
         newState.setBoard(newBoard.placePiece(move));
-        playerGroups = GroupManager.getInstance().mergeGroupsByMove(playerGroups, board, move);
-        if (getRemainingGroups().length == 1) {
+        if (getGroupsLength() == 1) {
             // Player has won.
             IO.debug("Player has won.");
         }
-//        if (getRemainingGroups().length == 10) {
-//            String[] list = getShortestPathsToGroups(this.playerGroups[getIndexesOfAyuGroups()[getIndexesOfAyuGroups().length - 1]
-//                    .intValue()]);
-//            String path = "Path:\n";
-//            for (String s : list) {
-//                path += s + "\n";
-//            }
-//            IO.debug(path);
-//        }
         return newState;
     }
 

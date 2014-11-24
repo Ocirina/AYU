@@ -22,7 +22,7 @@ public class GameStateTest {
 	
 	@Test
 	public void testRemainingGroups() {
-		assertEquals(gameState.getRemainingGroups().length, 30);
+		assertEquals(gameState.getGroupsLength(), 30);
 	}
 	
 	@Test
@@ -40,7 +40,7 @@ public class GameStateTest {
 		Move move = new Move("B","1","B","2");
 		gameState = gameState.makeMove(move);
 		
-		assertEquals(gameState.getRemainingGroups().length, 29);
+		assertEquals(gameState.getGroupsLength(), 29);
 		assertEquals(gameState.getIndexesOfAyuGroups().length, 1);
 		assertEquals(gameState.getBoardContents()[1][1], Player.piece);
 	}

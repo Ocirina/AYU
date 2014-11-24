@@ -41,7 +41,7 @@ public class Player {
      */
     public Move getRandomMove() {
         IO.debug("TRY TO FIND RANDOM MOVE!");
-        Group[] remainingGroups = this.state.getRemainingGroups();
+        Group[] remainingGroups = this.state.getGroups();
         int groupIndex = randomInt(0, remainingGroups.length - 1);
 
         Group startGroup = remainingGroups[groupIndex];
