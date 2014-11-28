@@ -14,8 +14,12 @@ public class MCTree {
 	/**
 	 * creates a new tree 
 	 * 
-	 * @param treeWidth		- number of children for the root
-	 * @param searchTime	- search time in milliseconds
+	 * @param treeWidth	
+	 * 					number of children for the root
+	 * @param searchTime
+	 * 					search time in milliseconds
+	 * @param state
+	 * 				The current GameState
 	 */
 	public MCTree(int treeWidth, int treeDepth, GameState state) {
 		this.treeWidth = treeWidth;

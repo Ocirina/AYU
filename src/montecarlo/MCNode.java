@@ -12,9 +12,11 @@ public class MCNode {
 	private GameState state;
 	
 	/**
-	 * creates a new Node
+	 * Creates a new Node with a GameState. 
+	 * Then checks if the game is over and if it is a win or not.
 	 * 
-	 * @param isLeaf	- is a leaf of the tree
+	 * @param state	
+	 * 				the GameState of the node
 	 */
 	public MCNode(GameState state) {
 		this.state = state;
@@ -22,7 +24,8 @@ public class MCNode {
 		boolean leaf = state.isGameOver();
 		this.isLeaf = leaf;
 		if (isLeaf) {
-			boolean win = state.hasWon(state.getPlayingPiece()); 
+			boolean win = state.hasWon(state.getPlayingPiece());
+			
 			this.isWin = win;
 			this.winpercentage = (float) (win ? 1.0 : 0.0);
 		}
