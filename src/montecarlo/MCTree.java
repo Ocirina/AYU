@@ -87,6 +87,11 @@ public class MCTree {
 	 */
 	private void printTree(MCNode node, String whitespace) {
 		IO.debug(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren());
+		IO.debug(whitespace + 
+				node.getState().getPlayedMove().getBoardOriginX() + "," +  
+				node.getState().getPlayedMove().getBoardOriginY() + "--->" + 
+				node.getState().getPlayedMove().getBoardTargetX() + "," +
+				node.getState().getPlayedMove().getBoardTargetY());
 		if (!node.isLeaf()) {
 			for (int i = 0; i < node.getChildren().length; i++) {
 				printTree(node.getChildren()[i], whitespace + "    ");

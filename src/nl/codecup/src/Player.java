@@ -144,7 +144,7 @@ public class Player {
     }
     
     private void makeTree() {
-    	MCTree tree = new MCTree(2, 2, this);
+    	MCTree tree = new MCTree(4, 4, this);
     }
 
     /**
