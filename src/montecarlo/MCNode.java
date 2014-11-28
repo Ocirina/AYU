@@ -1,6 +1,7 @@
 package montecarlo;
 
 import nl.codecup.src.GameState;
+import nl.codecup.src.Player;
 
 public class MCNode {
 	
@@ -9,6 +10,7 @@ public class MCNode {
 	private float winpercentage = (float) 0.0;
 	private boolean isLeaf = false;
 	private boolean isWin = false;
+	private Player player;
 	private GameState state;
 	
 	/**
@@ -18,17 +20,25 @@ public class MCNode {
 	 * @param state	
 	 * 				the GameState of the node
 	 */
-	public MCNode(GameState state) {
-		this.state = state;
+	public MCNode(Player player) {
+		this.player = player;
+		boolean win = false;
 		
-		boolean leaf = state.isGameOver();
-		this.isLeaf = leaf;
-		if (isLeaf) {
-			boolean win = state.hasWon(state.getPlayingPiece());
-			
-			this.isWin = win;
-			this.winpercentage = (float) (win ? 1.0 : 0.0);
+		GameState state = this.player.getState();
+		this.state = state.makeMove(this.player.getRandomMove());
+		
+		this.isLeaf = this.state.isGameOver();
+		if (this.isLeaf) {
+			win = this.state.hasWon(this.state.getPlayingPiece());
+		} else {
+			this.state = state.makeMove(this.player.getRandomMove());
+			this.isLeaf = this.state.isGameOver();
+			if (this.isLeaf) {
+				win = !this.state.hasWon(this.state.getPlayingPiece());
+			}
 		}
+		this.isWin = win;
+		this.winpercentage = (float) (win ? 1.0 : 0.0);
 	}
 
 	/**
@@ -119,6 +129,14 @@ public class MCNode {
 	 */
 	public void setNumOfChildren(int numOfChildren) {
 		this.numOfChildren = numOfChildren;
+	}
+
+	public GameState getState() {
+		return state;
+	}
+
+	public void setState(GameState state) {
+		this.state = state;
 	}
 	
 }

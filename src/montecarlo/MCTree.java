@@ -3,11 +3,13 @@ package montecarlo;
 import java.util.Random;
 
 import nl.codecup.src.GameState;
+import nl.codecup.src.IO;
+import nl.codecup.src.Player;
 
 public class MCTree {
 	
 	private MCNode root;
-	private int treeWidth, treeDepth;
+	private Player player;
 	
 	private final int NIMIALNUMOFCHILDREN = 1000000;
 	
@@ -21,17 +23,15 @@ public class MCTree {
 	 * @param state
 	 * 				The current GameState
 	 */
-	public MCTree(int treeWidth, int treeDepth, GameState state) {
-		this.treeWidth = treeWidth;
-		this.treeDepth = treeDepth;
-		
-		MCNode root = new MCNode(state);
+	public MCTree(int treeWidth, int treeDepth, Player player) {
+		this.player = player;		
+		MCNode root = new MCNode(player);
 		this.root = root;
 		
-		//generateTree(getRoot(), treeWidth, treeDepth);
-		//printTree(getRoot(), "");
-		//MCNode bestMove = getBestMove();
-		//System.out.println("Best move " + bestMove.getWinpercentage() + " - " + bestMove.getNumOfChildren());
+		generateTree(this.root, treeWidth, treeDepth);
+		printTree(getRoot(), "");
+		MCNode bestMove = getBestMove();
+		IO.debug("Best move " + bestMove.getWinpercentage() + " - " + bestMove.getNumOfChildren());
 	}
 	
 	/**
@@ -44,18 +44,13 @@ public class MCTree {
 	private void generateTree(MCNode node, int numChilds, int searchDepth) {
 		if (searchDepth > 0) {
 			MCNode children[] = new MCNode[numChilds];
-			/*for (int i = 0; i < numChilds; i++) {
-				boolean isLeaf = getRandomBoolean();
-				MCNode child = new MCNode(isLeaf);
-				if (!isLeaf) {
+			for (int i = 0; i < numChilds; i++) {
+				MCNode child = new MCNode(this.player);
+				if (!child.isLeaf()) {
 					generateTree(child, randInt(0, numChilds), searchDepth - 1);
-				} else {
-					boolean win = getRandomBoolean();
-					child.setWin(win);
-					child.setWinpercentage((float) (win ? 1.0 : 0.0));
 				}
 				children[i] = child;
-			}*/
+			}
 			node.setChildren(children);
 			updateWinpercentage(node);
 			updateNumOfChildren(node);
@@ -91,7 +86,7 @@ public class MCTree {
 	 * @param whitespace	 - the whitespace before the win percentage (for visibility) 
 	 */
 	private void printTree(MCNode node, String whitespace) {
-		System.out.println(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren());
+		IO.debug(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren());
 		if (!node.isLeaf()) {
 			for (int i = 0; i < node.getChildren().length; i++) {
 				printTree(node.getChildren()[i], whitespace + "    ");

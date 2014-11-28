@@ -144,8 +144,7 @@ public class Player {
     }
     
     private void makeTree() {
-    	MCTree tree = new MCTree(10, 10, this.state);
-    	IO.debug(tree.getRoot().isWin() + " " + tree.getRoot().isLeaf() + " " + tree.getRoot().getWinpercentage());
+    	MCTree tree = new MCTree(2, 2, this);
     }
 
     /**
@@ -186,4 +185,8 @@ public class Player {
         return "R player: " + Player.piece;
     }
 
+    public GameState getState() {
+    	return this.state;
+    }
+    
 }
