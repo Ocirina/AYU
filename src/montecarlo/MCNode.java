@@ -22,23 +22,21 @@ public class MCNode {
 	 */
 	public MCNode(Player player) {
 		this.player = player;
-		boolean win = false;
 		
 		GameState state = this.player.getState();
 		this.state = state.makeMove(this.player.getRandomMove());
 		
 		this.isLeaf = this.state.isGameOver();
 		if (this.isLeaf) {
-			win = this.state.hasWon(this.state.getPlayingPiece());
+			this.isWin = this.state.hasWon(this.state.getPlayingPiece());
 		} else {
 			this.state = state.makeMove(this.player.getRandomMove());
 			this.isLeaf = this.state.isGameOver();
 			if (this.isLeaf) {
-				win = !this.state.hasWon(this.state.getPlayingPiece());
+				this.isWin = !this.state.hasWon(this.state.getPlayingPiece());
 			}
 		}
-		this.isWin = win;
-		this.winpercentage = (float) (win ? 1.0 : 0.0);
+		this.winpercentage = (float) (this.isWin ? 1.0 : 0.0);
 	}
 
 	/**
