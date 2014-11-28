@@ -1,13 +1,13 @@
 package montecarlo;
 
-import nl.codecup.src.GameState;
-import nl.codecup.src.Player;
+import nl.codecup.src.*;
 
 public class MCNode {
 	
 	private MCNode[] children = new MCNode[0];
 	private int numOfChildren = 0;
 	private float winpercentage = (float) 0.0;
+	private int moveValue = 0;
 	private boolean isLeaf = false;
 	private boolean isWin = false;
 	private Player player;
@@ -25,6 +25,7 @@ public class MCNode {
 		
 		GameState state = this.player.getState();
 		this.state = state.makeMove(this.player.getRandomMove());
+		updateMoveValue();
 		
 		this.isLeaf = this.state.isGameOver();
 		if (this.isLeaf) {
@@ -37,6 +38,12 @@ public class MCNode {
 			}
 		}
 		this.winpercentage = (float) (this.isWin ? 1.0 : 0.0);
+	}
+	
+	private void updateMoveValue() {
+		Move playedMove = this.state.getPlayedMove();
+		Group group = GroupManager.getInstance().getGroupByCoordinate(playedMove.getIndexTargetX(), playedMove.getIndexTargetY());
+		this.moveValue = group.getCoordinates().size();
 	}
 
 	/**
@@ -135,6 +142,14 @@ public class MCNode {
 
 	public void setState(GameState state) {
 		this.state = state;
+	}
+
+	public int getMoveValue() {
+		return moveValue;
+	}
+
+	public void setMoveValue(int moveValue) {
+		this.moveValue = moveValue;
 	}
 	
 }

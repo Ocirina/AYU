@@ -2,9 +2,7 @@ package montecarlo;
 
 import java.util.Random;
 
-import nl.codecup.src.GameState;
-import nl.codecup.src.IO;
-import nl.codecup.src.Player;
+import nl.codecup.src.*;
 
 public class MCTree {
 	
@@ -86,7 +84,7 @@ public class MCTree {
 	 * @param whitespace	 - the whitespace before the win percentage (for visibility) 
 	 */
 	private void printTree(MCNode node, String whitespace) {
-		IO.debug(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren());
+		IO.debug(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren() + " ---> " + node.getMoveValue());
 		IO.debug(whitespace + 
 				node.getState().getPlayedMove().getBoardOriginX() + "," +  
 				node.getState().getPlayedMove().getBoardOriginY() + "--->" + 
