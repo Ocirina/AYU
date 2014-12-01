@@ -7,7 +7,7 @@ public class MCTree {
 	private MCNode root;
 	private Player player;
 	
-	private final int NIMIALNUMOFCHILDREN = 1000000;
+	private final int MINNUMBEROFCHILDREN = 1000000;
 	
 	/**
 	 * creates a new tree 
@@ -49,6 +49,11 @@ public class MCTree {
 		}
 	}
 	
+	/**
+	 * updates the number of children for a node
+	 * 
+	 * @param node
+	 */
 	private void updateNumOfChildren(MCNode node) {
 		int numOfChildren = 0;
 		MCNode[] children = node.getChildren();
@@ -101,16 +106,8 @@ public class MCTree {
 		int childrenSize = getRoot().getChildren().length;
 		for (int i = 1; i < childrenSize; i++) {
 			MCNode childNode = getRoot().getChildren()[i];
-			if (isChildNodeWinstBetterThanNode(node, childNode)) {
+			if (isChildNodeBetterThanNode(node, childNode)) {
 				node = childNode;
-			}
-		}
-		if (node.getWinpercentage() == (float) 0.0) {
-			for (int i = 1; i < childrenSize; i++) {
-				MCNode childNode = getRoot().getChildren()[i];
-				if (isChildNodeMoveValueBetterThanNode(node, childNode)) {
-					node = childNode;
-				}
 			}
 		}
 		return node;
@@ -123,14 +120,10 @@ public class MCTree {
 	 * @param childNode	- node to compare to
 	 * @return boolean is better node
 	 */
-	private boolean isChildNodeWinstBetterThanNode(MCNode node, MCNode childNode) {
-		int minNumOfChildren = NIMIALNUMOFCHILDREN;
+	private boolean isChildNodeBetterThanNode(MCNode node, MCNode childNode) {
 		return childNode.getWinpercentage() > node.getWinpercentage()
-				&& minNumOfChildren > childNode.getNumOfChildren();
-	}
-	
-	private boolean isChildNodeMoveValueBetterThanNode(MCNode node, MCNode childNode) {
-		return childNode.getMoveValue() > node.getMoveValue();
+				&& MINNUMBEROFCHILDREN > childNode.getNumOfChildren()
+				&& childNode.getMoveValue() > node.getMoveValue();
 	}
 	
 	/**
@@ -142,18 +135,7 @@ public class MCTree {
 	 */
 	private int randInt(int min, int max) {
 	    Random rand = new Random();
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
-	    return randomNum;
-	}
-	
-	/**
-	 * get a random boolean
-	 *  
-	 * @return random boolean
-	 */
-	private boolean getRandomBoolean() {
-		Random random = new Random();
-	    return random.nextBoolean();
+	    return rand.nextInt((max - min) + 1) + min;
 	}
 	
 	/**
@@ -163,15 +145,6 @@ public class MCTree {
 	 */
 	public MCNode getRoot() {
 		return root;
-	}
-
-	/**
-	 * set the root node
-	 * 
-	 * @param root
-	 */
-	public void setRoot(MCNode root) {
-		this.root = root;
 	}
 
 }
