@@ -1,29 +1,29 @@
-package montecarlo;
+package nl.codecup.src;
 
 import java.util.Random;
 
 public class MCTree {
 	
 	private MCNode root;
-	private final int NIMIALNUMOFCHILDREN = 1000000;
+	private Player player;
 	
-	public static void main(String[] args) {
-		MCTree tree = new MCTree(10, 10);
-	}
+	private final int MINNUMBEROFCHILDREN = 1000000;
 	
 	/**
 	 * creates a new tree 
 	 * 
-	 * @param treeWidth		- number of children for the root
-	 * @param searchTime	- search time in milliseconds
+	 * @param treeWidth	
+	 * 					number of children for the root
+	 * @param searchTime
+	 * 					search time in milliseconds
+	 * @param state
+	 * 				The current GameState
 	 */
-	public MCTree(int treeWidth, int searchDepth) {
-		MCNode root = new MCNode(false);
-		setRoot(root);
-		generateTree(getRoot(), treeWidth, searchDepth);
-		printTree(getRoot(), "");
-		MCNode bestMove = getBestMove();
-		System.out.println("Best move " + bestMove.getWinpercentage() + " - " + bestMove.getNumOfChildren());
+	public MCTree(int treeWidth, int treeDepth, Player player) {
+		this.player = player;
+		this.root = new MCNode(player);
+		
+		generateTree(this.root, treeWidth, treeDepth);
 	}
 	
 	/**
@@ -37,14 +37,9 @@ public class MCTree {
 		if (searchDepth > 0) {
 			MCNode children[] = new MCNode[numChilds];
 			for (int i = 0; i < numChilds; i++) {
-				boolean isLeaf = getRandomBoolean();
-				MCNode child = new MCNode(isLeaf);
-				if (!isLeaf) {
+				MCNode child = new MCNode(this.player);
+				if (!child.isLeaf()) {
 					generateTree(child, randInt(0, numChilds), searchDepth - 1);
-				} else {
-					boolean win = getRandomBoolean();
-					child.setWin(win);
-					child.setWinpercentage((float) (win ? 1.0 : 0.0));
 				}
 				children[i] = child;
 			}
@@ -54,6 +49,11 @@ public class MCTree {
 		}
 	}
 	
+	/**
+	 * updates the number of children for a node
+	 * 
+	 * @param node
+	 */
 	private void updateNumOfChildren(MCNode node) {
 		int numOfChildren = 0;
 		MCNode[] children = node.getChildren();
@@ -83,7 +83,12 @@ public class MCTree {
 	 * @param whitespace	 - the whitespace before the win percentage (for visibility) 
 	 */
 	private void printTree(MCNode node, String whitespace) {
-		System.out.println(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren());
+		IO.debug(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren() + " ---> " + node.getMoveValue());
+		IO.debug(whitespace + 
+				node.getState().getPlayedMove().getBoardOriginX() + "," +  
+				node.getState().getPlayedMove().getBoardOriginY() + "--->" + 
+				node.getState().getPlayedMove().getBoardTargetX() + "," +
+				node.getState().getPlayedMove().getBoardTargetY());
 		if (!node.isLeaf()) {
 			for (int i = 0; i < node.getChildren().length; i++) {
 				printTree(node.getChildren()[i], whitespace + "    ");
@@ -96,7 +101,7 @@ public class MCTree {
 	 * 
 	 * @return best move
 	 */
-	private MCNode getBestMove() {
+	public MCNode getBestMove() {
 		MCNode node = getRoot().getChildren()[0];
 		int childrenSize = getRoot().getChildren().length;
 		for (int i = 1; i < childrenSize; i++) {
@@ -116,12 +121,10 @@ public class MCTree {
 	 * @return boolean is better node
 	 */
 	private boolean isChildNodeBetterThanNode(MCNode node, MCNode childNode) {
-		int minNumOfChildren = NIMIALNUMOFCHILDREN;
 		return childNode.getWinpercentage() > node.getWinpercentage()
-				&& minNumOfChildren > childNode.getNumOfChildren();
+				&& MINNUMBEROFCHILDREN > childNode.getNumOfChildren()
+				&& childNode.getMoveValue() > node.getMoveValue();
 	}
-	
-	
 	
 	/**
 	 * get a random number between the min and max parameters
@@ -132,18 +135,7 @@ public class MCTree {
 	 */
 	private int randInt(int min, int max) {
 	    Random rand = new Random();
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
-	    return randomNum;
-	}
-	
-	/**
-	 * get a random boolean
-	 *  
-	 * @return random boolean
-	 */
-	private boolean getRandomBoolean() {
-		Random random = new Random();
-	    return random.nextBoolean();
+	    return rand.nextInt((max - min) + 1) + min;
 	}
 	
 	/**
@@ -153,15 +145,6 @@ public class MCTree {
 	 */
 	public MCNode getRoot() {
 		return root;
-	}
-
-	/**
-	 * set the root node
-	 * 
-	 * @param root
-	 */
-	public void setRoot(MCNode root) {
-		this.root = root;
 	}
 
 }

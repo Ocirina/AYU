@@ -9,6 +9,7 @@ public class GameState {
     private int opponentPiece;
     private int winner = 0;
     private Group[] playerGroups = new Group[30];
+    private Move playedMove;
 
     public GameState(int playerPiece, int opponentPiece) {
         this.playingPiece = playerPiece;
@@ -88,6 +89,7 @@ public class GameState {
      */
     public GameState makeMove(Move move) {
         GameState newState = this.clone();
+        newState.setPlayedMove(move);
         Board newBoard = this.board.clone();
         newState.setPlayerPiece(opponentPiece);
         newState.setComputerPiece(playingPiece);
@@ -202,6 +204,10 @@ public class GameState {
         // TODO Auto-generated method stub
         return this.playingPiece;
     }
+    
+    public int getOpponentPiece() {
+    	return this.opponentPiece;
+    }
 
     public int[][] getBoardContents() {
         return this.board.getBoardContents();
@@ -210,4 +216,13 @@ public class GameState {
     public Group[] getGroups() {
         return playerGroups;
     }
+
+	public Move getPlayedMove() {
+		return playedMove;
+	}
+
+	public void setPlayedMove(Move playedMove) {
+		this.playedMove = playedMove;
+	}
+    
 }

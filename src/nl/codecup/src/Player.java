@@ -118,8 +118,45 @@ public class Player {
                 //
 
             }
+    	this.state.recheckGroups();
+        IO.debug("TRY TO FIND MOVE!");
+        
+        if (state.getGroupsLength() > 12) {
+	        for (int row = 0; row < contentLength; row++) {
+
+	        	// bottom -> up until the half of the column
+	            for (int column = 0; column < contentLength/2; column++) {
+	                boolean gapScenario = (column < 9 && row < 9 && content[row][column] == Player.piece
+	                        && content[row][column + 1] == 0 && content[row][column + 2] == Player.piece);
+	
+	                if (gapScenario) {
+	                    int columnPieceToMove = findLastPieceInTheRow(content, row, column, 0);
+	                    return new Move(row, columnPieceToMove, row, column + 1);
+	                }
+	            }
+	            
+	            // top -> down until the half of the column
+	            for (int column = contentLength; column > contentLength/2; column--) {
+	            	boolean gapScenario = (column <= 9 && row <= 9 
+	            			&& content[row][column] == Player.piece
+	                        && content[row][column - 1] == 0 
+	                        && content[row][column - 2] == Player.piece);
+	            	if (gapScenario) {
+	                    int columnPieceToMove = findLastPieceInTheRowReverse(content, row, column, contentLength);
+	                    return new Move(row, columnPieceToMove, row, column - 1);
+	                }
+	            }
+	        }
+        } else {
+        	return getMonteCarloMove();
         }
+        
         return getRandomMove();
+    }
+
+    private Move getMonteCarloMove() {
+        MCTree tree = new MCTree(4, 4, this);
+        return tree.getBestMove().getState().getPlayedMove();
     }
 
     /**
@@ -147,6 +184,10 @@ public class Player {
      */
     public String toString() {
         return "R player: " + Player.piece;
+    }
+
+    public GameState getState() {
+        return this.state;
     }
 
 }
