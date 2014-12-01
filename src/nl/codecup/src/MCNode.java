@@ -1,143 +1,145 @@
 package nl.codecup.src;
 
+import java.util.Arrays;
+
 public class MCNode {
-	
-	private MCNode[] children = new MCNode[0];
-	private int numOfChildren = 0;
-	private float winpercentage = (float) 0.0;
-	private int moveValue = 0;
-	private boolean isLeaf = false;
-	private boolean isWin = false;
-	private Player player;
-	private GameState state;
-	
-	/**
-	 * Creates a new Node with a GameState. 
-	 * Then checks if the game is over and if it is a win or not.
-	 * 
-	 * @param state	
-	 * 				the GameState of the node
-	 */
-	public MCNode(Player player) {
-		this.player = player;
-		
-		GameState state = this.player.getState();
-		this.state = state.makeMove(this.player.getRandomMove());
-		updateMoveValue();
-		
-		this.isLeaf = this.state.isGameOver();
-		if (this.isLeaf) {
-			this.isWin = this.state.hasWon(this.state.getPlayingPiece());
-		}
-		this.winpercentage = (float) (this.isWin ? 1.0 : 0.0);
-	}
-	
-	private void updateMoveValue() {
-		Move playedMove = this.state.getPlayedMove();
-		GroupManager groupmanager = GroupManager.getInstance();
-		Board board = this.state.getBoard();
-		groupmanager.recheckGroups(board);
-		
-		int x = playedMove.getIndexTargetX();
-		int y = playedMove.getIndexTargetY();
-		Group group = groupmanager.getGroupByCoordinate(x, y);
-		String neighbors[] = board.getNeighborsByPiece(x, y, this.state.getOpponentPiece());
 
-		this.moveValue = group.getCoordinates().size() * 2;
-		
-		for (int i = 0; i < neighbors.length; i++) {
-			this.moveValue += groupmanager.getGroupByCoordinate(neighbors[i]).getCoordinates().size();
-		}
-	}
+    private MCNode[] children = new MCNode[0];
+    private int numOfChildren = 0;
+    private float winpercentage = (float) 0.0;
+    private int moveValue = 0;
+    private boolean isLeaf = false;
+    private boolean isWin = false;
+    private Player player;
+    private GameState state;
 
-	/**
-	 * get children
-	 * 
-	 * @return children
-	 */
-	public MCNode[] getChildren() {
-		return children;
-	}
+    /**
+     * Creates a new Node with a GameState. Then checks if the game is over and
+     * if it is a win or not.
+     * 
+     * @param state
+     *            the GameState of the node
+     */
+    public MCNode(Player player) {
+        this.player = player;
 
-	/**
-	 * set children
-	 * 
-	 * @param children
-	 */
-	public void setChildren(MCNode[] children) {
-		this.children = children;
-	}
+        GameState state = this.player.getState();
+        this.state = state.makeMove(this.player.getRandomMove());
+        updateMoveValue();
 
-	/**
-	 * get the winpercentage
-	 * 
-	 * @return float winpercentage
-	 */
-	public float getWinpercentage() {
-		return winpercentage;
-	}
+        this.isLeaf = this.state.isGameOver();
+        if (this.isLeaf) {
+            this.isWin = this.state.hasWon(this.state.getPlayingPiece());
+        }
+        this.winpercentage = (float) (this.isWin ? 1.0 : 0.0);
+    }
 
-	/**
-	 * set the winpercentage
-	 * 
-	 * @param winpercentage	- float the new winpercentage
-	 */
-	public void setWinpercentage(float winpercentage) {
-		this.winpercentage = winpercentage;
-	}
+    private void updateMoveValue() {
+        Move playedMove = this.state.getPlayedMove();
+        Board board = this.state.getBoard();
+        GroupManager.recheckGroups(board);
 
-	/**
-	 * get isLeaf
-	 * 
-	 * @return boolean isLeaf
-	 */
-	public boolean isLeaf() {
-		return isLeaf;
-	}
+        int x = playedMove.getIndexTargetX();
+        int y = playedMove.getIndexTargetY();
+        Group group = GroupManager.getGroupByCoordinate(x, y, Arrays.asList(this.state.getGroups()));
+        String neighbors[] = board.getNeighborsByPiece(x, y, this.state.getOpponentPiece());
 
-	/**
-	 * get isWin
-	 * 
-	 * @return boolean isWin
-	 */
-	public boolean isWin() {
-		return isWin;
-	}
+        this.moveValue = group.getCoordinates().size() * 2;
 
-	/**
-	 * get number of children
-	 * 
-	 * @return numOfChildren
-	 */
-	public int getNumOfChildren() {
-		return numOfChildren;
-	}
+        for (int i = 0; i < neighbors.length; i++) {
+            this.moveValue += GroupManager.getGroupByCoordinate(neighbors[i]).getCoordinates().size();
+        }
+    }
 
-	/**
-	 * set numOfChildren
-	 * 
-	 * @param numOfChildren
-	 */
-	public void setNumOfChildren(int numOfChildren) {
-		this.numOfChildren = numOfChildren;
-	}
+    /**
+     * get children
+     * 
+     * @return children
+     */
+    public MCNode[] getChildren() {
+        return children;
+    }
 
-	/**
-	 * get the game state
-	 *  
-	 * @return GameState
-	 */
-	public GameState getState() {
-		return state;
-	}
+    /**
+     * set children
+     * 
+     * @param children
+     */
+    public void setChildren(MCNode[] children) {
+        this.children = children;
+    }
 
-	/**
-	 * get Move value
-	 * 
-	 * @return int move value
-	 */
-	public int getMoveValue() {
-		return moveValue;
-	}
+    /**
+     * get the winpercentage
+     * 
+     * @return float winpercentage
+     */
+    public float getWinpercentage() {
+        return winpercentage;
+    }
+
+    /**
+     * set the winpercentage
+     * 
+     * @param winpercentage
+     *            - float the new winpercentage
+     */
+    public void setWinpercentage(float winpercentage) {
+        this.winpercentage = winpercentage;
+    }
+
+    /**
+     * get isLeaf
+     * 
+     * @return boolean isLeaf
+     */
+    public boolean isLeaf() {
+        return isLeaf;
+    }
+
+    /**
+     * get isWin
+     * 
+     * @return boolean isWin
+     */
+    public boolean isWin() {
+        return isWin;
+    }
+
+    /**
+     * get number of children
+     * 
+     * @return numOfChildren
+     */
+    public int getNumOfChildren() {
+        return numOfChildren;
+    }
+
+    /**
+     * set numOfChildren
+     * 
+     * @param numOfChildren
+     */
+    public void setNumOfChildren(int numOfChildren) {
+        this.numOfChildren = numOfChildren;
+    }
+
+    /**
+     * get the game state
+     * 
+     * @return GameState
+     */
+    public GameState getState() {
+        return state;
+    }
+
+    /**
+     * get Move value
+     * 
+     * @return int move value
+     */
+    public int getMoveValue() {
+        return moveValue;
+    }
 
 }
