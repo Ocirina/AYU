@@ -279,10 +279,10 @@ public class PathFinder {
 	 */
 	private List<String> fillListWithUnvistedNodes() {
 		List<String> coordinates = new ArrayList<String>();
-		int[][] contents = board.getBoardContents();
-		for (int i = 0; i < contents.length; i++) {
-			for (int j = 0; j < contents[i].length; j++) {
-				if (contents[i][j] == 0) {
+
+		for (int i = 0; i < Board.SIZE; i++) {
+			for (int j = 0; j < Board.SIZE; j++) {
+				if (board.isBlankSpace(i, j)) {
 					coordinates.add(join(i, j));
 				}
 			}

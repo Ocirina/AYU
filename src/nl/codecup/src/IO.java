@@ -22,12 +22,13 @@ public abstract class IO {
         BufferedReader reader = new BufferedReader(streamReader);
         try {
             String readLine = reader.readLine();
-            if (!firstMessage) {
-                IO.debug("Read line: " + readLine);
-            } else {
-                firstMessage = false;
+
+            if (firstMessage) {
                 IO.debug("R JavaPlayer");
+                firstMessage = false;
             }
+
+            IO.debug("Read line: " + readLine);
 
             return readLine;
         }

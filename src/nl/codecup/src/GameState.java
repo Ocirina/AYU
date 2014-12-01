@@ -1,7 +1,6 @@
 package nl.codecup.src;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameState {
@@ -53,13 +52,13 @@ public class GameState {
             }
         }
     }
-    
+
     public void recheckGroups() {
-    	this.playerGroups = GroupManager.recheckGroups(this.getBoard());
+        this.playerGroups = GroupManager.recheckGroups(this.getBoard());
     }
-    
+
     public int getGroupsLength() {
-    	return playerGroups.length;
+        return playerGroups.length;
     }
 
     /**
@@ -207,8 +206,8 @@ public class GameState {
     public int[][] getBoardContents() {
         return this.board.getBoardContents();
     }
-    
+
     public Group[] getGroups() {
-    	return playerGroups;
+        return playerGroups;
     }
 }
