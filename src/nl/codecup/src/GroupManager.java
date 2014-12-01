@@ -65,11 +65,7 @@ public class GroupManager {
      * @return The group that contains the coordinate.
      */
     public Group getGroupByCoordinate(int x, int y) {
-        for (Group group : playerGroups) {
-            if (group != null && group.getCoordinates().contains(joinCoordinates(x, y)))
-                return group;
-        }
-        return null;
+    	return getGroupByCoordinate(x, y, Arrays.asList(playerGroups));
     }
     
     /**
