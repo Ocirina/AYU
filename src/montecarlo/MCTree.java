@@ -22,14 +22,10 @@ public class MCTree {
 	 * 				The current GameState
 	 */
 	public MCTree(int treeWidth, int treeDepth, Player player) {
-		this.player = player;		
-		MCNode root = new MCNode(player);
-		this.root = root;
+		this.player = player;
+		this.root = new MCNode(player);
 		
 		generateTree(this.root, treeWidth, treeDepth);
-		printTree(getRoot(), "");
-		MCNode bestMove = getBestMove();
-		IO.debug("Best move " + bestMove.getWinpercentage() + " - " + bestMove.getMoveValue() + " Move: " + bestMove.getState().getPlayedMove().toString());
 	}
 	
 	/**
