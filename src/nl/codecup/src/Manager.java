@@ -45,6 +45,10 @@ public class Manager {
 
 	public Manager(boolean testing) {
 	}
+	
+	public Board getBoard() {
+		return gameState.getBoard();
+	}
 
 	/**
 	 * This will load the terminal configuration and the file configuration
