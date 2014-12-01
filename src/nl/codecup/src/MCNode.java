@@ -28,14 +28,7 @@ public class MCNode {
 		this.isLeaf = this.state.isGameOver();
 		if (this.isLeaf) {
 			this.isWin = this.state.hasWon(this.state.getPlayingPiece());
-		} /*else {
-			this.state = state.makeMove(this.player.getRandomMove());
-			IO.debug("Random black move " + this.state.getPlayedMove().toString());
-			this.isLeaf = this.state.isGameOver();
-			if (this.isLeaf) {
-				this.isWin = !this.state.hasWon(this.state.getPlayingPiece());
-			}
-		}*/
+		}
 		this.winpercentage = (float) (this.isWin ? 1.0 : 0.0);
 	}
 	
@@ -103,30 +96,12 @@ public class MCNode {
 	}
 
 	/**
-	 * set isLeaf
-	 * 
-	 * @param isLeaf
-	 */
-	public void setLeaf(boolean isLeaf) {
-		this.isLeaf = isLeaf;
-	}
-
-	/**
 	 * get isWin
 	 * 
 	 * @return boolean isWin
 	 */
 	public boolean isWin() {
 		return isWin;
-	}
-
-	/**
-	 * set win
-	 * 
-	 * @param isWin
-	 */
-	public void setWin(boolean isWin) {
-		this.isWin = isWin;
 	}
 
 	/**
@@ -147,20 +122,22 @@ public class MCNode {
 		this.numOfChildren = numOfChildren;
 	}
 
+	/**
+	 * get the game state
+	 *  
+	 * @return GameState
+	 */
 	public GameState getState() {
 		return state;
 	}
 
-	public void setState(GameState state) {
-		this.state = state;
-	}
-
+	/**
+	 * get Move value
+	 * 
+	 * @return int move value
+	 */
 	public int getMoveValue() {
 		return moveValue;
 	}
 
-	public void setMoveValue(int moveValue) {
-		this.moveValue = moveValue;
-	}
-	
 }
