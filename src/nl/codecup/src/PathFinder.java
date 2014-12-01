@@ -1,12 +1,11 @@
 package nl.codecup.src;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PathFinder {
-	private final String SEPERATOR = ",";
-	
+	private static final String COMMA_SEPARATOR = ",";
+
 	private static PathFinder instance;
 	private Board board;
 
@@ -52,8 +51,8 @@ public class PathFinder {
 		for (String coordinate1 : group1.getCoordinates()) {
 			for (String coordinate2 : group2.getCoordinates()) {
 				String[] temp = findShortestPath(split(coordinate1),
-						split(coordinate2), new ArrayList<String>(unvisitedNodes),
-						new ArrayList<String>());
+						split(coordinate2), new ArrayList<String>(
+								unvisitedNodes), new ArrayList<String>());
 				if (coordinateList == null || (coordinateList != null)
 						&& temp != null && temp.length < coordinateList.length) {
 					coordinateList = temp;
@@ -71,7 +70,7 @@ public class PathFinder {
 	 * @return
 	 */
 	private String[] getShortestPathsToGroups(Group group, Group[] playerGroups) {
-		List<Group> remainingGroups = Arrays.asList(getRemainingGroups(playerGroups));
+		List<Group> remainingGroups = getRemainingGroups(playerGroups);
 		List<Group> sortedList = new ArrayList<Group>();
 		List<Integer> distances = new ArrayList<Integer>();
 		int minimumDistance = 0;
@@ -97,13 +96,7 @@ public class PathFinder {
 				 * case, the numbers are coordinates and for each coordinate it
 				 * returns the minimum distance.
 				 */
-				for (int c = 0; c < g.getCoordinates().size(); c++) {
-					int tempDistance = group.getMinimumDistance(g
-							.getCoordinates().get(c));
-					if (tempDistance <= distance) {
-						distance = tempDistance;
-					}
-				}
+				distance = findShortestDistanceToGroup(group, g, distance);
 
 				/*
 				 * If it's the current minimum distance of all groups, it will
@@ -144,11 +137,28 @@ public class PathFinder {
 						distances.add(distance);
 					}
 				}
-			} 
+			}
 		}
 		String[] path = findShortestPossiblePath(group, sortedList);
 		return path;
 
+	}
+
+	/**
+	 * @param group
+	 * @param g
+	 * @param distance
+	 * @return
+	 */
+	private int findShortestDistanceToGroup(Group group, Group g, int distance) {
+		for (int c = 0; c < g.getCoordinates().size(); c++) {
+			int tempDistance = group.getMinimumDistance(g.getCoordinates().get(
+					c));
+			if (tempDistance <= distance) {
+				distance = tempDistance;
+			}
+		}
+		return distance;
 	}
 
 	private boolean addDistanceAndGroupToLists(List<Group> sortedList,
@@ -237,9 +247,8 @@ public class PathFinder {
 					 * else it cannot go over the nodes the previous neighbor
 					 * has visited, which should not happen.
 					 */
-					String[] tempReturn = findShortestPath(coords, end,
-							unvisited, newPath);
-					returnValue = assignPath(returnValue, tempReturn);
+					returnValue = assignPath(returnValue,
+							findShortestPath(coords, end, unvisited, newPath));
 					unvisited = unvisitedRef;
 				}
 			}
@@ -263,6 +272,11 @@ public class PathFinder {
 		return returnValue;
 	}
 
+	/**
+	 * Fills a list with nodes that whose cells are empty.
+	 * 
+	 * @return A list with coordinates as string
+	 */
 	private List<String> fillListWithUnvistedNodes() {
 		List<String> coordinates = new ArrayList<String>();
 		int[][] contents = board.getBoardContents();
@@ -276,12 +290,28 @@ public class PathFinder {
 		return coordinates;
 	}
 
-	private String[] split(String coordinates) {
-		return coordinates.split(SEPERATOR);
+	/**
+	 * Splits a coordinate on the comma separator
+	 * 
+	 * @param coordinate
+	 *            the string coordinate
+	 * @return A string array with the x and y coordinate split
+	 */
+	private String[] split(String coordinate) {
+		return coordinate.split(COMMA_SEPARATOR);
 	}
 
+	/**
+	 * Joins Object X and Y with a comma separator
+	 * 
+	 * @param x
+	 *            The x coordinate
+	 * @param y
+	 *            The y coordinate
+	 * @return A coordinate like: '5,7'
+	 */
 	private String join(Object x, Object y) {
-		return (x + SEPERATOR + y);
+		return (x + COMMA_SEPARATOR + y);
 	}
 
 	/**
@@ -289,13 +319,13 @@ public class PathFinder {
 	 * 
 	 * @return The remaining groups
 	 */
-	private Group[] getRemainingGroups(Group[] playerGroups) {
+	private List<Group> getRemainingGroups(Group[] playerGroups) {
 		List<Group> groups = new ArrayList<Group>();
 		for (Group group : playerGroups) {
 			if (group != null) {
 				groups.add(group);
 			}
 		}
-		return groups.toArray(new Group[groups.size()]);
+		return groups;
 	}
 }
