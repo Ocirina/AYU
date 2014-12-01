@@ -42,8 +42,11 @@ public class MCNode {
 	
 	private void updateMoveValue() {
 		Move playedMove = this.state.getPlayedMove();
-		Group group = GroupManager.getInstance().getGroupByCoordinate(playedMove.getIndexTargetX(), playedMove.getIndexTargetY());
-		this.moveValue = group.getCoordinates().size();
+		GroupManager groupmanager = GroupManager.getInstance();
+		groupmanager.recheckGroups(this.state.getBoard());
+		Group group = groupmanager.getGroupByCoordinate(playedMove.getIndexTargetX(), playedMove.getIndexTargetY());
+		
+		this.moveValue = group.getCoordinates().size() * 2;
 	}
 
 	/**
