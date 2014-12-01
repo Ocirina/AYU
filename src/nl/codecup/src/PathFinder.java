@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PathFinder {
-	private static PathFinder instance;
-	private Group[] playerGroups;
-	private Board board;
 	private final String SEPERATOR = ",";
+	
+	private static PathFinder instance;
+	private Board board;
 
 	private PathFinder() {
 	}
@@ -22,8 +22,7 @@ public class PathFinder {
 	public String[] findShortestPathForGroup(Group[] groups, Board board,
 			Group group) {
 		this.board = board;
-		this.playerGroups = groups;
-		return getShortestPathsToGroups(group);
+		return getShortestPathsToGroups(group, groups);
 	}
 
 	/**
@@ -38,6 +37,7 @@ public class PathFinder {
 	 */
 	private String[] getShortestPathBetweenGroups(Group group1, Group group2) {
 		String[] coordinateList = null;
+		List<String> unvisitedNodes = this.fillListWithUnvistedNodes();
 
 		/*
 		 * This loop checks all coordinates of the group with each coordinate of
@@ -51,9 +51,8 @@ public class PathFinder {
 		 */
 		for (String coordinate1 : group1.getCoordinates()) {
 			for (String coordinate2 : group2.getCoordinates()) {
-				List<String> unvisitedNodes = this.fillListWithUnvistedNodes();
 				String[] temp = findShortestPath(split(coordinate1),
-						split(coordinate2), unvisitedNodes,
+						split(coordinate2), new ArrayList<String>(unvisitedNodes),
 						new ArrayList<String>());
 				if (coordinateList == null || (coordinateList != null)
 						&& temp != null && temp.length < coordinateList.length) {
@@ -71,15 +70,8 @@ public class PathFinder {
 	 * @param group
 	 * @return
 	 */
-	private String[] getShortestPathsToGroups(Group group) {
-		IO.debug("TRY TO FIND SHORTEST PATH TO GROUP MOVE!");
-		/*
-		 * TODO: Recheck groups, they were not correct the last test
-		 * (19-11-2014). Before changing algorithm, make sure that works
-		 * completely. Wrong groups means wrong paths. If coordinates are not
-		 * present in the groups while our pieces are on it, we're fucked :)
-		 */
-		List<Group> remainingGroups = Arrays.asList(getRemainingGroups());
+	private String[] getShortestPathsToGroups(Group group, Group[] playerGroups) {
+		List<Group> remainingGroups = Arrays.asList(getRemainingGroups(playerGroups));
 		List<Group> sortedList = new ArrayList<Group>();
 		List<Integer> distances = new ArrayList<Integer>();
 		int minimumDistance = 0;
@@ -152,14 +144,8 @@ public class PathFinder {
 						distances.add(distance);
 					}
 				}
-			} else {
-				IO.debug("Same group skipped");
-			}
+			} 
 		}
-
-		IO.debug("Expected " + (remainingGroups.size() - 1) + " groups, got "
-				+ sortedList.size());
-
 		String[] path = findShortestPossiblePath(group, sortedList);
 		return path;
 
@@ -184,40 +170,12 @@ public class PathFinder {
 	private String[] findShortestPossiblePath(Group start,
 			List<Group> sortedList) {
 		String[] list = null;
-		IO.debug(start.toString());
-
-		IO.debug("TRY TO FIND HERE IF THE GIVEN MOVE IS INCORRECT, MAYBE WE CAN CONNECT THE GROUP THIS SHOULD BE OVERIDDEN BY THE GIVEN MOVE");
 		/*
 		 * For each group, check the shortest path. If it's the shortest path,
 		 * take that path. Return the shortest path at the end.
 		 */
 		for (Group g : sortedList) {
-			String sPath = "";
-			for (String c : g.getCoordinates()) {
-				String[] coords = c.split(",");
-				sPath += MoveConverter.convertPointToString(Integer.parseInt(coords[0]))
-						+ ","
-						+ (Integer.parseInt(coords[1]) + 1)
-						+ " ";
-
-			}
-			IO.debug("Group coordinates: " + sPath);
-
 			String[] tempList = getShortestPathBetweenGroups(start, g);
-			if (tempList != null) {
-				sPath = "";
-				for (String c : tempList) {
-					String[] coords = c.split(",");
-					sPath += MoveConverter.convertPointToString(Integer.parseInt(coords[0]))
-							+ ", "
-							+ (Integer.parseInt(coords[1]) + 1)
-							+ " ";
-
-				}
-				IO.debug("Possible path: " + sPath);
-
-			}
-
 			if (tempList != null
 					&& (list == null || list.length > tempList.length)) {
 				/*
@@ -235,7 +193,7 @@ public class PathFinder {
 		String[] neighbors = board.getNeighborsByPiece(
 				Integer.parseInt(current[0]), Integer.parseInt(current[1]), 0);
 		String[] returnValue = null;
-		List<String> unvisitedLocal = new ArrayList<String>(unvisited);
+		List<String> unvisitedRef = new ArrayList<String>(unvisited);
 
 		/*
 		 * Visit each neighbour to check a path. Neighbours are places that
@@ -243,7 +201,7 @@ public class PathFinder {
 		 */
 		for (int i = 0; i < neighbors.length; i++) {
 			String neighbor = neighbors[i];
-			if (neighbor != null && unvisitedLocal.contains(neighbor)) {
+			if (neighbor != null && unvisitedRef.contains(neighbor)) {
 				String[] coords = split(neighbor);
 				int x = Integer.parseInt(coords[0]);
 				int y = Integer.parseInt(coords[1]);
@@ -282,7 +240,7 @@ public class PathFinder {
 					String[] tempReturn = findShortestPath(coords, end,
 							unvisited, newPath);
 					returnValue = assignPath(returnValue, tempReturn);
-					unvisited = unvisitedLocal;
+					unvisited = unvisitedRef;
 				}
 			}
 		}
@@ -305,24 +263,6 @@ public class PathFinder {
 		return returnValue;
 	}
 
-	public Move findShortestGroup() {
-		int smallestDistance = Integer.MAX_VALUE;
-		Group closestGroup = null;
-
-		for (Group group : playerGroups) {
-			if (group.findClosestGroup() < smallestDistance) {
-				smallestDistance = group.findClosestGroup();
-				closestGroup = group;
-
-				if (smallestDistance == 1) {
-					return closestGroup.findClosestGroupMove();
-				}
-			}
-		}
-
-		return closestGroup.findClosestGroupMove();
-	}
-
 	private List<String> fillListWithUnvistedNodes() {
 		List<String> coordinates = new ArrayList<String>();
 		int[][] contents = board.getBoardContents();
@@ -341,7 +281,7 @@ public class PathFinder {
 	}
 
 	private String join(Object x, Object y) {
-		return x + SEPERATOR + y;
+		return (x + SEPERATOR + y);
 	}
 
 	/**
@@ -349,7 +289,7 @@ public class PathFinder {
 	 * 
 	 * @return The remaining groups
 	 */
-	private Group[] getRemainingGroups() {
+	private Group[] getRemainingGroups(Group[] playerGroups) {
 		List<Group> groups = new ArrayList<Group>();
 		for (Group group : playerGroups) {
 			if (group != null) {
