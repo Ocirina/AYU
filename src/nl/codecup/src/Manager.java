@@ -24,7 +24,7 @@ public class Manager {
      */
     public Manager() {
         String input = IO.input(); // leave for debug
-        int playerNumber = (input.equals("Start") ? 2 : 1);
+        int playerNumber = (input.equals("Start") ? 1 : 2);
         initGame(playerNumber);
         this.handleInput(input);
     }
