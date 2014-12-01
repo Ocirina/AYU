@@ -38,6 +38,10 @@ public class Group {
     	return getCoordinates().contains(coordinates);
     }
 	
+	public int getSize() {
+		return coordinates.size();
+	}
+	
     /**
      * Sets the coordinates
      * 

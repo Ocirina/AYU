@@ -47,7 +47,7 @@ public class MCNode {
         this.moveValue = group.getCoordinates().size() * 2;
 
         for (int i = 0; i < neighbors.length; i++) {
-            this.moveValue += GroupManager.getGroupByCoordinate(neighbors[i]).getCoordinates().size();
+            this.moveValue += GroupManager.getGroupByCoordinate(neighbors[i], Arrays.asList(this.state.getGroups())).getSize();
         }
     }
 
