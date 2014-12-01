@@ -7,7 +7,6 @@ import java.util.List;
 public class GroupManager {
     private static GroupManager instance;
     private Group[] playerGroups;
-    private Board board;
 
     private GroupManager() {
     }
@@ -23,17 +22,16 @@ public class GroupManager {
     }
 
     public Group[] recheckGroups(Board board) {
-        this.board = board;
         List<Group> groupsArray = new ArrayList<Group>();
-        int[][] boardArray = this.board.getBoardContents();
+        int[][] boardArray = board.getBoardContents();
 
         for (int row = 0; row < 11; row++) {
             for (int column = 0; column < 11; column++) {
                 if (boardArray[row][column] == Player.piece && this.getGroupByCoordinate(row, column, groupsArray) == null) {
             		Group group = new Group(groupsArray.size());
             		group.addCoordinate(row + "," + column);
-            		String[] neighBors = this.board.getNeighbors(row, column);
-                    groupsArray.add(checkNeighBorsForGroup(neighBors, group));
+            		String[] neighBors = board.getNeighbors(row, column);
+                    groupsArray.add(checkNeighBorsForGroup(neighBors, group, board));
                 }
             }
         }
@@ -41,13 +39,13 @@ public class GroupManager {
         return playerGroups;
     }
     
-    private Group checkNeighBorsForGroup(String[] currentNeighbors, Group group) {
+    private Group checkNeighBorsForGroup(String[] currentNeighbors, Group group, Board board) {
     	for(String neighBor : currentNeighbors) {
     		if(!group.getCoordinates().contains(neighBor)) {
     			String[] coords = neighBor.split(",");
     			group.addCoordinate(neighBor);
-    			String[] neighBors = this.board.getNeighbors(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
-                group = checkNeighBorsForGroup(neighBors, group);
+    			String[] neighBors = board.getNeighbors(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
+                group = checkNeighBorsForGroup(neighBors, group, board);
     		}
     	}
     	return group;
