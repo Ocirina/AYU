@@ -8,6 +8,8 @@ public class Board {
     private static final int NONE = 0;
     private static final int WHITE = 1;
     private static final int BLACK = 2;
+    private static final int NEIGHBOR_DISTANCE = 1;
+    private static final int ON_EDGES = 1;
 
     /**
      * The actual board
@@ -50,10 +52,10 @@ public class Board {
      * @return True if it's a group, else returns false.
      */
     public boolean hasNeighbor(int x, int y) {
-    	return ((y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece) ||
-    			(x + 1 < SIZE && this.boardGrid[x + 1][y] == Player.piece) ||
-    			(y - 1 >= 0	  && this.boardGrid[x][y - 1] == Player.piece) ||
-				(x - 1 >= 0   && this.boardGrid[x - 1][y] == Player.piece));
+    	return ((y + NEIGHBOR_DISTANCE < SIZE && this.boardGrid[x][y + NEIGHBOR_DISTANCE] == Player.piece) ||
+    			(x + NEIGHBOR_DISTANCE < SIZE && this.boardGrid[x + NEIGHBOR_DISTANCE][y] == Player.piece) ||
+    			(y - NEIGHBOR_DISTANCE >= 0	  && this.boardGrid[x][y - NEIGHBOR_DISTANCE] == Player.piece) ||
+				(x - NEIGHBOR_DISTANCE >= 0   && this.boardGrid[x - NEIGHBOR_DISTANCE][y] == Player.piece));
     }
 
     /**
@@ -65,23 +67,23 @@ public class Board {
      */
     public boolean onEdgesOfGroup(int x, int y) {
         int neighBours = 0;
-        if (y + 1 < SIZE && this.boardGrid[x][y + 1] == Player.piece) {
+        if (y + NEIGHBOR_DISTANCE < SIZE && this.boardGrid[x][y + NEIGHBOR_DISTANCE] == Player.piece) {
             neighBours++;
         }
 
-        if (x + 1 < SIZE && this.boardGrid[x + 1][y] == Player.piece) {
+        if (x + NEIGHBOR_DISTANCE < SIZE && this.boardGrid[x + NEIGHBOR_DISTANCE][y] == Player.piece) {
             neighBours++;
         }
 
-        if (y - 1 >= 0 && this.boardGrid[x][y - 1] == Player.piece) {
+        if (y - NEIGHBOR_DISTANCE >= 0 && this.boardGrid[x][y - NEIGHBOR_DISTANCE] == Player.piece) {
             neighBours++;
         }
 
-        if (x - 1 >= 0 && this.boardGrid[x - 1][y] == Player.piece) {
+        if (x - NEIGHBOR_DISTANCE >= 0 && this.boardGrid[x - NEIGHBOR_DISTANCE][y] == Player.piece) {
             neighBours++;
         }
 
-        return neighBours < 2;
+        return neighBours == ON_EDGES;
     }
 
     /**
@@ -115,20 +117,20 @@ public class Board {
             found = isNeighbour(nextX, nextY, targetX, targetY);
         }
 
-        if (!found && nextY + 1 < SIZE && this.boardGrid[nextX][nextY + 1] == Player.piece && ((nextY + 1) != originY)) {
-            found = findPath(nextX, nextY, nextX, nextY + 1, targetX, targetY);
+        if (!found && nextY + NEIGHBOR_DISTANCE < SIZE && this.boardGrid[nextX][nextY + NEIGHBOR_DISTANCE] == Player.piece && ((nextY + NEIGHBOR_DISTANCE) != originY)) {
+            found = findPath(nextX, nextY, nextX, nextY + NEIGHBOR_DISTANCE, targetX, targetY);
         }
 
-        if (!found && nextX + 1 < SIZE && this.boardGrid[nextX + 1][nextY] == Player.piece && ((nextX + 1) != originY)) {
-            found = findPath(nextX, nextY, nextX + 1, nextY, targetX, targetY);
+        if (!found && nextX + NEIGHBOR_DISTANCE < SIZE && this.boardGrid[nextX + NEIGHBOR_DISTANCE][nextY] == Player.piece && ((nextX + NEIGHBOR_DISTANCE) != originY)) {
+            found = findPath(nextX, nextY, nextX + NEIGHBOR_DISTANCE, nextY, targetX, targetY);
         }
 
-        if (!found && nextY - 1 >= 0 && this.boardGrid[nextX][nextY - 1] == Player.piece && ((nextY - 1) != originY)) {
-            found = findPath(nextX, nextY, nextX, nextY - 1, targetX, targetY);
+        if (!found && nextY - NEIGHBOR_DISTANCE >= 0 && this.boardGrid[nextX][nextY - NEIGHBOR_DISTANCE] == Player.piece && ((nextY - NEIGHBOR_DISTANCE) != originY)) {
+            found = findPath(nextX, nextY, nextX, nextY - NEIGHBOR_DISTANCE, targetX, targetY);
         }
 
-        if (!found && nextX - 1 >= 0 && this.boardGrid[nextX - 1][nextY] == Player.piece && ((nextX - 1) != originY)) {
-            found = findPath(nextX, nextY, nextX - 1, nextY, targetX, targetY);
+        if (!found && nextX - NEIGHBOR_DISTANCE >= 0 && this.boardGrid[nextX - NEIGHBOR_DISTANCE][nextY] == Player.piece && ((nextX - NEIGHBOR_DISTANCE) != originY)) {
+            found = findPath(nextX, nextY, nextX - NEIGHBOR_DISTANCE, nextY, targetX, targetY);
         }
 
         return found;
@@ -155,20 +157,20 @@ public class Board {
      */
     public String[] getNeighborsByPiece(int x, int y, int piece) {
         List<String> neighbors = new ArrayList<String>();
-        if (y + 1 < SIZE && this.boardGrid[x][y + 1] == piece) {
-            neighbors.add(x + "," + (y + 1));
+        if (y + NEIGHBOR_DISTANCE < SIZE && this.boardGrid[x][y + NEIGHBOR_DISTANCE] == piece) {
+            neighbors.add(x + "," + (y + NEIGHBOR_DISTANCE));
         }
 
-        if (x + 1 < SIZE && this.boardGrid[x + 1][y] == piece) {
-        	neighbors.add((x + 1) + "," + y);
+        if (x + NEIGHBOR_DISTANCE < SIZE && this.boardGrid[x + NEIGHBOR_DISTANCE][y] == piece) {
+        	neighbors.add((x + NEIGHBOR_DISTANCE) + "," + y);
         }
 
-        if (y - 1 >= 0 && this.boardGrid[x][y - 1] == piece) {
-        	neighbors.add(x + "," + (y - 1));
+        if (y - NEIGHBOR_DISTANCE >= 0 && this.boardGrid[x][y - NEIGHBOR_DISTANCE] == piece) {
+        	neighbors.add(x + "," + (y - NEIGHBOR_DISTANCE));
         }
 
-        if (x - 1 >= 0 && this.boardGrid[x - 1][y] == piece) {
-        	neighbors.add((x - 1) + "," + y);
+        if (x - NEIGHBOR_DISTANCE >= 0 && this.boardGrid[x - NEIGHBOR_DISTANCE][y] == piece) {
+        	neighbors.add((x - NEIGHBOR_DISTANCE) + "," + y);
         }
 
         return neighbors.toArray(new String[neighbors.size()]);
@@ -184,9 +186,9 @@ public class Board {
      * @return
      */
     public boolean isNeighbour(int originX, int originY, int targetX, int targetY) {
-        return ((originX == targetX && ((originY - 1) == targetY))
-                || (originX == targetX && ((originY + 1) == targetY))
-                || (originY == targetY && ((originX - 1) == targetX)) || (originY == targetY && ((originX + 1) == targetX)));
+        return ((originX == targetX && ((originY - NEIGHBOR_DISTANCE) == targetY))
+                || (originX == targetX && ((originY + NEIGHBOR_DISTANCE) == targetY))
+                || (originY == targetY && ((originX - NEIGHBOR_DISTANCE) == targetX)) || (originY == targetY && ((originX + NEIGHBOR_DISTANCE) == targetX)));
     }
 
     /**
