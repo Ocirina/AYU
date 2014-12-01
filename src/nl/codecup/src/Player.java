@@ -20,7 +20,7 @@ public class Player {
         }
 
         this.state = state.clone();
-        Player.piece = state.getPlayingPiece();
+        // Player.piece = state.getPlayingPiece();
         Move move = chooseMove();
         // if (this.getReferee().validMove(move)) {
         IO.output(move.toString());
@@ -100,7 +100,7 @@ public class Player {
         int[][] content = this.state.getBoardContents();
         int contentLength = content.length - 1;
         this.state.recheckGroups();
-        IO.debug("TRY TO FIND MOVE!");
+        IO.debug("TRY TO FIND MOVE FOR PLAYER: " + Player.piece);
 
         if (state.getGroupsLength() > 18) {
             for (int row = 0; row < contentLength; row++) {
