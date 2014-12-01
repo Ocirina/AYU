@@ -1,6 +1,4 @@
-package montecarlo;
-
-import nl.codecup.src.*;
+package nl.codecup.src;
 
 public class MCNode {
 	

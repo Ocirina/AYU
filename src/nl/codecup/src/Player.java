@@ -3,8 +3,6 @@ package nl.codecup.src;
 import java.util.List;
 import java.util.Random;
 
-import montecarlo.*;
-
 public class Player {
     private GameState state;
     public static int piece;

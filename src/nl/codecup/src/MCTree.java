@@ -1,8 +1,6 @@
-package montecarlo;
+package nl.codecup.src;
 
 import java.util.Random;
-
-import nl.codecup.src.*;
 
 public class MCTree {
 	
