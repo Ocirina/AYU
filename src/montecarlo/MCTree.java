@@ -29,7 +29,7 @@ public class MCTree {
 		generateTree(this.root, treeWidth, treeDepth);
 		printTree(getRoot(), "");
 		MCNode bestMove = getBestMove();
-		IO.debug("Best move " + bestMove.getWinpercentage() + " - " + bestMove.getNumOfChildren());
+		IO.debug("Best move " + bestMove.getWinpercentage() + " - " + bestMove.getMoveValue() + " Move: " + bestMove.getState().getPlayedMove().toString());
 	}
 	
 	/**
@@ -107,8 +107,16 @@ public class MCTree {
 		int childrenSize = getRoot().getChildren().length;
 		for (int i = 1; i < childrenSize; i++) {
 			MCNode childNode = getRoot().getChildren()[i];
-			if (isChildNodeBetterThanNode(node, childNode)) {
+			if (isChildNodeWinstBetterThanNode(node, childNode)) {
 				node = childNode;
+			}
+		}
+		if (node.getWinpercentage() == (float) 0.0) {
+			for (int i = 1; i < childrenSize; i++) {
+				MCNode childNode = getRoot().getChildren()[i];
+				if (isChildNodeMoveValueBetterThanNode(node, childNode)) {
+					node = childNode;
+				}
 			}
 		}
 		return node;
@@ -121,13 +129,15 @@ public class MCTree {
 	 * @param childNode	- node to compare to
 	 * @return boolean is better node
 	 */
-	private boolean isChildNodeBetterThanNode(MCNode node, MCNode childNode) {
+	private boolean isChildNodeWinstBetterThanNode(MCNode node, MCNode childNode) {
 		int minNumOfChildren = NIMIALNUMOFCHILDREN;
 		return childNode.getWinpercentage() > node.getWinpercentage()
 				&& minNumOfChildren > childNode.getNumOfChildren();
 	}
 	
-	
+	private boolean isChildNodeMoveValueBetterThanNode(MCNode node, MCNode childNode) {
+		return childNode.getMoveValue() > node.getMoveValue();
+	}
 	
 	/**
 	 * get a random number between the min and max parameters
