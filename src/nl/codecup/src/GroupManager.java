@@ -81,7 +81,7 @@ public class GroupManager {
      */
     public Group getGroupByCoordinate(int x, int y, List<Group> groups) {
         for (Group group : groups) {
-            if (group != null && group.getCoordinates().contains(joinCoordinates(x, y)))
+            if (group != null && group.containsCoordinates(joinCoordinates(x, y)))
                 return group;
         }
         return null;
