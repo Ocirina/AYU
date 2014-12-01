@@ -33,7 +33,11 @@ public class Group {
     public List<String> getCoordinates() {
         return coordinates;
     }
-
+    
+	public boolean containsCoordinates(String coordinates) {
+    	return getCoordinates().contains(coordinates);
+    }
+	
     /**
      * Sets the coordinates
      * 

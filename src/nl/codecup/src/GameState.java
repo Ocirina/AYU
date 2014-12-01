@@ -52,12 +52,10 @@ public class GameState {
                 }
             }
         }
-
-        GroupManager.getInstance().setPlayerGroups(playerGroups);
     }
     
     public void recheckGroups() {
-    	this.playerGroups = GroupManager.getInstance().recheckGroups(this.getBoard());
+    	this.playerGroups = GroupManager.recheckGroups(this.getBoard());
     }
     
     public int getGroupsLength() {
