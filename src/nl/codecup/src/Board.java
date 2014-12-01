@@ -279,7 +279,6 @@ public class Board {
 		this.boardGrid[originX][originY] = this.boardGrid[targetX][targetY];
 		this.boardGrid[targetX][targetY] = tempPiece;
 		IO.debug(this.toString());
-		// IO.debug(this.toDebugBoard());
 	}
 
 	/**

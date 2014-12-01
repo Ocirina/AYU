@@ -1,6 +1,8 @@
 package nl.codecup.src;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class PathFinder {
@@ -70,7 +72,7 @@ public class PathFinder {
 	 * @return
 	 */
 	private String[] getShortestPathsToGroups(Group group, Group[] playerGroups) {
-		List<Group> remainingGroups = getRemainingGroups(playerGroups);
+		List<Group> remainingGroups = getRemainingGroups(Arrays.asList(playerGroups));
 		List<Group> sortedList = new ArrayList<Group>();
 		List<Integer> distances = new ArrayList<Integer>();
 		int minimumDistance = 0;
@@ -279,10 +281,10 @@ public class PathFinder {
 	 */
 	private List<String> fillListWithUnvistedNodes() {
 		List<String> coordinates = new ArrayList<String>();
-		int[][] contents = board.getBoardContents();
-		for (int i = 0; i < contents.length; i++) {
-			for (int j = 0; j < contents[i].length; j++) {
-				if (contents[i][j] == 0) {
+
+		for (int i = 0; i < Board.SIZE; i++) {
+			for (int j = 0; j < Board.SIZE; j++) {
+				if (board.isBlankSpace(i, j)) {
 					coordinates.add(join(i, j));
 				}
 			}
@@ -319,13 +321,8 @@ public class PathFinder {
 	 * 
 	 * @return The remaining groups
 	 */
-	private List<Group> getRemainingGroups(Group[] playerGroups) {
-		List<Group> groups = new ArrayList<Group>();
-		for (Group group : playerGroups) {
-			if (group != null) {
-				groups.add(group);
-			}
-		}
-		return groups;
+	private List<Group> getRemainingGroups(List<Group> playerGroups) {
+		playerGroups.removeAll(Collections.singleton(null));
+		return playerGroups;
 	}
 }
