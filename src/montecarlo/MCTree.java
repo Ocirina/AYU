@@ -102,7 +102,7 @@ public class MCTree {
 	 * 
 	 * @return best move
 	 */
-	private MCNode getBestMove() {
+	public MCNode getBestMove() {
 		MCNode node = getRoot().getChildren()[0];
 		int childrenSize = getRoot().getChildren().length;
 		for (int i = 1; i < childrenSize; i++) {

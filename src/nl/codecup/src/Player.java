@@ -137,14 +137,15 @@ public class Player {
 	            }
 	        }
         } else {
-        	makeTree();
+        	return getMonteCarloMove();
         }
         
         return getRandomMove();
     }
     
-    private void makeTree() {
+    private Move getMonteCarloMove() {
     	MCTree tree = new MCTree(4, 4, this);
+    	return tree.getBestMove().getState().getPlayedMove();
     }
 
     /**

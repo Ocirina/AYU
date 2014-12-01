@@ -207,6 +207,10 @@ public class GameState {
         // TODO Auto-generated method stub
         return this.playingPiece;
     }
+    
+    public int getOpponentPiece() {
+    	return this.opponentPiece;
+    }
 
     public int[][] getBoardContents() {
         return this.board.getBoardContents();
