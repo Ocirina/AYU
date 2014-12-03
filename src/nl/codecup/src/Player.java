@@ -52,7 +52,7 @@ public class Player {
 	        Group startGroup = groups.get(groupIndex);
 	        String[] shortestPath = PathFinder.getInstance().findShortestPathForGroup(state.getGroups(), state.getBoard(), startGroup);
 	        if (shortestPath != null) {
-	            return constructMoveFromShortestPath(startGroup, shortestPath[0]);
+	            return constructMoveFromShortestPath(startGroup, shortestPath[0].split(","));
 	        }
 	        groups.remove(startGroup);
 	        return getRandomMove(groups);
@@ -67,9 +67,9 @@ public class Player {
      * @param shortestPath
      * @return Move
      */
-    private Move constructMoveFromShortestPath(Group startGroup, String shortestPath) {
-        int targetX = Integer.parseInt(shortestPath.split(",")[0]);
-        int targetY = Integer.parseInt(shortestPath.split(",")[1]);
+    private Move constructMoveFromShortestPath(Group startGroup, String[] shortestPath) {
+        int targetX = Integer.parseInt(shortestPath[0]);
+        int targetY = Integer.parseInt(shortestPath[1]);
 
         String[] origin = startGroup.findPointMostFarAway(targetX, targetY, this.state.getBoard());
         int originX = Integer.parseInt(origin[0]);
