@@ -46,18 +46,18 @@ public class Player {
     }
 
     public Move getRandomMove(List<Group> groups) {
-    	if(groups.size() > 0) {
-	        int groupIndex = randomInt(0, groups.size() - 1);
-	
-	        Group startGroup = groups.get(groupIndex);
-	        String[] shortestPath = PathFinder.getInstance().findShortestPathForGroup(state.getGroups(), state.getBoard(), startGroup);
-	        if (shortestPath != null) {
-	            return constructMoveFromShortestPath(startGroup, shortestPath[0].split(","));
-	        }
-	        groups.remove(startGroup);
-	        return getRandomMove(groups);
-    	}
-    	return null;
+        if (groups.size() > 0) {
+            int groupIndex = randomInt(0, groups.size() - 1);
+
+            Group startGroup = groups.get(groupIndex);
+            String[] shortestPath = PathFinder.getInstance().findShortestPathForGroup(state.getGroups(), state.getBoard(), startGroup);
+            if (shortestPath != null) {
+                return constructMoveFromShortestPath(startGroup, shortestPath[0].split(","));
+            }
+            groups.remove(startGroup);
+            return getRandomMove(groups);
+        }
+        return null;
     }
 
     /**
@@ -117,19 +117,28 @@ public class Player {
             }
         }
 
+<<<<<<< HEAD
 //        if (state.getGroupsLength() > 5 && state.getGroupsLength() <= 18) {
 //            Move move = getRandomMove();
 //            if (move != null) {
 //                return move;
 //            }
 //        }
+=======
+        if (state.getGroupsLength() > 5 && state.getGroupsLength() <= 18) {
+            Move move = getRandomMove();
+            if (move != null) {
+                return move;
+            }
+        }
+>>>>>>> e0cbb55ccd4eb185d6953f1c4fc34309d9362a08
 
         return getMonteCarloMove();
     }
 
-	private boolean isGapScenario(int[][] content, int row, int column) {
-		return column < 9 && row < 9 && content[row][column] == Player.piece && content[row][column + 1] == Board.NONE && content[row][column + 2] == Player.piece;
-	}
+    private boolean isGapScenario(int[][] content, int row, int column) {
+        return column < 9 && row < 9 && content[row][column] == Player.piece && content[row][column + 1] == Board.NONE && content[row][column + 2] == Player.piece;
+    }
 
     private Move getMonteCarloMove() {
         MCTree tree = new MCTree(1, 10, this);
