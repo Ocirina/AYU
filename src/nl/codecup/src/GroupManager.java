@@ -8,7 +8,7 @@ public class GroupManager {
 
     private static final String GROUP_SEPERATOR = ",";
 
-	public static Group[] recheckGroups(Board board, int piece) {
+	public static Group[] getGroupsByPiece(Board board, int piece) {
         List<Group> groupsArray = new ArrayList<Group>();
         int[][] boardArray = board.getBoardContents();
 

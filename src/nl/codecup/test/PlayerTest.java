@@ -12,8 +12,7 @@ public class PlayerTest {
 	
 	private GameState gameState = new GameState(WHITE, BLACK);
 	private Manager manager = new Manager(true);
-	private Referee referee = new Referee(manager);
-	private Player player = new Player(gameState, WHITE, referee);
+	private Player player = new Player(gameState, WHITE);
 	private Board board = new Board(new int[][] {
 			{ NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE },
 			{ NONE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE, NONE, WHITE },
