@@ -40,11 +40,11 @@ public class Player {
      */
     public Move getRandomMove() {
         IO.debug("TRY TO FIND RANDOM MOVE!");
-		List<Group> remainingGroups = Arrays.asList(this.state.getGroups());
-		remainingGroups = new ArrayList<Group>(remainingGroups);
+        List<Group> remainingGroups = Arrays.asList(this.state.getGroups());
+        remainingGroups = new ArrayList<Group>(remainingGroups);
         return getRandomMove(remainingGroups);
     }
-    
+
     public Move getRandomMove(List<Group> groups) {
     	if(groups.size() > 0) {
 	        int groupIndex = randomInt(0, groups.size() - 1);
@@ -104,6 +104,7 @@ public class Player {
         int contentLength = content.length - 1;
         this.state.recheckGroups();
         IO.debug("TRY TO FIND MOVE FOR PLAYER: " + Player.piece);
+        IO.debug("AMOUNT OF GROUPS: " + state.getGroupsLength());
 
         if (state.getGroupsLength() > 18) {
             for (int row = 0; row < contentLength; row++) {
@@ -115,6 +116,14 @@ public class Player {
                 }
             }
         }
+
+        if (state.getGroupsLength() > 5 && state.getGroupsLength() <= 18) {
+            Move move = getRandomMove();
+            if (move != null) {
+                return move;
+            }
+        }
+
         return getMonteCarloMove();
     }
 
