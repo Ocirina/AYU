@@ -64,7 +64,7 @@ public class MCTree {
 	}
 	
 	/**
-	 * updates the winpercentage for the given node based on the winpercentages of all its children
+	 * updates the win percentage for the given node based on the win percentages of all its children
 	 * 
 	 * @param node
 	 */
@@ -82,18 +82,23 @@ public class MCTree {
 	 * @param node			 - the node that will be printed
 	 * @param whitespace	 - the whitespace before the win percentage (for visibility) 
 	 */
-	private void printTree(MCNode node, String whitespace) {
-		IO.debug(whitespace + node.getWinPercentage() + " - " + node.getNumOfChildren() + " ---> " + node.getMoveValue());
-		IO.debug(whitespace + 
+	private String printTree(MCNode node, String whitespace) {
+		String output = whitespace + node.getWinPercentage() + " - " + node.getNumOfChildren() + " ---> " + node.getMoveValue();
+		output += whitespace + 
 				node.getPlayableMove().getBoardOriginX() + "," +  
 				node.getPlayableMove().getBoardOriginY() + "--->" + 
 				node.getPlayableMove().getBoardTargetX() + "," +
-				node.getPlayableMove().getBoardTargetY());
+				node.getPlayableMove().getBoardTargetY();
 		if (!node.isLeaf()) {
 			for (int i = 0; i < node.getChildren().length; i++) {
-				printTree(node.getChildren()[i], whitespace + "    ");
+				output += printTree(node.getChildren()[i], whitespace + "    ");
 			}
 		}
+		return output;
+	}
+	
+	public String toString() {
+		return printTree(root, "");
 	}
 	
 	/**
