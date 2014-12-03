@@ -8,13 +8,13 @@ public class GroupManager {
 
     private static final String GROUP_SEPERATOR = ",";
 
-	public static Group[] recheckGroups(Board board) {
+	public static Group[] recheckGroups(Board board, int piece) {
         List<Group> groupsArray = new ArrayList<Group>();
         int[][] boardArray = board.getBoardContents();
 
         for (int row = 0; row < 11; row++) {
             for (int column = 0; column < 11; column++) {
-                if (boardArray[row][column] == Player.piece && getGroupByCoordinate(row, column, groupsArray) == null) {
+                if (boardArray[row][column] == piece && getGroupByCoordinate(row, column, groupsArray) == null) {
             		Group group = new Group(groupsArray.size());
             		group.addCoordinate(row + GROUP_SEPERATOR + column);
             		String[] neighBors = board.getNeighbors(row, column);

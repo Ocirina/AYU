@@ -37,7 +37,8 @@ public class MCNode {
     private void updateMoveValue() {
         Move playedMove = this.state.getPlayableMove();
         Board board = this.state.getBoard();
-        this.state.setGroups(GroupManager.recheckGroups(board));
+        this.state.setGroups(GroupManager.recheckGroups(board, Player.piece));
+        Group[] oppponentGroups = GroupManager.recheckGroups(board, this.state.getOpponentPiece());
 
         int x = playedMove.getIndexTargetX();
         int y = playedMove.getIndexTargetY();
@@ -47,7 +48,7 @@ public class MCNode {
         this.moveValue = group.getCoordinates().size() * 2;
 
         for (int i = 0; i < neighbors.length; i++) {
-            this.moveValue += GroupManager.getGroupByCoordinate(neighbors[i], Arrays.asList(this.state.getGroups())).getSize();
+            this.moveValue += GroupManager.getGroupByCoordinate(neighbors[i], Arrays.asList(oppponentGroups)).getSize();
         }
     }
 
