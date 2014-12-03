@@ -117,21 +117,21 @@ public class Player {
             }
         }
 
-<<<<<<< HEAD
+
 //        if (state.getGroupsLength() > 5 && state.getGroupsLength() <= 18) {
 //            Move move = getRandomMove();
 //            if (move != null) {
 //                return move;
 //            }
 //        }
-=======
+
         if (state.getGroupsLength() > 5 && state.getGroupsLength() <= 18) {
             Move move = getRandomMove();
             if (move != null) {
                 return move;
             }
         }
->>>>>>> e0cbb55ccd4eb185d6953f1c4fc34309d9362a08
+
 
         return getMonteCarloMove();
     }
