@@ -117,7 +117,7 @@ public class Player {
             }
         }
 
-        if (state.getGroupsLength() > 5 && state.getGroupsLength() <= 18) {
+        if (state.getGroupsLength() > 3 && state.getGroupsLength() <= 18) {
             Move move = getRandomMove();
             if (move != null) {
                 return move;
@@ -132,7 +132,7 @@ public class Player {
 	}
 
     private Move getMonteCarloMove() {
-        MCTree tree = new MCTree(4, 4, this);
+        MCTree tree = new MCTree(3, 3, this);
         return tree.getPlayableMove();
     }
 
