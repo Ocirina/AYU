@@ -126,7 +126,7 @@ public class Player {
 
     private Move getMonteCarloMove() {
         MCTree tree = new MCTree(4, 4, this);
-        return tree.getBestMove().getState().getPlayedMove();
+        return tree.getPlayableMove();
     }
 
     /**

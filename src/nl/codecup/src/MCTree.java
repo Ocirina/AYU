@@ -85,10 +85,10 @@ public class MCTree {
 	private void printTree(MCNode node, String whitespace) {
 		IO.debug(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren() + " ---> " + node.getMoveValue());
 		IO.debug(whitespace + 
-				node.getState().getPlayedMove().getBoardOriginX() + "," +  
-				node.getState().getPlayedMove().getBoardOriginY() + "--->" + 
-				node.getState().getPlayedMove().getBoardTargetX() + "," +
-				node.getState().getPlayedMove().getBoardTargetY());
+				node.getState().getPlayableMove().getBoardOriginX() + "," +  
+				node.getState().getPlayableMove().getBoardOriginY() + "--->" + 
+				node.getState().getPlayableMove().getBoardTargetX() + "," +
+				node.getState().getPlayableMove().getBoardTargetY());
 		if (!node.isLeaf()) {
 			for (int i = 0; i < node.getChildren().length; i++) {
 				printTree(node.getChildren()[i], whitespace + "    ");
@@ -97,11 +97,11 @@ public class MCTree {
 	}
 	
 	/**
-	 * get best move based on winpercentage and number of children
+	 * get best move based on win percentage and number of children
 	 * 
 	 * @return best move
 	 */
-	public MCNode getBestMove() {
+	public Move getPlayableMove() {
 		MCNode node = getRoot().getChildren()[0];
 		int childrenSize = getRoot().getChildren().length;
 		for (int i = 1; i < childrenSize; i++) {
@@ -110,7 +110,7 @@ public class MCTree {
 				node = childNode;
 			}
 		}
-		return node;
+		return node.getPlayableMove();
 	}
 
 	/**
