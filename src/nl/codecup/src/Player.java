@@ -6,12 +6,10 @@ public class Player {
     private GameState state;
     public static int piece;
     public static int empty = 0;
-    private Referee referee;
 
-    public Player(GameState state, int piece, Referee referee) {
+    public Player(GameState state, int piece) {
         this.state = state;
         Player.piece = piece;
-        this.referee = referee;
     }
 
     public GameState takeTurn(GameState state) {
