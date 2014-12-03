@@ -46,18 +46,18 @@ public class Player {
     }
 
     public Move getRandomMove(List<Group> groups) {
-        if (groups.size() > 0) {
-            int groupIndex = randomInt(0, groups.size() - 1);
-
-            Group startGroup = groups.get(groupIndex);
-            String[] shortestPath = PathFinder.getInstance().findShortestPathForGroup(state.getGroups(), state.getBoard(), startGroup);
-            if (shortestPath != null) {
-                return constructMoveFromShortestPath(startGroup, shortestPath);
-            }
-            groups.remove(startGroup);
-            return getRandomMove(groups);
-        }
-        return null;
+    	if(groups.size() > 0) {
+	        int groupIndex = randomInt(0, groups.size() - 1);
+	
+	        Group startGroup = groups.get(groupIndex);
+	        String[] shortestPath = PathFinder.getInstance().findShortestPathForGroup(state.getGroups(), state.getBoard(), startGroup);
+	        if (shortestPath != null) {
+	            return constructMoveFromShortestPath(startGroup, shortestPath[0].split(","));
+	        }
+	        groups.remove(startGroup);
+	        return getRandomMove(groups);
+    	}
+    	return null;
     }
 
     /**
@@ -68,8 +68,8 @@ public class Player {
      * @return Move
      */
     private Move constructMoveFromShortestPath(Group startGroup, String[] shortestPath) {
-        int targetX = Integer.parseInt(shortestPath[0].split(",")[0]);
-        int targetY = Integer.parseInt(shortestPath[0].split(",")[1]);
+        int targetX = Integer.parseInt(shortestPath[0]);
+        int targetY = Integer.parseInt(shortestPath[1]);
 
         String[] origin = startGroup.findPointMostFarAway(targetX, targetY, this.state.getBoard());
         int originX = Integer.parseInt(origin[0]);
@@ -108,12 +108,8 @@ public class Player {
 
         if (state.getGroupsLength() > 18) {
             for (int row = 0; row < contentLength; row++) {
-
-                // bottom -> up until the half of the column
                 for (int column = 0; column < contentLength; column++) {
-                    boolean gapScenario = (column < 9 && row < 9 && content[row][column] == Player.piece && content[row][column + 1] == Board.NONE && content[row][column + 2] == Player.piece);
-
-                    if (gapScenario) {
+                    if (isGapScenario(content, row, column)) {
                         int columnPieceToMove = findLastPieceInTheRow(content, row, column, 0);
                         return new Move(row, columnPieceToMove, row, column + 1);
                     }
@@ -121,7 +117,7 @@ public class Player {
             }
         }
 
-        if (state.getGroupsLength() > 5 && state.getGroupsLength() <= 18) {
+        if (state.getGroupsLength() > 3 && state.getGroupsLength() <= 18) {
             Move move = getRandomMove();
             if (move != null) {
                 return move;
@@ -131,8 +127,16 @@ public class Player {
         return getMonteCarloMove();
     }
 
+	private boolean isGapScenario(int[][] content, int row, int column) {
+		return column < 9 && row < 9 && content[row][column] == Player.piece && content[row][column + 1] == Board.NONE && content[row][column + 2] == Player.piece;
+	}
+
     private Move getMonteCarloMove() {
+<<<<<<< HEAD
         MCTree tree = new MCTree(3, 2, this);
+=======
+        MCTree tree = new MCTree(3, 3, this);
+>>>>>>> 0cb8930de7fa57dcecc8b6ec5c3fc3856aab214a
         return tree.getPlayableMove();
     }
 
