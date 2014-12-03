@@ -27,7 +27,7 @@ public class MCTree {
 	}
 	
 	/**
-	 * generates the monte-carlo tree
+	 * generates the Monte Carlo tree
 	 * 
 	 * @param node			- base node, this is where the new children will be added
 	 * @param numChilds 	- number of children for the node
@@ -44,7 +44,7 @@ public class MCTree {
 				children[i] = child;
 			}
 			node.setChildren(children);
-			updateWinpercentage(node);
+			updateWinPercentage(node);
 			updateNumOfChildren(node);
 		}
 	}
@@ -68,12 +68,13 @@ public class MCTree {
 	 * 
 	 * @param node
 	 */
-	private void updateWinpercentage(MCNode node) {
+	private void updateWinPercentage(MCNode node) {
 		float winpercentage = (float) 0.0;
-		for (int i = 0; i < node.getChildren().length; i++) {
+		int childrenLength = node.getChildren().length;
+		for (int i = 0; i < childrenLength; i++) {
 			winpercentage += node.getChildren()[i].getWinPercentage();
 		}
-		node.setWinPercentage(winpercentage / ((node.getChildren().length == 0) ? 1 : node.getChildren().length));
+		node.setWinPercentage(winpercentage / ((childrenLength == 0) ? 1 : childrenLength));
 	}
 	
 	/**
