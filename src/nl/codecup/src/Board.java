@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Board {
 	public static final int SIZE = 11;
-	private static final int NONE = 0;
+	public static final int NONE = 0;
 	private static final int WHITE = 1;
 	private static final int BLACK = 2;
 	private static final int NEIGHBOR_DISTANCE = 1;
