@@ -113,15 +113,9 @@ public class Player {
                         return new Move(row, columnPieceToMove, row, column + 1);
                     }
                 }
-
-                //
-
             }
-        } else {
-            return getMonteCarloMove();
         }
-
-        return getRandomMove();
+        return getMonteCarloMove();
     }
 
     private Move getMonteCarloMove() {
