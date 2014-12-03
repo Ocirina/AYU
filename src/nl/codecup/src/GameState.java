@@ -219,7 +219,11 @@ public class GameState {
     
     /**
      * Sets the playerGroups
+
+     * @param playerGroups : The new playergroups
+
      * @param playerGroups : The player groups
+
      */
     public void setGroups(Group[] playerGroups) {
     	this.playerGroups = playerGroups;

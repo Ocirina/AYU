@@ -130,15 +130,6 @@ public class MCNode {
     }
 
     /**
-     * get the game state
-     * 
-     * @return GameState
-     */
-    public GameState getState() {
-        return state;
-    }
-
-    /**
      * get Move value
      * 
      * @return int move value
