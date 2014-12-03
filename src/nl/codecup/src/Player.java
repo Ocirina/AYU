@@ -1,5 +1,7 @@
 package nl.codecup.src;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Player {
@@ -40,20 +42,23 @@ public class Player {
      */
     public Move getRandomMove() {
         IO.debug("TRY TO FIND RANDOM MOVE!");
-        Group[] remainingGroups = this.state.getGroups();
-        int groupIndex = randomInt(0, remainingGroups.length - 1);
-
-        Group startGroup = remainingGroups[groupIndex];
-        String[] shortestPath = PathFinder.getInstance().findShortestPathForGroup(state.getGroups(), state.getBoard(), startGroup);
-        if (shortestPath != null) {
-            String sPath = "";
-            for (String s : shortestPath) {
-                sPath += s + " ";
-            }
-            IO.debug("Found path: " + sPath);
-            return constructMoveFromShortestPath(startGroup, shortestPath);
-        }
-        return getRandomMove();
+        List<Group> remainingGroups = (List<Group>) Arrays.asList(this.state.getGroups());
+        return getRandomMove(remainingGroups);
+    }
+    
+    public Move getRandomMove(List<Group> groups) {
+    	if(groups.size() > 0) {
+	        int groupIndex = randomInt(0, groups.size() - 1);
+	
+	        Group startGroup = groups.get(groupIndex);
+	        String[] shortestPath = PathFinder.getInstance().findShortestPathForGroup(state.getGroups(), state.getBoard(), startGroup);
+	        if (shortestPath != null) {
+	            return constructMoveFromShortestPath(startGroup, shortestPath);
+	        }
+	        groups.remove(startGroup);
+	        return getRandomMove(groups);
+    	}
+    	return null;
     }
 
     /**
