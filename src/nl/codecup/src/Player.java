@@ -125,13 +125,6 @@ public class Player {
 //            }
 //        }
 
-        if (state.getGroupsLength() > 5 && state.getGroupsLength() <= 18) {
-            Move move = getRandomMove();
-            if (move != null) {
-                return move;
-            }
-        }
-
 
         return getMonteCarloMove();
     }
