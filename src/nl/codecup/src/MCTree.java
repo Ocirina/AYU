@@ -64,7 +64,7 @@ public class MCTree {
 	}
 	
 	/**
-	 * updates the winpercentage for the given node based on the winpercentages of all its children
+	 * updates the win percentage for the given node based on the win percentages of all its children
 	 * 
 	 * @param node
 	 */
