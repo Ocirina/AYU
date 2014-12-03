@@ -216,6 +216,14 @@ public class GameState {
     public Group[] getGroups() {
         return playerGroups;
     }
+    
+    /**
+     * Sets the playerGroups
+     * @param playerGroups : The player groups
+     */
+    public void setGroups(Group[] playerGroups) {
+    	this.playerGroups = playerGroups;
+    }
 
 	public Move getPlayableMove() {
 		return playableMove;

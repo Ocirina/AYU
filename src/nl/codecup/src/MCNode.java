@@ -37,7 +37,7 @@ public class MCNode {
     private void updateMoveValue() {
         Move playedMove = this.state.getPlayableMove();
         Board board = this.state.getBoard();
-        GroupManager.recheckGroups(board);
+        this.state.setGroups(GroupManager.recheckGroups(board));
 
         int x = playedMove.getIndexTargetX();
         int y = playedMove.getIndexTargetY();
