@@ -1,5 +1,6 @@
 package nl.codecup.src;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -39,7 +40,7 @@ public class Player {
      */
     public Move getRandomMove() {
         IO.debug("TRY TO FIND RANDOM MOVE!");
-        List<Group> remainingGroups = (List<Group>) Arrays.asList(this.state.getGroups());
+		List<Group> remainingGroups = (ArrayList<Group>) Arrays.asList(this.state.getGroups());
         return getRandomMove(remainingGroups);
     }
     
