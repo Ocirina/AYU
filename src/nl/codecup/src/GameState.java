@@ -132,7 +132,7 @@ public class GameState {
     }
 
     public boolean isGameOver() {
-        return false;
+        return hasWinner();
     }
 
     /**
