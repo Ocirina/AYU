@@ -40,7 +40,8 @@ public class Player {
      */
     public Move getRandomMove() {
         IO.debug("TRY TO FIND RANDOM MOVE!");
-		List<Group> remainingGroups = (ArrayList<Group>) Arrays.asList(this.state.getGroups());
+		List<Group> remainingGroups = (List<Group>) Arrays.asList(this.state.getGroups());
+		remainingGroups = new ArrayList<Group>(remainingGroups);
         return getRandomMove(remainingGroups);
     }
     
