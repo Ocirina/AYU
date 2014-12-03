@@ -35,7 +35,7 @@ public class MCNode {
     }
 
     private void updateMoveValue() {
-        Move playedMove = this.state.getPlayedMove();
+        Move playedMove = this.state.getPlayableMove();
         Board board = this.state.getBoard();
         GroupManager.recheckGroups(board);
 
@@ -58,6 +58,10 @@ public class MCNode {
      */
     public MCNode[] getChildren() {
         return children;
+    }
+    
+    public Move getPlayableMove() {
+    	return state.getPlayableMove();
     }
 
     /**

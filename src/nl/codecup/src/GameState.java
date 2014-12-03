@@ -9,7 +9,7 @@ public class GameState {
     private int opponentPiece;
     private int winner = 0;
     private Group[] playerGroups = new Group[30];
-    private Move playedMove;
+    private Move playableMove;
 
     public GameState(int playerPiece, int opponentPiece) {
         this.playingPiece = playerPiece;
@@ -89,7 +89,7 @@ public class GameState {
      */
     public GameState makeMove(Move move) {
         GameState newState = this.clone();
-        newState.setPlayedMove(move);
+        newState.setPlayableMove(move);
         Board newBoard = this.board.clone();
         newState.setPlayerPiece(opponentPiece);
         newState.setComputerPiece(playingPiece);
@@ -217,12 +217,12 @@ public class GameState {
         return playerGroups;
     }
 
-	public Move getPlayedMove() {
-		return playedMove;
+	public Move getPlayableMove() {
+		return playableMove;
 	}
 
-	public void setPlayedMove(Move playedMove) {
-		this.playedMove = playedMove;
+	public void setPlayableMove(Move playableMove) {
+		this.playableMove = playableMove;
 	}
     
 }
