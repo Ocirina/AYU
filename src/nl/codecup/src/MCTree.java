@@ -69,12 +69,12 @@ public class MCTree {
 	 * @param node
 	 */
 	private void updateWinPercentage(MCNode node) {
-		float winpercentage = (float) 0.0;
+		float winPercentage = (float) 0.0;
 		int childrenLength = node.getChildren().length;
 		for (int i = 0; i < childrenLength; i++) {
-			winpercentage += node.getChildren()[i].getWinPercentage();
+			winPercentage += node.getChildren()[i].getWinPercentage();
 		}
-		node.setWinPercentage(winpercentage / ((childrenLength == 0) ? 1 : childrenLength));
+		node.setWinPercentage(winPercentage / ((childrenLength == 0) ? 1 : childrenLength));
 	}
 	
 	/**
