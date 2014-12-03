@@ -7,13 +7,10 @@ import java.util.Random;
 public class Player {
     private GameState state;
     public static int piece;
-    public static int empty = 0;
-    private Referee referee;
 
-    public Player(GameState state, int piece, Referee referee) {
+    public Player(GameState state, int piece) {
         this.state = state;
         Player.piece = piece;
-        this.referee = referee;
     }
 
     public GameState takeTurn(GameState state) {
@@ -111,7 +108,7 @@ public class Player {
 
                 // bottom -> up until the half of the column
                 for (int column = 0; column < contentLength; column++) {
-                    boolean gapScenario = (column < 9 && row < 9 && content[row][column] == Player.piece && content[row][column + 1] == 0 && content[row][column + 2] == Player.piece);
+                    boolean gapScenario = (column < 9 && row < 9 && content[row][column] == Player.piece && content[row][column + 1] == Board.NONE && content[row][column + 2] == Player.piece);
 
                     if (gapScenario) {
                         int columnPieceToMove = findLastPieceInTheRow(content, row, column, 0);

@@ -33,7 +33,7 @@ public class Manager {
         this.converter = new MoveConverter();
         this.gameState = new GameState(new Board(), playerNumber, (playerNumber == 1 ? 2 : 1));
         this.referee = new Referee(this);
-        this.player = new Player(this.gameState, playerNumber, this.referee);
+        this.player = new Player(this.gameState, playerNumber);
         if (playerNumber == STARTPLAYER) {
             this.gameState = this.player.takeTurn(this.gameState);
         }
