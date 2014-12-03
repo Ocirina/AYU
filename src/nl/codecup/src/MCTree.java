@@ -39,7 +39,7 @@ public class MCTree {
 			for (int i = 0; i < numChilds; i++) {
 				MCNode child = new MCNode(this.player);
 				if (!child.isLeaf()) {
-					generateTree(child, randInt(0, numChilds), searchDepth - 1);
+					generateTree(child, numChilds/*randInt(0, numChilds)*/, searchDepth - 1);
 				}
 				children[i] = child;
 			}
