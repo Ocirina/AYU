@@ -71,9 +71,9 @@ public class MCTree {
 	private void updateWinpercentage(MCNode node) {
 		float winpercentage = (float) 0.0;
 		for (int i = 0; i < node.getChildren().length; i++) {
-			winpercentage += node.getChildren()[i].getWinpercentage();
+			winpercentage += node.getChildren()[i].getWinPercentage();
 		}
-		node.setWinpercentage(winpercentage / ((node.getChildren().length == 0) ? 1 : node.getChildren().length));
+		node.setWinPercentage(winpercentage / ((node.getChildren().length == 0) ? 1 : node.getChildren().length));
 	}
 	
 	/**
@@ -83,7 +83,7 @@ public class MCTree {
 	 * @param whitespace	 - the whitespace before the win percentage (for visibility) 
 	 */
 	private void printTree(MCNode node, String whitespace) {
-		IO.debug(whitespace + node.getWinpercentage() + " - " + node.getNumOfChildren() + " ---> " + node.getMoveValue());
+		IO.debug(whitespace + node.getWinPercentage() + " - " + node.getNumOfChildren() + " ---> " + node.getMoveValue());
 		IO.debug(whitespace + 
 				node.getPlayableMove().getBoardOriginX() + "," +  
 				node.getPlayableMove().getBoardOriginY() + "--->" + 
@@ -121,7 +121,7 @@ public class MCTree {
 	 * @return boolean is better node
 	 */
 	private boolean isChildNodeBetterThanNode(MCNode node, MCNode childNode) {
-		return childNode.getWinpercentage() > node.getWinpercentage()
+		return childNode.getWinPercentage() > node.getWinPercentage()
 				&& MINNUMBEROFCHILDREN > childNode.getNumOfChildren()
 				&& childNode.getMoveValue() > node.getMoveValue();
 	}

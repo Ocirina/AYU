@@ -6,7 +6,7 @@ public class MCNode {
 
     private MCNode[] children = new MCNode[0];
     private int numOfChildren = 0;
-    private float winpercentage = (float) 0.0;
+    private float winPercentage = (float) 0.0;
     private int moveValue = 0;
     private boolean isLeaf = false;
     private boolean isWin = false;
@@ -31,7 +31,7 @@ public class MCNode {
         if (this.isLeaf) {
             this.isWin = this.state.hasWon(this.state.getPlayingPiece());
         }
-        this.winpercentage = (float) (this.isWin ? 1.0 : 0.0);
+        this.winPercentage = (float) (this.isWin ? 1.0 : 0.0);
     }
 
     private void updateMoveValue() {
@@ -75,22 +75,22 @@ public class MCNode {
     }
 
     /**
-     * get the winpercentage
+     * get the win percentage
      * 
-     * @return float winpercentage
+     * @return float win percentage
      */
-    public float getWinpercentage() {
-        return winpercentage;
+    public float getWinPercentage() {
+        return winPercentage;
     }
 
     /**
-     * set the winpercentage
+     * set the win percentage
      * 
-     * @param winpercentage
-     *            - float the new winpercentage
+     * @param winPercentage
+     *            - float the new win percentage
      */
-    public void setWinpercentage(float winpercentage) {
-        this.winpercentage = winpercentage;
+    public void setWinPercentage(float winPercentage) {
+        this.winPercentage = winPercentage;
     }
 
     /**
