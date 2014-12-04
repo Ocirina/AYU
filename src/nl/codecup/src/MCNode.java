@@ -26,9 +26,9 @@ public class MCNode {
         this.state = state.makeMove(this.player.getRandomMove());
         updateMoveValue();
 
-        this.isLeaf = this.state.isGameOver();
-        if (this.isLeaf) {
-            this.isWin = this.state.hasWon(this.state.getPlayingPiece());
+        this.isWin = this.state.hasWon(this.state.getPlayingPiece());
+        if (this.isWin) {
+        	this.isLeaf = true;
         }
         this.winPercentage = (float) (this.isWin ? 1.0 : 0.0);
     }
