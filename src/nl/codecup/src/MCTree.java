@@ -1,7 +1,5 @@
 package nl.codecup.src;
 
-import java.util.Random;
-
 public class MCTree {
 	
 	private MCNode root;
@@ -37,7 +35,7 @@ public class MCTree {
 			for (int i = 0; i < numChilds; i++) {
 				MCNode child = new MCNode(this.player);
 				if (!child.isLeaf()) {
-					generateTree(child, numChilds/*randInt(0, numChilds)*/, searchDepth - 1);
+					generateTree(child, numChilds, searchDepth - 1);
 				}
 				children[i] = child;
 			}
@@ -116,18 +114,6 @@ public class MCTree {
 	private boolean isChildNodeBetterThanNode(MCNode node, MCNode childNode) {
 		return childNode.getWinPercentage() > node.getWinPercentage()
 				&& childNode.getMoveValue() > node.getMoveValue();
-	}
-	
-	/**
-	 * get a random number between the min and max parameters
-	 * 
-	 * @param min
-	 * @param max
-	 * @return random number
-	 */
-	private int randInt(int min, int max) {
-	    Random rand = new Random();
-	    return rand.nextInt((max - min) + 1) + min;
 	}
 	
 	/**
