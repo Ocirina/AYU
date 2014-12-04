@@ -134,7 +134,7 @@ public class Player {
     }
 
     private Move getMonteCarloMove() {
-        MCTree tree = new MCTree(1, 10, this);
+        MCTree tree = new MCTree(4, 3, this);
         return tree.getPlayableMove();
     }
 
