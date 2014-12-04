@@ -7,8 +7,6 @@ public class MCTree {
 	private MCNode root;
 	private Player player;
 	
-	private final int MINNUMBEROFCHILDREN = 1000000;
-	
 	/**
 	 * creates a new tree 
 	 * 
@@ -44,23 +42,8 @@ public class MCTree {
 				children[i] = child;
 			}
 			node.setChildren(children);
-			updateWinPercentage(node);
-			updateNumOfChildren(node);
+			updateMoveValues(node);
 		}
-	}
-	
-	/**
-	 * updates the number of children for a node
-	 * 
-	 * @param node
-	 */
-	private void updateNumOfChildren(MCNode node) {
-		int numOfChildren = 0;
-		MCNode[] children = node.getChildren();
-		for (int i = 0; i < children.length; i++) {
-			numOfChildren += children[i].getNumOfChildren() + 1;
-		}
-		node.setNumOfChildren(numOfChildren);
 	}
 	
 	/**
@@ -68,13 +51,17 @@ public class MCTree {
 	 * 
 	 * @param node
 	 */
-	private void updateWinPercentage(MCNode node) {
+	private void updateMoveValues(MCNode node) {
 		float winPercentage = (float) 0.0;
+		int moveValue = 0;
 		int childrenLength = node.getChildren().length;
 		for (int i = 0; i < childrenLength; i++) {
-			winPercentage += node.getChildren()[i].getWinPercentage();
+			MCNode child = node.getChildren()[i];
+			winPercentage += child.getWinPercentage();
+			moveValue += child.getMoveValue();
 		}
 		node.setWinPercentage(winPercentage / ((childrenLength == 0) ? 1 : childrenLength));
+		node.setMoveValue(moveValue);
 	}
 	
 	/**
@@ -84,7 +71,7 @@ public class MCTree {
 	 * @param whitespace	 - the whitespace before the win percentage (for visibility) 
 	 */
 	private String printTree(MCNode node, String whitespace) {
-		String output = whitespace + node.getWinPercentage() + " - " + node.getNumOfChildren() + " ---> " + node.getMoveValue();
+		String output = whitespace + node.getWinPercentage() + " - " + " ---> " + node.getMoveValue();
 		output += whitespace + 
 				node.getPlayableMove().getBoardOriginX() + "," +  
 				node.getPlayableMove().getBoardOriginY() + "--->" + 
@@ -128,7 +115,6 @@ public class MCTree {
 	 */
 	private boolean isChildNodeBetterThanNode(MCNode node, MCNode childNode) {
 		return childNode.getWinPercentage() > node.getWinPercentage()
-				&& MINNUMBEROFCHILDREN > childNode.getNumOfChildren()
 				&& childNode.getMoveValue() > node.getMoveValue();
 	}
 	

@@ -5,7 +5,6 @@ import java.util.Arrays;
 public class MCNode {
 
     private MCNode[] children = new MCNode[0];
-    private int numOfChildren = 0;
     private float winPercentage = (float) 0.0;
     private int moveValue = 0;
     private boolean isLeaf = false;
@@ -35,7 +34,6 @@ public class MCNode {
     }
 
     private void updateMoveValue() {
-//    	this.moveValue = 0;
         Move playedMove = this.state.getPlayableMove();
         Board board = this.state.getBoard();
         Group originGroup = GroupManager.getGroupByCoordinate(playedMove.getIndexOriginX(), playedMove.getIndexOriginY(), Arrays.asList(this.state.getGroups()));
@@ -46,9 +44,8 @@ public class MCNode {
         int y = playedMove.getIndexTargetY();
         Group group = GroupManager.getGroupByCoordinate(x, y, Arrays.asList(this.state.getGroups()));
         String neighbors[] = board.getNeighborsByPiece(x, y, this.state.getOpponentPiece());
-        if (originGroup.getSize()==1)
-        {
-        	this.moveValue =25;
+        if (originGroup.getSize() == 1) {
+        	this.moveValue = 25;
         }
         this.moveValue += group.getCoordinates().size() * 2;
         for (int i = 0; i < neighbors.length; i++) {
@@ -116,30 +113,21 @@ public class MCNode {
     }
 
     /**
-     * get number of children
-     * 
-     * @return numOfChildren
-     */
-    public int getNumOfChildren() {
-        return numOfChildren;
-    }
-
-    /**
-     * set numOfChildren
-     * 
-     * @param numOfChildren
-     */
-    public void setNumOfChildren(int numOfChildren) {
-        this.numOfChildren = numOfChildren;
-    }
-
-    /**
      * get Move value
      * 
      * @return int move value
      */
     public int getMoveValue() {
         return moveValue;
+    }
+    
+    /**
+     * set move value
+     * 
+     * @param moveValue
+     */
+    public void setMoveValue(int moveValue) {
+    	this.moveValue = moveValue;
     }
 
 }
