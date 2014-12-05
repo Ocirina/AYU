@@ -93,7 +93,7 @@ public class GameState {
         newState.setBoard(newBoard.placePiece(move));
         if (getGroupsLength() == 1) {
             // Player has won.
-            IO.debug("Player has won.");
+            //IO.debug("Player has won.");
         }
         return newState;
     }

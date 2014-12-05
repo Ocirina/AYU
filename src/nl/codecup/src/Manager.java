@@ -28,7 +28,7 @@ public class Manager {
         initGame(playerNumber);
         this.handleInput(input);
         long endTime = System.currentTimeMillis();
-        IO.debug("Total execution time: " + (endTime - startTime) + "ms");
+        //IO.debug("Total execution time: " + (endTime - startTime) + "ms");
     }
 
     private void initGame(int playerNumber) {

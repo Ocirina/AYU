@@ -31,8 +31,8 @@ public class Player {
 		Move move = null;
 
 		this.state.recheckGroups();
-		IO.debug("TRY TO FIND MOVE FOR PLAYER: " + Player.piece);
-		IO.debug("AMOUNT OF GROUPS: " + state.getGroupsLength());
+		//IO.debug("TRY TO FIND MOVE FOR PLAYER: " + Player.piece);
+		//IO.debug("AMOUNT OF GROUPS: " + state.getGroupsLength());
 		IAlgorithm random = new RandomMoveAlgorithm(state.getGroups() , state.getBoard(), pathFinder);
 
 		if (move == null && state.getGroupsLength() > 15) {
