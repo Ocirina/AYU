@@ -9,7 +9,6 @@ public class MCNode {
     private int moveValue = 0;
     private boolean isLeaf = false;
     private boolean isWin = false;
-    private Player player;
     private GameState state;
 
     /**
@@ -19,11 +18,8 @@ public class MCNode {
      * @param state
      *            the GameState of the node
      */
-    public MCNode(Player player) {
-        this.player = player;
-
-        GameState state = this.player.getState();
-        this.state = state.makeMove(this.player.getRandomMove());
+    public MCNode(GameState state, IAlgorithm algorithm) {
+        this.state = state.makeMove(algorithm.getMove());
         updateMoveValue();
 
         this.isWin = this.state.hasWon(this.state.getPlayingPiece());
@@ -37,7 +33,7 @@ public class MCNode {
         Move playableMove = this.state.getPlayableMove();
         Board board = this.state.getBoard();
         Group originGroup = GroupManager.getGroupByCoordinate(playableMove.getIndexOriginX(), playableMove.getIndexOriginY(), Arrays.asList(this.state.getGroups()));
-        this.state.setGroups(GroupManager.getGroupsByPiece(board, Player.piece));
+        this.state.setGroups(GroupManager.getGroupsByPiece(board, state.getPlayingPiece()));
         Group[] oppponentGroups = GroupManager.getGroupsByPiece(board, this.state.getOpponentPiece());
 
         int x = playableMove.getIndexTargetX();

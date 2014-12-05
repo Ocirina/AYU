@@ -3,7 +3,7 @@ package nl.codecup.src;
 public class MCTree {
 	
 	private MCNode root;
-	private Player player;
+	private GameState state;
 	
 	/**
 	 * creates a new tree 
@@ -15,11 +15,11 @@ public class MCTree {
 	 * @param state
 	 * 				The current GameState
 	 */
-	public MCTree(int treeWidth, int treeDepth, Player player) {
-		this.player = player;
-		this.root = new MCNode(player);
+	public MCTree(int treeWidth, int treeDepth, GameState state, IAlgorithm algorithm) {
+		this.state = state;
+		this.root = new MCNode(state, algorithm);
 		
-		generateTree(this.root, treeWidth, treeDepth);
+		generateTree(this.root, treeWidth, treeDepth, algorithm);
 	}
 	
 	/**
@@ -29,13 +29,13 @@ public class MCTree {
 	 * @param numChilds 	- number of children for the node
 	 * @param searchDepth	- the search depth of the tree
 	 */
-	private void generateTree(MCNode node, int numChilds, int searchDepth) {
+	private void generateTree(MCNode node, int numChilds, int searchDepth, IAlgorithm algorithm) {
 		if (searchDepth > 0) {
 			MCNode children[] = new MCNode[numChilds];
 			for (int i = 0; i < numChilds; i++) {
-				MCNode child = new MCNode(this.player);
+				MCNode child = new MCNode(this.state, algorithm);
 				if (!child.isLeaf()) {
-					generateTree(child, numChilds, searchDepth - 1);
+					generateTree(child, numChilds, searchDepth - 1, algorithm);
 				}
 				children[i] = child;
 			}
