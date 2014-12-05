@@ -39,6 +39,9 @@ public class Manager {
         }
     }
 
+    public Manager(boolean testing) {
+    }
+
     /**
      * This will load the terminal configuration and the file configuration
      */
