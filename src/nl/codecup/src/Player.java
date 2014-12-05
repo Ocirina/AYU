@@ -109,23 +109,18 @@ public class Player {
         if (move == null && state.getGroupsLength() > 15) {
             move = getMoveUpInBoard(this.state);
         }
-
-
+        else if (move == null && state.getGroupsLength() > 10) {
+        	move = getMonteCarloMove(2,4); 
+        }
+        else if (move == null && state.getGroupsLength() > 5) {
+        	move = getMonteCarloMove(5,1); 
+        }
+        else {
+        	move = getRandomMove();
+        }
 //        if (move == null && state.getGroupsLength() > 5 && state.getGroupsLength() <= 18) {
 //            move = getRandomMove();
 //        }
-
-        else if (move == null && state.getGroupsLength()>10) {
-        	move = getMonteCarloMove(2,3); 
-        }
-        else if (move == null && state.getGroupsLength()>5) {
-        	move = getMonteCarloMove(2,2); 
-        }
-        else 
-        {
-        		move = getRandomMove();
-
-       }
         
         return move;
     }
