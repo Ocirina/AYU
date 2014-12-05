@@ -106,7 +106,7 @@ public class Player {
         IO.debug("TRY TO FIND MOVE FOR PLAYER: " + Player.piece);
         IO.debug("AMOUNT OF GROUPS: " + state.getGroupsLength());
 
-        if (move == null && state.getGroupsLength() > 18) {
+        if (move == null && state.getGroupsLength() > 15) {
             move = getMoveUpInBoard(this.state);
         }
 
@@ -115,9 +115,17 @@ public class Player {
 //            move = getRandomMove();
 //        }
 
-        if (move == null) {
-        	move = getMonteCarloMove(); 
+        else if (move == null && state.getGroupsLength()>10) {
+        	move = getMonteCarloMove(2,3); 
         }
+        else if (move == null && state.getGroupsLength()>5) {
+        	move = getMonteCarloMove(2,2); 
+        }
+        else 
+        {
+        		move = getRandomMove();
+
+       }
         
         return move;
     }
@@ -140,8 +148,8 @@ public class Player {
         return column < 9 && row < 9 && content[row][column] == Player.piece && content[row][column + 1] == Board.NONE && content[row][column + 2] == Player.piece;
     }
 
-    private Move getMonteCarloMove() {
-        MCTree tree = new MCTree(3, 2, this);
+    private Move getMonteCarloMove(int width, int height) {
+        MCTree tree = new MCTree(width, height, this);
         return tree.getPlayableMove();
     }
 
