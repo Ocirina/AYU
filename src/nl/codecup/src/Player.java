@@ -14,19 +14,11 @@ public class Player {
 		if (state.isGameOver()) {
 			return state;
 		}
-
+		
 		this.state = state.clone();
-		// Player.piece = state.getPlayingPiece();
 		Move move = chooseMove();
-		// if (this.getReferee().validMove(move)) {
 		IO.output(move.toString());
 		return state.makeMove(move);
-		// }
-
-		// Let program quit, more easy debugging.
-		// IO.output("NO VALID MOVE: " + move.toString());
-
-		// return null;
 	}
 
 	/**
