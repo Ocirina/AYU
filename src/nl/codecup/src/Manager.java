@@ -39,6 +39,7 @@ public class Manager {
         }
     }
 
+    // TODO: remove this constructor and move code from other constructor into seperate method named setupGame().
     public Manager(boolean testing) {
     }
 
