@@ -35,9 +35,9 @@ public class Player {
 		//IO.debug("AMOUNT OF GROUPS: " + state.getGroupsLength());
 		IAlgorithm random = new RandomMoveAlgorithm(state.getGroups() , state.getBoard(), pathFinder);
 
-		if (move == null && state.getGroupsLength() > 15) {
-			move = new DirectionAlgorithm(state).getMove();
-		}
+//		if (move == null && state.getGroupsLength() > 15) {
+//			move = new DirectionAlgorithm(state).getMove();
+//		}
 		if (move == null && state.getGroupsLength() > 10) {
 			move = getMonteCarloMove(2, 4, random);
 		}
