@@ -4,7 +4,6 @@ import java.io.IOException;
 
 public class Manager {
     private Player player;
-    private Referee referee;
     private GameState gameState;
     private final int STARTPLAYER = 1;
     private MoveConverter converter;
@@ -34,14 +33,10 @@ public class Manager {
     private void initGame(int playerNumber) {
         this.converter = new MoveConverter();
         this.gameState = new GameState(new Board(), playerNumber, (playerNumber == 1 ? 2 : 1));
-        this.referee = new Referee(this);
         this.player = new Player(this.gameState, playerNumber);
         if (playerNumber == STARTPLAYER) {
             this.gameState = this.player.takeTurn(this.gameState);
         }
-    }
-
-    public Manager(boolean testing) {
     }
 
     /**
@@ -103,15 +98,6 @@ public class Manager {
      */
     public MoveConverter getConverter() {
         return this.converter;
-    }
-
-    /**
-     * Get the referee
-     * 
-     * @return
-     */
-    public Referee getReferee() {
-        return this.referee;
     }
 
     /**
