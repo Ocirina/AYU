@@ -127,7 +127,7 @@ public class Player {
     }
 
 	private Move getMoveUpInBoard(GameState state) {
-		return new DirectionAlgorithm().getMove(state);
+		return new DirectionAlgorithm(state).getMove();
 	}
 
     private Move getMonteCarloMove(int width, int height) {

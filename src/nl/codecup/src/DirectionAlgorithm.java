@@ -1,7 +1,13 @@
 package nl.codecup.src;
 
 public class DirectionAlgorithm implements IAlgorithm {
-	public Move getMove(GameState state) {
+	private GameState state;
+	
+	public DirectionAlgorithm(GameState state) {
+		this.state = state;
+	}
+	
+	public Move getMove() {
 		int[][] content = state.getBoardContents();
         int contentLength = content.length - 1;
 		for (int row = 0; row < contentLength; row++) {

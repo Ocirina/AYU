@@ -1,5 +1,6 @@
 package nl.codecup.src;
 
 public interface IAlgorithm {
-	public Move getMove(GameState state);
+	
+	public Move getMove();
 }
