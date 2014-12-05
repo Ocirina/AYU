@@ -24,7 +24,7 @@ public class MCNode {
 
         this.isWin = this.state.hasWon(this.state.getPlayingPiece());
         if (this.isWin) {
-        	this.isLeaf = true;
+            this.isLeaf = true;
         }
         this.winPercentage = (float) (this.isWin ? 1.0 : 0.0);
     }
@@ -41,9 +41,13 @@ public class MCNode {
         Group group = GroupManager.getGroupByCoordinate(x, y, Arrays.asList(this.state.getGroups()));
         String neighbors[] = board.getNeighborsByPiece(x, y, this.state.getOpponentPiece());
         if (originGroup.getSize() == 1) {
-        	this.moveValue = 25;
+            this.moveValue = 25;
         }
-        this.moveValue += group.getCoordinates().size() * 2;
+
+        if (group != null) {
+            this.moveValue += group.getCoordinates().size() * 2;
+        }
+
         for (int i = 0; i < neighbors.length; i++) {
             this.moveValue += GroupManager.getGroupByCoordinate(neighbors[i], Arrays.asList(oppponentGroups)).getSize();
         }
@@ -57,9 +61,9 @@ public class MCNode {
     public MCNode[] getChildren() {
         return children;
     }
-    
+
     public Move getPlayableMove() {
-    	return state.getPlayableMove();
+        return state.getPlayableMove();
     }
 
     /**
@@ -116,14 +120,14 @@ public class MCNode {
     public int getMoveValue() {
         return moveValue;
     }
-    
+
     /**
      * set move value
      * 
      * @param moveValue
      */
     public void setMoveValue(int moveValue) {
-    	this.moveValue = moveValue;
+        this.moveValue = moveValue;
     }
 
 }
