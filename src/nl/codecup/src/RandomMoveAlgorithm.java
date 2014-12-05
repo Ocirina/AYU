@@ -17,8 +17,7 @@ public class RandomMoveAlgorithm implements IAlgorithm {
     }
 
     public Move getMove() {
-        List<Group> remainingGroups = Arrays.asList(this.playerGroups);
-        remainingGroups = new ArrayList<Group>(remainingGroups);
+    	ArrayList<Group> remainingGroups = (ArrayList<Group>) Arrays.asList(this.playerGroups);
         return getRandomMove(remainingGroups);
     }
 
