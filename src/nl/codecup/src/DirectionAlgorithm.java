@@ -2,7 +2,12 @@ package nl.codecup.src;
 
 public class DirectionAlgorithm implements IAlgorithm {
 	private GameState state;
-
+	private int oneStepColumn = 1;
+	private int twoStepColumn = 2;
+	private int oneStepRow = 0;
+	private int twoStepRow = 0;
+	private int maxBoundary = 9;
+	
 	public DirectionAlgorithm(GameState state) {
 		this.state = state;
 	}
@@ -14,10 +19,10 @@ public class DirectionAlgorithm implements IAlgorithm {
 	}
 
 	private boolean isGapScenarioInColumnForward(int[][] content, int row, int column) {
-		return column < 9 && row < 9 
-				&& content[row][column]     == Player.piece
-				&& content[row][column + 1] == Board.NONE
-				&& content[row][column + 2] == Player.piece;
+		if (column >= maxBoundary && row >= maxBoundary) { return false; }		
+		return content[row][column] == Player.piece && 
+			   content[row + oneStepRow][column + oneStepColumn] == Board.NONE &&
+			   content[row + twoStepRow][column + twoStepColumn] == Player.piece;
 	}
 
 	private Move getBottomUpMove(int[][] content, int contentLength) {
