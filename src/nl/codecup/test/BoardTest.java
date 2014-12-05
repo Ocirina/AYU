@@ -18,6 +18,24 @@ public class BoardTest {
 	}
 	
 	@Test
+	public void testMovePiece() {
+		assertEquals(board.getBoardContents()[1][0], 1);
+		assertEquals(board.getBoardContents()[1][1], 0);
+		
+		board.movePiece(new Move("B","1","B","2"));
+		
+		assertEquals(board.getBoardContents()[1][0], 0);
+		assertEquals(board.getBoardContents()[1][1], 1);
+	}
+	
+	@Test
+	public void testConvertPiece() {
+		assertEquals(board.convertPiece(1), "W");
+		assertEquals(board.convertPiece(2), "B");
+		assertEquals(board.convertPiece(0), " ");		
+	}
+	
+	@Test
 	public void testHasNeighbour() {
 		board.movePiece(new Move("B","1","B","2"));
 		assertTrue(board.hasNeighbor(1,1));
@@ -48,6 +66,23 @@ public class BoardTest {
 		assertTrue(board.isBlankSpace(0,2));
 		assertFalse(board.isBlankSpace(1,0));
 		assertFalse(board.isBlankSpace(0,1));
+	}
+	
+	@Test
+	public void testGetNeighborsByPiece() {
+		board.movePiece(new Move("B","1","B","2"));
+		board.movePiece(new Move("B","2","B","4"));
+		assertEquals(board.getNeighborsByPiece(1,3,1).length, 2);
+		assertEquals(board.getNeighborsByPiece(1,4,1).length, 1);
+		assertEquals(board.getNeighborsByPiece(1,2,1).length, 1);
+	}
+	
+	@Test
+	public void testIsNeighbour() {
+		board.movePiece(new Move("B","1","B","2"));
+		board.movePiece(new Move("B","2","B","4"));
+		assertTrue(board.isNeighbour(1, 3, 1, 2));
+		assertFalse(board.isNeighbour(1, 3, 1, 1));
 	}
 	
 	@After

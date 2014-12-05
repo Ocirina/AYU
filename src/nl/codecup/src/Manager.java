@@ -7,7 +7,6 @@ public class Manager {
     private Referee referee;
     private GameState gameState;
     private final int STARTPLAYER = 1;
-
     private MoveConverter converter;
 
     /**
@@ -22,11 +21,14 @@ public class Manager {
     /**
      * Constructor
      */
-    public Manager() {
+    public Manager() {    	
+    	long startTime = System.currentTimeMillis();
         String input = IO.input(); // leave for debug
         int playerNumber = (input.equals("Start") ? 1 : 2);
         initGame(playerNumber);
         this.handleInput(input);
+        long endTime = System.currentTimeMillis();
+        System.out.println("Total execution time: " + (endTime - startTime) + "ms");
     }
 
     private void initGame(int playerNumber) {
