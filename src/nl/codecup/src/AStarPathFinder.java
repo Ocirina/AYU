@@ -3,22 +3,12 @@ package nl.codecup.src;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PathFinder {
+public class AStarPathFinder implements IPathFinder {
 	private static final String COMMA_SEPARATOR = ",";
 
-	private static PathFinder instance;
 	private Board board;
 
-	private PathFinder() {
-	}
-
-	public static synchronized PathFinder getInstance() {
-		if (instance == null)
-			instance = new PathFinder();
-		return instance;
-	}
-
-	public String[] findShortestPathForGroup(Group[] groups, Board board,
+	public String[] findShortestPath(Group[] groups, Board board,
 			Group group) {
 		this.board = board;
 		return getShortestPathsToGroups(group, groups);

@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Player {
     private GameState state;
+    private IPathFinder pathFinder = new AStarPathFinder();
     public static int piece;
 
     public Player(GameState state, int piece) {
@@ -50,7 +51,7 @@ public class Player {
             int groupIndex = randomInt(0, groups.size() - 1);
 
             Group startGroup = groups.get(groupIndex);
-            String[] shortestPath = PathFinder.getInstance().findShortestPathForGroup(state.getGroups(), state.getBoard(), startGroup);
+            String[] shortestPath = pathFinder.findShortestPath(state.getGroups(), state.getBoard(), startGroup);
             if (shortestPath != null) {
                 return constructMoveFromShortestPath(startGroup, shortestPath[0].split(","));
             }
