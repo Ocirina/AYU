@@ -334,7 +334,7 @@ public class Board {
 	 */
 	public String convertPiece(int piece) {
 		if (piece != NONE) {
-			return piece == WHITE ? "W" : "B";
+			return piece == WHITE ? "X" : "O";
 		}
 
 		return " ";
