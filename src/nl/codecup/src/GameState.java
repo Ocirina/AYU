@@ -1,8 +1,5 @@
 package nl.codecup.src;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GameState {
     private Board board;
     private int playingPiece;
@@ -68,7 +65,7 @@ public class GameState {
      * 
      * @return An integer array.
      */
-    public Integer[] getIndexesOfAyuGroups() {
+    /*public Integer[] getIndexesOfAyuGroups() {
         List<Integer> groups = new ArrayList<Integer>();
         for (Group group : playerGroups) {
             if (group != null && group.getCoordinates().size() >= 2) {
@@ -76,7 +73,7 @@ public class GameState {
             }
         }
         return groups.toArray(new Integer[groups.size()]);
-    }
+    }*/
 
     /**
      * Places the move on the board and returns this in a new state.

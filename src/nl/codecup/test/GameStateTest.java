@@ -25,13 +25,6 @@ public class GameStateTest {
 		assertEquals(gameState.getGroupsLength(), 30);
 	}
 	
-	@Test
-	public void testAyuGroups() {
-		Move move = new Move("B","1","B","2");
-		gameState = gameState.makeMove(move);
-		
-		assertEquals(gameState.getIndexesOfAyuGroups().length, 1);
-	}
 	
 	@Test
 	public void testMakeMove() {
@@ -40,8 +33,6 @@ public class GameStateTest {
 		Move move = new Move("B","1","B","2");
 		gameState = gameState.makeMove(move);
 		
-		assertEquals(gameState.getGroupsLength(), 29);
-		assertEquals(gameState.getIndexesOfAyuGroups().length, 1);
 		assertEquals(gameState.getBoardContents()[1][1], Player.piece);
 	}
 	

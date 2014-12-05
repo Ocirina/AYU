@@ -332,7 +332,7 @@ public class Board {
 	 * @param piece
 	 * @return
 	 */
-	private String convertPiece(int piece) {
+	public String convertPiece(int piece) {
 		if (piece != NONE) {
 			return piece == WHITE ? "W" : "B";
 		}
