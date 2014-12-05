@@ -6,21 +6,21 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomMoveAlgorithm implements IAlgorithm {
-	private IPathFinder pathFinder;
-	private Group[] playerGroups;
-	private Board board;
-	
-	public RandomMoveAlgorithm(Group[] playerGroups, Board board, IPathFinder pathFinder) {
-		this.board = board;
-		this.playerGroups = playerGroups;
-		this.pathFinder = pathFinder;
-	}
+    private IPathFinder pathFinder;
+    private Group[] playerGroups;
+    private Board board;
 
-	public Move getMove() {
-		List<Group> remainingGroups = Arrays.asList(this.playerGroups);
-		remainingGroups = new ArrayList<Group>(remainingGroups);
-		return getRandomMove(remainingGroups);
-	}
+    public RandomMoveAlgorithm(Group[] playerGroups, Board board, IPathFinder pathFinder) {
+        this.board = board;
+        this.playerGroups = playerGroups;
+        this.pathFinder = pathFinder;
+    }
+
+    public Move getMove() {
+        List<Group> remainingGroups = Arrays.asList(this.playerGroups);
+        remainingGroups = new ArrayList<Group>(remainingGroups);
+        return getRandomMove(remainingGroups);
+    }
 
     private Move getRandomMove(List<Group> groups) {
         if (groups.size() > 0) {
@@ -35,7 +35,7 @@ public class RandomMoveAlgorithm implements IAlgorithm {
             return getRandomMove(groups);
         }
         return null;
-    }    
+    }
 
     /**
      * constructs a move based on the shortest path between two groups
@@ -49,16 +49,19 @@ public class RandomMoveAlgorithm implements IAlgorithm {
         int targetY = Integer.parseInt(shortestPath[1]);
 
         String[] origin = startGroup.findPointMostFarAway(targetX, targetY, this.board);
+        if (origin == null || origin[0] == null || origin[1] == null) {
+            return null;
+        }
+
         int originX = Integer.parseInt(origin[0]);
         int originY = Integer.parseInt(origin[1]);
 
         if (this.board.getBoardContents()[originX][originY] != Player.piece) {
             return getMove();
         }
+
         return new Move(originX, originY, targetX, targetY);
     }
-    
-
 
     /**
      * get a random number between the min and max parameters
