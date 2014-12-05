@@ -33,20 +33,19 @@ public class Player {
 		this.state.recheckGroups();
 		IO.debug("TRY TO FIND MOVE FOR PLAYER: " + Player.piece);
 		IO.debug("AMOUNT OF GROUPS: " + state.getGroupsLength());
+		IAlgorithm random = new RandomMoveAlgorithm(state.getGroups() , state.getBoard(), pathFinder);
 
 		if (move == null && state.getGroupsLength() > 15) {
 			move = new DirectionAlgorithm(state).getMove();
 		}
 		if (move == null && state.getGroupsLength() > 10) {
-			move = getMonteCarloMove(2, 4, new RandomMoveAlgorithm(state,
-					pathFinder));
+			move = getMonteCarloMove(2, 4, random);
 		}
 		if (move == null && state.getGroupsLength() > 5) {
-			move = getMonteCarloMove(5, 1, new RandomMoveAlgorithm(state,
-					pathFinder));
+			move = getMonteCarloMove(5, 1, random);
 		}
 		if (move == null) {
-			move = new RandomMoveAlgorithm(state, pathFinder).getMove();
+			move = random.getMove();
 		}
 
 		return move;
