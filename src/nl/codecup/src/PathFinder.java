@@ -108,8 +108,7 @@ public class PathFinder {
 				if (added) {
 					minimumDistance = distance;
 				}
-
-				if (!added) {
+				else {
 					/*
 					 * Insertion sort Insert the group where the distance is
 					 * lower than the current distance in the loop. Indexes of
