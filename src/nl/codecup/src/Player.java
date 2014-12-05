@@ -109,16 +109,20 @@ public class Player {
 
         if (move == null && state.getGroupsLength() > 15) {
             move = getMoveUpInBoard(this.state);
+            IO.debug("brian's move");
         }
          if (move == null && state.getGroupsLength() > 10) {
         	move = getMonteCarloMove(2,4); 
+        	IO.debug("mc's big group move");
         }
          if (move == null && state.getGroupsLength() > 5) {
-        	move = getMonteCarloMove(5,1); 
+        	move = getMonteCarloMove(5,1);
+        	IO.debug("mc's small group move");
         }
         if (move == null)
         {
         	move = getRandomMove();
+        	IO.debug("make random move");
         }
 //        if (move == null && state.getGroupsLength() > 5 && state.getGroupsLength() <= 18) {
 //            move = getRandomMove();
