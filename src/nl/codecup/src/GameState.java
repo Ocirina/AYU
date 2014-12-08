@@ -199,7 +199,6 @@ public class GameState {
     }
 
     public int getPlayingPiece() {
-        // TODO Auto-generated method stub
         return this.playingPiece;
     }
     
