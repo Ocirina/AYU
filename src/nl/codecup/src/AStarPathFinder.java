@@ -8,6 +8,9 @@ public class AStarPathFinder implements IPathFinder {
 
 	private Board board;
 
+	/**
+	 * 
+	 */
 	public String findShortestPath(Group[] groups, Board board,
 			Group group) {
 		this.board = board;
