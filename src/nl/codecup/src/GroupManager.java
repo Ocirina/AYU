@@ -15,7 +15,7 @@ public class GroupManager {
             for (int column = 0; column < Board.SIZE; column++) {
                 if (boardArray[row][column] == piece && getGroupByCoordinate(row, column, groupsArray) == null) {
             		Group group = new Group(groupsArray.size());
-            		group.addCoordinate(row + GROUP_SEPERATOR + column);
+            		group.addCoordinate(joinCoordinates(row, column));
             		String[] neighBors = board.getNeighbors(row, column);
                     groupsArray.add(checkNeighBorsForGroup(neighBors, group, board));
                 }
