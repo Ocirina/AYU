@@ -61,22 +61,6 @@ public class GameState {
     }
 
     /**
-     * Returns the indexes of real ayu groups. Real ayu groups have a length of
-     * 2 or higher.
-     * 
-     * @return An integer array.
-     */
-    /*public Integer[] getIndexesOfAyuGroups() {
-        List<Integer> groups = new ArrayList<Integer>();
-        for (Group group : playerGroups) {
-            if (group != null && group.getCoordinates().size() >= 2) {
-                groups.add(group.getIndexInList());
-            }
-        }
-        return groups.toArray(new Integer[groups.size()]);
-    }*/
-
-    /**
      * Places the move on the board and returns this in a new state.
      * 
      * @param row
