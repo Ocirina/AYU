@@ -127,6 +127,7 @@ public class Manager {
         while (!input.equals("Quit!")) {
             if (converter.isMoveFormat(input)) {
                 gameState = gameState.makeMove(this.readMove(input));
+                gameState.setTimePast(getTimePastInMiliseconds());
                 gameState = this.player.takeTurn(gameState);
             }
 

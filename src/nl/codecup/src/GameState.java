@@ -7,6 +7,7 @@ public class GameState {
     private int winner = 0;
     private Group[] playerGroups = new Group[30];
     private Move playableMove;
+	private long timePastInMiliseconds;
 
     public GameState(int playerPiece, int opponentPiece) {
         this.playingPiece = playerPiece;
@@ -233,5 +234,12 @@ public class GameState {
 	public void setPlayableMove(Move playableMove) {
 		this.playableMove = playableMove;
 	}
+
+	public void setTimePast(long timePastInMiliseconds) {
+		this.timePastInMiliseconds = timePastInMiliseconds;
+	}
     
+	public long getTimePastInMiliseconds() {
+		return this.timePastInMiliseconds;
+	}
 }
