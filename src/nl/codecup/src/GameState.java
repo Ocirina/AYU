@@ -36,7 +36,7 @@ public class GameState {
 
     public void recheckGroups() {
         this.playerGroups = GroupManager.getGroupsByPiece(this.getBoard(), Player.piece);
-        groupsToString();
+        IO.debug(groupsToString());
     }
 
     public int getGroupsLength() {
