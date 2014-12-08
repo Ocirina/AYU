@@ -8,9 +8,6 @@ public class AStarPathFinder implements IPathFinder {
 
 	private Board board;
 
-	/**
-	 * 
-	 */
 	public String[] findShortestPath(Group[] groups, Board board,
 			Group group) {
 		this.board = board;
@@ -43,8 +40,8 @@ public class AStarPathFinder implements IPathFinder {
 		 */
 		for (String coordinate1 : group1.getCoordinates()) {
 			for (String coordinate2 : group2.getCoordinates()) {
-				String[] temp = execute(convertStringToIntArray(split(coordinate1)),
-						convertStringToIntArray(split(coordinate2)), new ArrayList<String>(
+				String[] temp = findShortestPath(split(coordinate1),
+						split(coordinate2), new ArrayList<String>(
 								unvisitedNodes), new ArrayList<String>());
 				if (coordinateList == null || (coordinateList != null)
 						&& temp != null && temp.length < coordinateList.length) {
@@ -131,8 +128,8 @@ public class AStarPathFinder implements IPathFinder {
 				}
 			}
 		}
-		String[] coordinate = findShortestPossiblePath(group, sortedList);
-		return coordinate;
+		String[] path = findShortestPossiblePath(group, sortedList);
+		return path;
 
 	}
 
@@ -186,13 +183,14 @@ public class AStarPathFinder implements IPathFinder {
 				list = tempList;
 			}
 		}
-		
+
 		return list;
 	}
 
-	private String[] execute(int[] current, int[] end,
+	private String[] findShortestPath(String[] current, String[] end,
 			List<String> unvisited, List<String> path) {
-		String[] neighbors = board.getNeighborsByPiece(current[0], current[1], Board.NONE);
+		String[] neighbors = board.getNeighborsByPiece(
+				Integer.parseInt(current[0]), Integer.parseInt(current[1]), 0);
 		String[] returnValue = null;
 		List<String> unvisitedRef = new ArrayList<String>(unvisited);
 
@@ -200,39 +198,48 @@ public class AStarPathFinder implements IPathFinder {
 		 * Visit each neighbour to check a path. Neighbours are places that
 		 * contain no piece, so a value of 0.
 		 */
-		for (String neighbor : neighbors) {
-			if (unvisitedRef.contains(neighbor)) {
-				int[] coords = convertStringToIntArray(split(neighbor));
-				
-				unvisited.remove(neighbor);
-				List<String> newPath = new ArrayList<String>(path);
-				if (!newPath.contains(neighbor))
-					newPath.add(neighbor);
+		for (int i = 0; i < neighbors.length; i++) {
+			String neighbor = neighbors[i];
+			if (neighbor != null && unvisitedRef.contains(neighbor)) {
+				String[] coords = split(neighbor);
+				int x = Integer.parseInt(coords[0]);
+				int y = Integer.parseInt(coords[1]);
 
 				/*
-				 * If the current neighbor of the 'current' coordinate that
-				 * is checked is a neighbor of the end coordinate, a path is
-				 * found and set if it is shorter. Move on to the next
-				 * neighbor of the 'current' coordinate to check whether
-				 * there is another path possible.
+				 * Neighbour must be a blank space (0)
 				 */
-				if (board.isNeighbour(coords[0], coords[1], end[0], end[1])) {
-					returnValue = assignPath(returnValue,
-							newPath.toArray(new String[newPath.size()]));
-					continue;
-				}
+				if (board.isBlankSpace(x, y)) {
+					unvisited.remove(unvisited.indexOf(neighbor));
+					List<String> newPath = new ArrayList<String>(path);
+					if (!newPath.contains(neighbor))
+						newPath.add(neighbor);
 
-				/**
-				 * The path is not yet found, take the coordinates of the
-				 * neighbor and try to check it's neighbors if it is a
-				 * neighbor of the end coordinate. Set the path if it's
-				 * shorter. Reset the unvisited nodes for the next neighbor,
-				 * else it cannot go over the nodes the previous neighbor
-				 * has visited, which should not happen.
-				 */
-				returnValue = assignPath(returnValue,
-						execute(coords, end, unvisited, newPath));
-				unvisited = unvisitedRef;
+					/*
+					 * If the current neighbor of the 'current' coordinate that
+					 * is checked is a neighbor of the end coordinate, a path is
+					 * found and set if it is shorter. Move on to the next
+					 * neighbor of the 'current' coordinate to check whether
+					 * there is another path possible.
+					 */
+					if (board.isNeighbour(x, y, Integer.parseInt(end[0]),
+							Integer.parseInt(end[1]))) {
+						returnValue = assignPath(returnValue,
+								newPath.toArray(new String[newPath.size()]));
+						continue;
+					}
+
+					/**
+					 * The path is not yet found, take the coordinates of the
+					 * neighbor and try to check it's neighbors if it is a
+					 * neighbor of the end coordinate. Set the path if it's
+					 * shorter. Reset the unvisited nodes for the next neighbor,
+					 * else it cannot go over the nodes the previous neighbor
+					 * has visited, which should not happen.
+					 */
+					returnValue = assignPath(returnValue,
+							findShortestPath(coords, end, unvisited, newPath));
+					unvisited = unvisitedRef;
+				}
 			}
 		}
 
@@ -281,15 +288,6 @@ public class AStarPathFinder implements IPathFinder {
 	 */
 	private String[] split(String coordinate) {
 		return coordinate.split(COMMA_SEPARATOR);
-	}
-	
-	/**
-	 * Converts a string array to an int array
-	 * @param coordinate
-	 * @return
-	 */
-	private int[] convertStringToIntArray(String[] coordinate) {
-		return (new int[]{ Integer.parseInt(coordinate[0]), Integer.parseInt(coordinate[1]) });
 	}
 
 	/**
