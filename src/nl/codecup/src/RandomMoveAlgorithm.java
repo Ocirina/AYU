@@ -27,9 +27,9 @@ public class RandomMoveAlgorithm implements IAlgorithm {
             int groupIndex = randomInt(0, groups.size() - 1);
 
             Group startGroup = groups.get(groupIndex);
-            String shortestPathCoordinate = pathFinder.findShortestPath(this.playerGroups, this.board, startGroup);
+            String shortestPathCoordinate[] = pathFinder.findShortestPath(this.playerGroups, this.board, startGroup);
             if (shortestPathCoordinate != null) {
-                return constructMoveFromShortestPath(startGroup, shortestPathCoordinate.split(","));
+                return constructMoveFromShortestPath(startGroup, shortestPathCoordinate[0].split(","));
             }
             groups.remove(startGroup);
             return getRandomMove(groups);
