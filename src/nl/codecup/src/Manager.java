@@ -15,9 +15,9 @@ public class Manager {
      * @param args
      */
     public static void main(String args[]) {
-    	String input = IO.input(); // leave for debug
+    	String input = IO.input();
         int playerNumber = (input.equals("Start") ? 1 : 2);
-        new Manager().start(playerNumber);
+        new Manager().start(input, playerNumber);
     }
 
     /**
@@ -25,10 +25,10 @@ public class Manager {
      */
     public Manager() {}
     
-    private void start(int playerNumber) {
+    private void start(String input, int playerNumber) {
     	startTime = System.currentTimeMillis();
         initGame(playerNumber);
-        this.handleInput("");
+        this.handleInput(input);
     }
 
     private void initGame(int playerNumber) {
