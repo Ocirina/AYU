@@ -11,7 +11,7 @@ public class AStarPathFinder implements IPathFinder {
 	/**
 	 * 
 	 */
-	public String findShortestPath(Group[] groups, Board board,
+	public String[] findShortestPath(Group[] groups, Board board,
 			Group group) {
 		this.board = board;
 		return getShortestPathsToGroups(group, groups);
@@ -62,7 +62,7 @@ public class AStarPathFinder implements IPathFinder {
 	 * @param group
 	 * @return
 	 */
-	private String getShortestPathsToGroups(Group group, Group[] playerGroups) {
+	private String[] getShortestPathsToGroups(Group group, Group[] playerGroups) {
 		List<Group> remainingGroups = getRemainingGroups(playerGroups);
 		List<Group> sortedList = new ArrayList<Group>();
 		List<Integer> distances = new ArrayList<Integer>();
@@ -131,7 +131,7 @@ public class AStarPathFinder implements IPathFinder {
 				}
 			}
 		}
-		String coordinate = findShortestPossiblePath(group, sortedList);
+		String[] coordinate = findShortestPossiblePath(group, sortedList);
 		return coordinate;
 
 	}
@@ -169,7 +169,7 @@ public class AStarPathFinder implements IPathFinder {
 		return false;
 	}
 
-	private String findShortestPossiblePath(Group start,
+	private String[] findShortestPossiblePath(Group start,
 			List<Group> sortedList) {
 		String[] list = null;
 		/*
@@ -187,7 +187,7 @@ public class AStarPathFinder implements IPathFinder {
 			}
 		}
 		
-		return list != null && list.length > 0 ? list[0] : null;
+		return list;
 	}
 
 	private String[] execute(int[] current, int[] end,

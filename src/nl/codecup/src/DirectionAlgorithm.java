@@ -19,7 +19,7 @@ public class DirectionAlgorithm implements IAlgorithm {
 	}
 
 	private boolean isGapScenarioInColumnForward(int[][] content, int row, int column) {
-		if (column >= maxBoundary && row >= maxBoundary) { return false; }		
+		if (column >= maxBoundary || row >= maxBoundary) { return false; }		
 		return content[row][column] == Player.piece && 
 			   content[row + oneStepRow][column + oneStepColumn] == Board.NONE &&
 			   content[row + twoStepRow][column + twoStepColumn] == Player.piece;
