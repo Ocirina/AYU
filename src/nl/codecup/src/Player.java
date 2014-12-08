@@ -4,6 +4,7 @@ public class Player {
     private GameState state;
     private IPathFinder pathFinder = new AStarPathFinder();
     public static int piece;
+    private static int FIVESECONDS = 5000;
 
     public Player(GameState state, int piece) {
         this.state = state;
@@ -35,18 +36,20 @@ public class Player {
         // IO.debug("AMOUNT OF GROUPS: " + state.getGroupsLength());
         IAlgorithm random = new RandomMoveAlgorithm(state.getGroups(), state.getBoard(), pathFinder);
 
-        if (move == null && state.getGroupsLength() > 15) {
-            move = new DirectionAlgorithm(state).getMove();
-        }
+        if (state.getTimePastInMiliseconds() > FIVESECONDS) {
+        	if (move == null && state.getGroupsLength() > 15) {
+                move = new DirectionAlgorithm(state).getMove();
+            }
 
-        if (move == null && state.getGroupsLength() > 10) {
-            move = getMonteCarloMove(2, 4, random);
-        }
+            if (move == null && state.getGroupsLength() > 10) {
+                move = getMonteCarloMove(2, 4, random);
+            }
 
-        if (move == null && state.getGroupsLength() > 5) {
-            move = getMonteCarloMove(5, 1, random);
+            if (move == null && state.getGroupsLength() > 5) {
+                move = getMonteCarloMove(5, 1, random);
+            }
         }
-
+        
         if (move == null) {
             move = random.getMove();
         }
