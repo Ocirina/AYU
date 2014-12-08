@@ -23,7 +23,7 @@ public class RandomMoveAlgorithm implements IAlgorithm {
     }
 
     private Move getRandomMove(List<Group> groups) {
-        if (groups.size() > 0) {
+        //if (groups.size() > 0) {
             int groupIndex = randomInt(0, groups.size() - 1);
 
             Group startGroup = groups.get(groupIndex);
@@ -33,8 +33,8 @@ public class RandomMoveAlgorithm implements IAlgorithm {
             }
             groups.remove(startGroup);
             return getRandomMove(groups);
-        }
-        return null;
+        //}
+        //return null;
     }
 
     /**
