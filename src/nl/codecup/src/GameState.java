@@ -19,7 +19,7 @@ public class GameState {
         this.playingPiece = playerPiece;
         this.opponentPiece = opponentPiece;
         this.checkForWin();
-        this.createGroupsForPlayer();
+        this.recheckGroups();
     }
 
     public GameState(GameState state) {
@@ -34,26 +34,9 @@ public class GameState {
         return board;
     }
 
-    /**
-     * Creates the groups for the player for a start board.
-     */
-    private void createGroupsForPlayer() {
-        int[][] contents = board.getBoardContents();
-        int count = 0;
-        for (int i = 0; i < contents.length; i++) {
-            for (int j = 0; j < contents[i].length; j++) {
-                if (contents[i][j] == playingPiece) {
-                    Group group = new Group(count);
-                    group.addCoordinate(i + "," + j);
-                    playerGroups[count] = group;
-                    count++;
-                }
-            }
-        }
-    }
-
     public void recheckGroups() {
         this.playerGroups = GroupManager.getGroupsByPiece(this.getBoard(), Player.piece);
+        groupsToString();
     }
 
     public int getGroupsLength() {

@@ -11,16 +11,17 @@ public class GroupManager {
         List<Group> groupsArray = new ArrayList<Group>();
         int[][] boardArray = board.getBoardContents();
 
-        for (int row = 0; row < 11; row++) {
-            for (int column = 0; column < 11; column++) {
+        for (int row = 0; row < Board.SIZE; row++) {
+            for (int column = 0; column < Board.SIZE; column++) {
                 if (boardArray[row][column] == piece && getGroupByCoordinate(row, column, groupsArray) == null) {
             		Group group = new Group(groupsArray.size());
-            		group.addCoordinate(row + GROUP_SEPERATOR + column);
+            		group.addCoordinate(joinCoordinates(row, column));
             		String[] neighBors = board.getNeighbors(row, column);
                     groupsArray.add(checkNeighBorsForGroup(neighBors, group, board));
                 }
             }
         }
+        
         return groupsArray.toArray(new Group[groupsArray.size()]);
     }
     
