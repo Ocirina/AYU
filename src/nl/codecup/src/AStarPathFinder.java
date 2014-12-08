@@ -8,7 +8,7 @@ public class AStarPathFinder implements IPathFinder {
 
 	private Board board;
 
-	public String[] findShortestPath(Group[] groups, Board board,
+	public String findShortestPath(Group[] groups, Board board,
 			Group group) {
 		this.board = board;
 		return getShortestPathsToGroups(group, groups);
@@ -40,7 +40,7 @@ public class AStarPathFinder implements IPathFinder {
 		 */
 		for (String coordinate1 : group1.getCoordinates()) {
 			for (String coordinate2 : group2.getCoordinates()) {
-				String[] temp = findShortestPath(split(coordinate1),
+				String[] temp = execute(split(coordinate1),
 						split(coordinate2), new ArrayList<String>(
 								unvisitedNodes), new ArrayList<String>());
 				if (coordinateList == null || (coordinateList != null)
@@ -59,7 +59,7 @@ public class AStarPathFinder implements IPathFinder {
 	 * @param group
 	 * @return
 	 */
-	private String[] getShortestPathsToGroups(Group group, Group[] playerGroups) {
+	private String getShortestPathsToGroups(Group group, Group[] playerGroups) {
 		List<Group> remainingGroups = getRemainingGroups(playerGroups);
 		List<Group> sortedList = new ArrayList<Group>();
 		List<Integer> distances = new ArrayList<Integer>();
@@ -128,8 +128,8 @@ public class AStarPathFinder implements IPathFinder {
 				}
 			}
 		}
-		String[] path = findShortestPossiblePath(group, sortedList);
-		return path;
+		String coordinate = findShortestPossiblePath(group, sortedList);
+		return coordinate;
 
 	}
 
@@ -166,7 +166,7 @@ public class AStarPathFinder implements IPathFinder {
 		return false;
 	}
 
-	private String[] findShortestPossiblePath(Group start,
+	private String findShortestPossiblePath(Group start,
 			List<Group> sortedList) {
 		String[] list = null;
 		/*
@@ -184,10 +184,10 @@ public class AStarPathFinder implements IPathFinder {
 			}
 		}
 
-		return list;
+		return list.length > 0 ? list[0] : null;
 	}
 
-	private String[] findShortestPath(String[] current, String[] end,
+	private String[] execute(String[] current, String[] end,
 			List<String> unvisited, List<String> path) {
 		String[] neighbors = board.getNeighborsByPiece(
 				Integer.parseInt(current[0]), Integer.parseInt(current[1]), 0);
@@ -237,7 +237,7 @@ public class AStarPathFinder implements IPathFinder {
 					 * has visited, which should not happen.
 					 */
 					returnValue = assignPath(returnValue,
-							findShortestPath(coords, end, unvisited, newPath));
+							execute(coords, end, unvisited, newPath));
 					unvisited = unvisitedRef;
 				}
 			}
