@@ -7,6 +7,7 @@ public class Manager {
     private GameState gameState;
     private final int STARTPLAYER = 1;
     private MoveConverter converter;
+    private long startTime;
 
     /**
      * Main
@@ -14,20 +15,20 @@ public class Manager {
      * @param args
      */
     public static void main(String args[]) {
-        new Manager();
+    	String input = IO.input(); // leave for debug
+        int playerNumber = (input.equals("Start") ? 1 : 2);
+        new Manager().start(playerNumber);
     }
 
     /**
      * Constructor
      */
-    public Manager() {    	
-    	long startTime = System.currentTimeMillis();
-        String input = IO.input(); // leave for debug
-        int playerNumber = (input.equals("Start") ? 1 : 2);
+    public Manager() {}
+    
+    private void start(int playerNumber) {
+    	startTime = System.currentTimeMillis();
         initGame(playerNumber);
-        this.handleInput(input);
-        long endTime = System.currentTimeMillis();
-        //IO.debug("Total execution time: " + (endTime - startTime) + "ms");
+        this.handleInput("");
     }
 
     private void initGame(int playerNumber) {
@@ -38,9 +39,9 @@ public class Manager {
             this.gameState = this.player.takeTurn(this.gameState);
         }
     }
-
-    // TODO: remove this constructor and move code from other constructor into seperate method named setupGame().
-    public Manager(boolean testing) {
+    
+    public long getTimePastInMiliseconds() {
+        return startTime - System.currentTimeMillis();
     }
 
     /**

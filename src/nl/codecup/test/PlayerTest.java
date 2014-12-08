@@ -11,7 +11,7 @@ public class PlayerTest {
 	private static final int BLACK = 2;
 	
 	private GameState gameState = new GameState(WHITE, BLACK);
-	private Manager manager = new Manager(true);
+	private Manager manager = new Manager();
 	private Player player = new Player(gameState, WHITE);
 	private Board board = new Board(new int[][] {
 			{ NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE, BLACK, NONE },
