@@ -22,15 +22,22 @@ public class RandomMoveAlgorithm implements IAlgorithm {
         return getRandomMove(remainingGroups);
     }
 
-    private Move getRandomMove(List<Group> groups) {
+    @SuppressWarnings("unused")
+	private Move getRandomMove(List<Group> groups) {
         int groupIndex = randomInt(0, groups.size() - 1);
-
+        
         Group startGroup = groups.get(groupIndex);
         String[] shortestPathCoordinate = pathFinder.findShortestPath(this.playerGroups, this.board, startGroup);
+        for (String s :  shortestPathCoordinate)
+        {
+        IO.debug(s + ",");
+        }
+        
         if (shortestPathCoordinate != null) {
             return constructMoveFromShortestPath(startGroup, shortestPathCoordinate[0].split(","));
         }
         groups.remove(startGroup);
+        
         return getRandomMove(groups);
     }
 
@@ -44,19 +51,31 @@ public class RandomMoveAlgorithm implements IAlgorithm {
     private Move constructMoveFromShortestPath(Group startGroup, String[] shortestPath) {
         int targetX = Integer.parseInt(shortestPath[0]);
         int targetY = Integer.parseInt(shortestPath[1]);
-
-        String[] origin = startGroup.findPointMostFarAway(targetX, targetY, this.board);
-        if (origin == null || origin[0] == null || origin[1] == null) {
-            return null;
+        IO.debug(targetX + "" + targetY);
+        for(String s: startGroup.getCoordinates())
+        {
+        IO.debug("start groep coordinates" + s.split(",")[0] + s.split(",")[1] );
         }
+        String[] origin = startGroup.findPointMostFarAway(targetX, targetY, this.board);
+        int originX;
+        int originY;
+        if (origin == null || origin[0] == null || origin[1] == null) {
+        	
+        	originX = Integer.parseInt(startGroup.getCoordinates().get(0).split(",")[0]);
+        	originY = Integer.parseInt(startGroup.getCoordinates().get(0).split(",")[1]);
+        }
+        else
+        {
+      
 
-        int originX = Integer.parseInt(origin[0]);
-        int originY = Integer.parseInt(origin[1]);
+         originX = Integer.parseInt(origin[0]);
+         originY = Integer.parseInt(origin[1]);
+        }
 
         if (this.board.getBoardContents()[originX][originY] != Player.piece) {
             return getMove();
         }
-
+       
         return new Move(originX, originY, targetX, targetY);
     }
 
