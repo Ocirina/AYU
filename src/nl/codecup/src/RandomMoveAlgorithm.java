@@ -60,16 +60,12 @@ public class RandomMoveAlgorithm implements IAlgorithm {
         int originX;
         int originY;
         if (origin == null || origin[0] == null || origin[1] == null) {
-        	
         	originX = Integer.parseInt(startGroup.getCoordinates().get(0).split(",")[0]);
         	originY = Integer.parseInt(startGroup.getCoordinates().get(0).split(",")[1]);
         }
-        else
-        {
-      
-
-         originX = Integer.parseInt(origin[0]);
-         originY = Integer.parseInt(origin[1]);
+        else {
+        	originX = Integer.parseInt(origin[0]);
+        	originY = Integer.parseInt(origin[1]);
         }
 
         if (this.board.getBoardContents()[originX][originY] != Player.piece) {
