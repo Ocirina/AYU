@@ -137,6 +137,9 @@ public class Group {
         String[] coordinateIfBlock = null;
         int maximumDistance = 0;
         int amountOfEdges = 0;
+        if(this.coordinates.size() == 1) 
+        	return this.coordinates.get(0).split(",");
+     
         for (int i = 0; i < this.coordinates.size(); i++) {
             String[] coords = this.coordinates.get(i).split(",");
             int coordX = Integer.parseInt(coords[0]);
