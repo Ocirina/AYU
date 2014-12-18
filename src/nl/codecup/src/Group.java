@@ -145,8 +145,7 @@ public class Group {
             int coordX = Integer.parseInt(coords[0]);
             int coordY = Integer.parseInt(coords[1]);
             if(board.hasNeighbor(coordX, coordY)) {
-            	int tempDistance = Math.abs(coordX - x);
-	            tempDistance += Math.abs(coordY - y);
+            	int tempDistance = Math.abs(coordX - x) + Math.abs(coordY - y);
 	            if(board.onEdgesOfGroup(coordX, coordY)) {
 		            amountOfEdges++;
 		            if (tempDistance > maximumDistance || maximumDistance == 0) {
@@ -159,8 +158,7 @@ public class Group {
 		            }
 	            }
         	} else {
-                coordsReturned = coords;
-                break;
+                return coords;
         	}
         }
         

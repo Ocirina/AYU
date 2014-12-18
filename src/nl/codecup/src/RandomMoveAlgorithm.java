@@ -22,16 +22,11 @@ public class RandomMoveAlgorithm implements IAlgorithm {
         return getRandomMove(remainingGroups);
     }
 
-    @SuppressWarnings("unused")
 	private Move getRandomMove(List<Group> groups) {
         int groupIndex = randomInt(0, groups.size() - 1);
         
         Group startGroup = groups.get(groupIndex);
         String[] shortestPathCoordinate = pathFinder.findShortestPath(this.playerGroups, this.board, startGroup);
-        for (String s :  shortestPathCoordinate)
-        {
-        IO.debug(s + ",");
-        }
         
         if (shortestPathCoordinate != null) {
             return constructMoveFromShortestPath(startGroup, shortestPathCoordinate[0].split(","));
@@ -55,10 +50,6 @@ public class RandomMoveAlgorithm implements IAlgorithm {
         String[] origin = startGroup.findPointMostFarAway(targetX, targetY, this.board);
         int originX = Integer.parseInt(origin[0]);
         int originY = Integer.parseInt(origin[1]);
-
-        if (this.board.getBoardContents()[originX][originY] != Player.piece) {
-            return getMove();
-        }
        
         return new Move(originX, originY, targetX, targetY);
     }
