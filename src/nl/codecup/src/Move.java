@@ -10,22 +10,22 @@ public class Move {
 	/**
 	 * From location X
 	 */
-	private String originX;
+	private String boardOriginX;
 
 	/**
 	 * From location Y
 	 */
-	private String originY;
+	private String boardOriginY;
 	
 	/**
 	 * Target location X
 	 */
-	private String targetX;
+	private String boardTargetX;
 
 	/**
 	 * Target location Y
 	 */
-	private String targetY;
+	private String boardTargetY;
 
 	/**
 	 * Constructor without user
@@ -74,10 +74,10 @@ public class Move {
 	 * @param targetY
 	 */
 	public void setUpMove(String originX, String originY, String targetX, String targetY) {
-		this.originX = originX;
-		this.originY = originY;
-		this.targetX = targetX;
-		this.targetY = targetY;
+		this.boardOriginX = originX;
+		this.boardOriginY = originY;
+		this.boardTargetX = targetX;
+		this.boardTargetY = targetY;
 	}
 	
 	/**
@@ -85,8 +85,8 @@ public class Move {
 	 * 
 	 * @return
 	 */
-	public int getOriginXConverted() {
-		return MoveConverter.convertStringToPoint(this.originX);
+	public int getIndexOriginX() {
+		return MoveConverter.convertStringToPoint(this.boardOriginX);
 	}
 	
 	/**
@@ -94,8 +94,8 @@ public class Move {
 	 * 
 	 * @return
 	 */
-	public int getOriginYConverted() {
-		return (Integer.parseInt(this.originY) - 1);
+	public int getIndexOriginY() {
+		return (Integer.parseInt(this.boardOriginY) - 1);
 	}
 	
 	/**
@@ -103,8 +103,8 @@ public class Move {
 	 * 
 	 * @return
 	 */
-	public int getTargetXConverted() {
-		return MoveConverter.convertStringToPoint(this.targetX);
+	public int getIndexTargetX() {
+		return MoveConverter.convertStringToPoint(this.boardTargetX);
 	}
 	
 	/**
@@ -112,8 +112,8 @@ public class Move {
 	 * 
 	 * @return
 	 */
-	public int getTargetYConverted() {
-		return (Integer.parseInt(this.targetY) - 1);
+	public int getIndexTargetY() {
+		return (Integer.parseInt(this.boardTargetY) - 1);
 	}
 
 	/**
@@ -121,79 +121,80 @@ public class Move {
 	 *
 	 * @return
 	 */
-	public String getFrom() {
-		return this.originX + this.originY;
+	public String getBoardOrigin() {
+		return this.boardOriginX + this.boardOriginY;
 	}
 
 	/**
 	 * Get to Location
 	 * @return
 	 */
-	public String getTo() {
-		return this.targetX + this.targetY;
+	public String getBoardTarget() {
+		return this.boardTargetX + this.boardTargetY;
 	}
 
 	/**
-	 * @return the originX
+	 * @return the boardOriginX
 	 */
-	public String getOriginX() {
-		return originX;
+	public String getBoardOriginX() {
+		return boardOriginX;
 	}
 
 	/**
-	 * @param originX the originX to set
+	 * @param boardOriginX the boardOriginX to set
 	 */
-	public void setOriginX(String originX) {
-		this.originX = originX;
+	public void setBoardOriginX(String boardOriginX) {
+		this.boardOriginX = boardOriginX;
 	}
 
 	/**
-	 * @return the originY
+	 * @return the boardOriginY
 	 */
-	public String getOriginY() {
-		return originY;
+	public String getBoardOriginY() {
+		return boardOriginY;
 	}
 
 	/**
-	 * @param originY the originY to set
+	 * @param boardOriginY the boardOriginY to set
 	 */
-	public void setOriginY(String originY) {
-		this.originY = originY;
+	public void setBoardOriginY(String boardOriginY) {
+		this.boardOriginY = boardOriginY;
 	}
 
 	/**
-	 * @return the targetX
+	 * @return the boardTargetX
 	 */
-	public String getTargetX() {
-		return targetX;
+	public String getBoardTargetX() {
+		return boardTargetX;
 	}
 
 	/**
-	 * @param targetX the targetX to set
+	 * @param boardTargetX the boardTargetX to set
 	 */
-	public void setTargetX(String targetX) {
-		this.targetX = targetX;
+	public void setBoardTargetX(String boardTargetX) {
+		this.boardTargetX = boardTargetX;
 	}
 
 	/**
-	 * @return the targetY
+	 * @return the boardTargetY
 	 */
-	public String getTargetY() {
-		return targetY;
+	public String getBoardTargetY() {
+		return boardTargetY;
 	}
 
 	/**
-	 * @param targetY the targetY to set
+	 * @param boardTargetY the boardTargetY to set
 	 */
-	public void setTargetY(String targetY) {
-		this.targetY = targetY;
+	public void setBoardTargetY(String boardTargetY) {
+		this.boardTargetY = boardTargetY;
 	}
+	
 
 	/**
 	 * To string for debugging and sending data to caiaio
 	 */
 	public String toString() {
 		String output = (this.player != null ? this.player.toString() : "");
-		return output + this.originX + this.originY + "-" + this.targetX + this.targetY;
+		return output + this.boardOriginX + this.boardOriginY + "-" + this.boardTargetX + this.boardTargetY;
 	}
 }

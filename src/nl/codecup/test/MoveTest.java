@@ -17,32 +17,32 @@ public class MoveTest {
 	
 	@Test
 	public void testOriginXConverted() {
-		assertEquals(move.getOriginXConverted(), 2);
+		assertEquals(move.getIndexOriginX(), 2);
 	}
 	
 	@Test
 	public void testOriginYConverted() {
-		assertEquals(move.getOriginYConverted(), 4);
+		assertEquals(move.getIndexOriginY(), 4);
 	}
 	
 	@Test
 	public void testTargetXConverted() {
-		assertEquals(move.getTargetXConverted(), 3);
+		assertEquals(move.getIndexTargetX(), 3);
 	}
 
 	@Test
 	public void testTargetYConverted() {
-		assertEquals(move.getTargetYConverted(), 4);
+		assertEquals(move.getIndexTargetY(), 4);
 	}
 	
 	@Test
 	public void testGetFrom() {
-		assertEquals(move.getFrom(), move.getOriginX()+move.getOriginY());
+		assertEquals(move.getBoardOrigin(), move.getBoardOriginX()+move.getBoardOriginY());
 	}
 	
 	@Test
 	public void testGetTo() {
-		assertEquals(move.getTo(), move.getTargetX()+move.getTargetY());
+		assertEquals(move.getBoardTarget(), move.getBoardTargetX()+move.getBoardTargetY());
 	}
 	
 	@After
