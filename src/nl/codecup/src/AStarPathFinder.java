@@ -65,111 +65,8 @@ public class AStarPathFinder implements IPathFinder {
 	 */
 	private String[] getShortestPathsToGroups(Group group, Group[] playerGroups) {
 		List<Group> remainingGroups = getRemainingGroups(playerGroups);
-		List<Group> sortedList = new ArrayList<Group>();
-		List<Integer> distances = new ArrayList<Integer>();
-		int minimumDistance = 0;
-
-		/*
-		 * Loop through each group to get it's minimum distance to the current
-		 * group as start group and add them sorted to the list.
-		 */
-//		for (Group g : remainingGroups) {
-//			/*
-//			 * Should skip itself
-//			 */
-//			if (!group.equals(g)) {
-//				int distance = Integer.MAX_VALUE;
-//
-//				/*
-//				 * This loop checks all coordinates of the group with each
-//				 * coordinate of the current group in the loop to retrieve the
-//				 * minimum distance. It checks it in a many to many way. Example
-//				 * with numbers List 1: [1,2,3] List 2: [4,5,6] It checks for
-//				 * number 1 : 1 -> 4 5 6 It checks for number 2 : 2 -> 4 5 6
-//				 * Same for number 3 So all possibilities are checked. In our
-//				 * case, the numbers are coordinates and for each coordinate it
-//				 * returns the minimum distance.
-//				 */
-//				distance = findShortestDistanceToGroup(group, g, distance);
-//
-//				/*
-//				 * If it's the current minimum distance of all groups, it will
-//				 * be added in addGroupToSortedList and it will return true.
-//				 * Else it returns false.
-//				 */
-//				boolean added = addGroupToSortedList(sortedList, distances,
-//						minimumDistance, g, distance);
-//				if (added) {
-//					minimumDistance = distance;
-//				}
-//				else {
-//					/*
-//					 * Insertion sort Insert the group where the distance is
-//					 * lower than the current distance in the loop. Indexes of
-//					 * 'distances' and 'sortedList' always match
-//					 */
-//					for (int i = 0; i < distances.size(); i++) {
-//						if (distance <= distances.get(i).intValue()) {
-//							added = addDistanceAndGroupToLists(sortedList,
-//									distances, g, distance, i);
-//						}
-//						/*
-//						 * Cancel loop if its inserted
-//						 */
-//						if (added) {
-//							break;
-//						}
-//					}
-//
-//					/*
-//					 * If the group is not yet added, add it to the end of the
-//					 * list.
-//					 */
-//					if (!added) {
-//						sortedList.add(g);
-//						distances.add(distance);
-//					}
-//				}
-//			}
-//		}
 		remainingGroups.remove(group);
-		String[] path = findShortestPossiblePath(group, remainingGroups);
-		return path;
-
-	}
-
-	/**
-	 * @param group
-	 * @param g
-	 * @param distance
-	 * @return
-	 */
-	private int findShortestDistanceToGroup(Group group, Group g, int distance) {
-		
-		for (int c = 0; c < g.getCoordinates().size(); c++) {
-			int tempDistance = group.getMinimumDistance(g.getCoordinates().get(
-					c));
-			if (tempDistance <= distance) {
-				distance = tempDistance;
-			}
-		}
-		return distance;
-	}
-
-	private boolean addDistanceAndGroupToLists(List<Group> sortedList,
-			List<Integer> distances, Group g, int distance, int i) {
-		sortedList.add(i, g);
-		distances.add(i, distance);
-		return true;
-	}
-
-	private boolean addGroupToSortedList(List<Group> sortedList,
-			List<Integer> distances, int minimumDistance, Group g, int distance) {
-		if (minimumDistance == 0 || distance <= minimumDistance) {
-			return addDistanceAndGroupToLists(sortedList, distances, g,
-					distance, 0);
-		}
-		return false;
+		return findShortestPossiblePath(group, remainingGroups);
 	}
 
 	private String[] findShortestPossiblePath(Group start,
@@ -189,14 +86,17 @@ public class AStarPathFinder implements IPathFinder {
 				list = tempList;
 			}
 		}
-
+		IO.debug("Shortestpath list:");
+		for(String s: list) {
+			IO.debug(s);
+		}
+		
 		return list;
 	}
 
 	private String[] findShortestPath(String[] current, String[] end,
 			List<String> unvisited, List<String> path) {
-		String[] neighbors = board.getNeighborsByPiece(
-				Integer.parseInt(current[0]), Integer.parseInt(current[1]), 0);
+		String[] neighbors = board.getNeighborsByPiece(Integer.parseInt(current[0]), Integer.parseInt(current[1]), 0);
 		String[] returnValue = null;
 		List<String> unvisitedRef = new ArrayList<String>(unvisited);
 
@@ -219,6 +119,9 @@ public class AStarPathFinder implements IPathFinder {
 					List<String> newPath = new ArrayList<String>(path);
 					if (!newPath.contains(neighbor))
 						newPath.add(neighbor);
+					
+					if(returnValue != null && newPath.size() > returnValue.length) 
+						continue;
 
 					/*
 					 * If the current neighbor of the 'current' coordinate that
