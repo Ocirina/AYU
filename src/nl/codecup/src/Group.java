@@ -147,11 +147,11 @@ public class Group {
             if(board.onEdgesOfGroup(coordX, coordY)) {
 	            amountOfEdges++;
 	            if (tempDistance > maximumDistance || maximumDistance == 0) {
-	                maximumDistance = tempDistance;
 	                if(board.isCoordOnEdgeOfBoard(coordX, coordY)) {
 	                	edgeOfBoardDistance = tempDistance;
 	                	coordinateIfOnEdgeOfBoard = coords;
 	                } else {
+		                maximumDistance = tempDistance;
 		                coordsReturned = coords;
 	                }
 	            }
@@ -161,7 +161,7 @@ public class Group {
             }
         }
         
-        if(amountOfEdges <= 1 && blockDistance > maximumDistance) {
+        if(amountOfEdges <= 1 && blockDistance > maximumDistance && blockDistance > edgeOfBoardDistance) {
         	return coordinateIfBlock;
         } else {
             return coordinateIfOnEdgeOfBoard != null && edgeOfBoardDistance > maximumDistance ? coordinateIfOnEdgeOfBoard : coordsReturned;
