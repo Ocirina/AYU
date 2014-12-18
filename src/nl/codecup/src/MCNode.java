@@ -29,6 +29,9 @@ public class MCNode {
         this.winPercentage = (float) (this.isWin ? 1.0 : 0.0);
     }
 
+    /**
+     * updates the move value
+     */
     private void updateMoveValue() {
         Move playableMove = this.state.getPlayableMove();
         Board board = this.state.getBoard();
@@ -62,6 +65,11 @@ public class MCNode {
         return children;
     }
 
+    /**
+     * get the playable from the state
+     * 
+     * @return Move
+     */
     public Move getPlayableMove() {
         return state.getPlayableMove();
     }
