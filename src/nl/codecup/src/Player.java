@@ -47,15 +47,21 @@ public class Player {
 
             if (move == null && state.getGroupsLength() > 10) {
                 IO.debug("Move monte 10 start: " + new Timestamp(new java.util.Date().getTime()));
-                move = getMonteCarloMove(2, 3, random);
+                move = getMonteCarloMove(3, 3, random);
+                IO.debug("Move monte 10 end: " + new Timestamp(new java.util.Date().getTime()));
+            }
+            
+            if (move == null && state.getGroupsLength() > 2) {
+                IO.debug("Move monte 10 start: " + new Timestamp(new java.util.Date().getTime()));
+                move = getMonteCarloMove(2, 2, random);
                 IO.debug("Move monte 10 end: " + new Timestamp(new java.util.Date().getTime()));
             }
 
-//            if (move == null && state.getGroupsLength() > 5) {
-//                IO.debug("Move monte 5 start: " + new Timestamp(new java.util.Date().getTime()));
-//                move = getMonteCarloMove(5, 1, random);
-//                IO.debug("Move monte 5 end: " + new Timestamp(new java.util.Date().getTime()));
-//            }
+            if (move == null && state.getGroupsLength() == 2) {
+                IO.debug("Move random start: " + new Timestamp(new java.util.Date().getTime()));
+                move = random.getMove();
+                IO.debug("Move random end: " + new Timestamp(new java.util.Date().getTime()));
+            }
             
         }
 
