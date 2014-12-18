@@ -116,8 +116,6 @@ public class AStarPathFinder implements IPathFinder {
 					if (!newPath.contains(neighbor))
 						newPath.add(neighbor);
 					
-					if(returnValue != null && newPath.size() > returnValue.length) 
-						continue;
 
 					/*
 					 * If the current neighbor of the 'current' coordinate that
