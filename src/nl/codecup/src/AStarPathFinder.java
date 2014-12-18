@@ -86,11 +86,7 @@ public class AStarPathFinder implements IPathFinder {
 				list = tempList;
 			}
 		}
-		IO.debug("Shortestpath list:");
-		for(String s: list) {
-			IO.debug(s);
-		}
-		
+
 		return list;
 	}
 
@@ -119,10 +115,6 @@ public class AStarPathFinder implements IPathFinder {
 					List<String> newPath = new ArrayList<String>(path);
 					if (!newPath.contains(neighbor))
 						newPath.add(neighbor);
-					
-					if(returnValue != null && newPath.size() > returnValue.length) 
-						continue;
-
 					/*
 					 * If the current neighbor of the 'current' coordinate that
 					 * is checked is a neighbor of the end coordinate, a path is
