@@ -134,7 +134,7 @@ public class Group {
      */
     public String[] findPointMostFarAway(int x, int y, Board board) {
         String[] coordsReturned = null, coordinateIfBlock = null, coordinateIfOnEdgeOfBoard = null;
-        int maximumDistance = 0, blockDistance = 0, amountOfEdges = 0;
+        int maximumDistance = 0, blockDistance = 0, edgeOfBoardDistance = 0, amountOfEdges = 0;
         
         if(this.coordinates.size() == 1) 
         	return this.coordinates.get(0).split(",");
@@ -149,6 +149,7 @@ public class Group {
 	            if (tempDistance > maximumDistance || maximumDistance == 0) {
 	                maximumDistance = tempDistance;
 	                if(board.isCoordOnEdgeOfBoard(coordX, coordY)) {
+	                	edgeOfBoardDistance = tempDistance;
 	                	coordinateIfOnEdgeOfBoard = coords;
 	                } else {
 		                coordsReturned = coords;
@@ -163,7 +164,7 @@ public class Group {
         if(amountOfEdges <= 1 && blockDistance > maximumDistance) {
         	return coordinateIfBlock;
         } else {
-            return coordinateIfOnEdgeOfBoard != null ? coordinateIfOnEdgeOfBoard : coordsReturned;
+            return coordinateIfOnEdgeOfBoard != null && edgeOfBoardDistance > maximumDistance ? coordinateIfOnEdgeOfBoard : coordsReturned;
         }
         	
     }
