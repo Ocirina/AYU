@@ -133,38 +133,33 @@ public class Group {
      * @return
      */
     public String[] findPointMostFarAway(int x, int y, Board board) {
-        String[] coordsReturned = null;
-        String[] coordinateIfBlock = null;
-        int maximumDistance = 0;
-        int amountOfEdges = 0;
+        String[] coordsReturned = null, coordinateIfBlock = null;
+        int maximumDistance = 0, blockDistance = 0, amountOfEdges = 0;
+        
+        if(this.coordinates.size() == 1) 
+        	return this.coordinates.get(0).split(",");
+     
         for (int i = 0; i < this.coordinates.size(); i++) {
             String[] coords = this.coordinates.get(i).split(",");
             int coordX = Integer.parseInt(coords[0]);
             int coordY = Integer.parseInt(coords[1]);
-            if(board.hasNeighbor(coordX, coordY)) {
-            	int tempDistance = Math.abs(coordX - x);
-	            tempDistance += Math.abs(coordY - y);
-	            if(board.onEdgesOfGroup(coordX, coordY)) {
-		            amountOfEdges++;
-		            if (tempDistance > maximumDistance || maximumDistance == 0) {
-		                maximumDistance = tempDistance;
-		                coordsReturned = coords;
-		            }
-	            } else {
-	            	if (tempDistance > maximumDistance || maximumDistance == 0) {
-		                coordinateIfBlock = coords;
-		            }
+        	int tempDistance = Math.abs(coordX - x) + Math.abs(coordY - y);
+            if(board.onEdgesOfGroup(coordX, coordY)) {
+	            amountOfEdges++;
+	            if (tempDistance > maximumDistance || maximumDistance == 0) {
+	                maximumDistance = tempDistance;
+	                coordsReturned = coords;
 	            }
-        	} else {
-                coordsReturned = coords;
-                break;
-        	}
+            } else if (tempDistance > maximumDistance || maximumDistance == 0) {
+            	blockDistance = tempDistance;
+                coordinateIfBlock = coords;
+            }
         }
         
-        if(amountOfEdges > 1) {
-            return coordsReturned;
-        } else {
+        if(amountOfEdges <= 1 && blockDistance > maximumDistance) {
         	return coordinateIfBlock;
+        } else {
+            return coordsReturned;
         }
         	
     }

@@ -278,7 +278,7 @@ public class Board {
 		int tempPiece = this.boardGrid[originX][originY];
 		this.boardGrid[originX][originY] = this.boardGrid[targetX][targetY];
 		this.boardGrid[targetX][targetY] = tempPiece;
-		IO.debug(this.toString());
+//		IO.debug(this.toString());
 	}
 
 	/**
@@ -397,5 +397,19 @@ public class Board {
 	 */
 	public int[][] getBoardContents() {
 		return this.boardGrid;
+	}
+
+	/**
+	 * 
+	 * @param coordX
+	 * @param coordY
+	 * @return
+	 */
+	public boolean isCoordOnEdgeOfBoard(int coordX, int coordY) {
+		return onBounds(coordX) || onBounds(coordY);
+	}
+	
+	private boolean onBounds(int coord) {
+		return (coord == 0) || (coord == (SIZE - 1));
 	}
 }
