@@ -6,11 +6,7 @@ def handle_line(file, line)
   if line.start_with? 'import'
     @imports << squish(line)
   else
-    if file.downcase.eql? './src/nl/codecup/src/manager.java'
-      @manager << clean_line(line)
-    else
-      @content << clean_line(line)
-    end
+    @content << clean_line(line)
   end
 end
 
@@ -38,8 +34,8 @@ end
 @manager.reject! { |c| c.empty? }
 
 concat  = @imports.uniq.sort.join("\n")
-concat << 'public ' << @manager.join("\n")
 concat << @content.join("\n")
+concat.gsub!('class Manager', 'public class Manager')
 
 out_file = File.new("Manager.java", "w")
 out_file.puts concat
