@@ -44,39 +44,12 @@ public class Player {
         // IO.debug("AMOUNT OF GROUPS: " + state.getGroupsLength());
         IAlgorithm random = new RandomMoveAlgorithm(state.getGroups(), state.getBoard(), pathFinder);
 
-        if (state.getTimePastInMiliseconds() < TWENTY_FIVE_SECONDS) {
-        	if (move == null && state.getGroupsLength() > 15) {
-                IO.debug("Move direct start: " + new Timestamp(new java.util.Date().getTime()));
-                move = new DirectionAlgorithm(state).getMove();
-                IO.debug("Move direct end: " + new Timestamp(new java.util.Date().getTime()));
-            }
-
-            if (move == null && state.getGroupsLength() > 10) {
-                IO.debug("Move monte 10 start: " + new Timestamp(new java.util.Date().getTime()));
-                move = getMonteCarloMove(3, 3, random);
-                IO.debug("Move monte 10 end: " + new Timestamp(new java.util.Date().getTime()));
-            }
-            
-            if (move == null && state.getGroupsLength() > 2) {
-                IO.debug("Move monte 10 start: " + new Timestamp(new java.util.Date().getTime()));
-                move = getMonteCarloMove(2, 2, random);
-                IO.debug("Move monte 10 end: " + new Timestamp(new java.util.Date().getTime()));
-            }
-
-            if (move == null && state.getGroupsLength() == 2) {
-                IO.debug("Move random start: " + new Timestamp(new java.util.Date().getTime()));
-                move = random.getMove();
-                IO.debug("Move random end: " + new Timestamp(new java.util.Date().getTime()));
-            }
-            
-        }
-
         if (move == null) {
             IO.debug("Move random start: " + new Timestamp(new java.util.Date().getTime()));
             move = random.getMove();
             IO.debug("Move random end: " + new Timestamp(new java.util.Date().getTime()));
         }
-
+        
         return move;
     }
 
